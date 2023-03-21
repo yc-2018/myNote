@@ -307,7 +307,7 @@
 >   >   2. 拷贝许可证文本：从 MIT 许可证模板中复制许可证文本，然后将其粘贴到 LICENSE 文件中。MIT 许可证文本如下：
 >   >
 >   >   ```shell
->   >   复制代码MIT License
+>   >   MIT License
 >   >   
 >   >   Copyright (c) [year] [author]
 >   >   
