@@ -1,3 +1,39 @@
+# ==java问题==
+
+### ==1.== java类名命名规范
+
+> Java类名的命名规范一般遵循以下几点：
+>
+> 1. 类名要使用大写字母开头的驼峰命名法（即首字母大写，后面每个单词的首字母也要大写）。
+>
+> 2. 类名应该是一个名词或者名词短语，且具有描述性。
+>
+> 3. 如果类名由多个单词组成，那么这些单词之间应该没有下划线符号，而是采用驼峰命名法。
+>
+> 4. 类名不要使用Java关键字。
+>
+> 例如，如果你编写一个代表学生的类，你可以将它命名为"Student"。如果你编写一个代表图书馆的类，你可以将它命名为"Library"。
+>
+> ---
+>
+> **java方法命名规范**
+>
+> Java方法的命名规范一般遵循以下几点：
+>
+> 1. 方法名使用小写字母开头的驼峰命名法（即首字母小写，后面每个单词的首字母大写）。
+>
+> 2. 方法名应该是一个动词或者动词短语，且具有描述性。
+>
+> 3. 如果方法名由多个单词组成，那么这些单词之间应该没有下划线符号，而是采用驼峰命名法。
+>
+> 4. 方法名不要使用Java关键字。
+>
+> 例如，如果你编写一个计算两个数之和的方法，你可以将它命名为"calculateSum"。如果你编写一个检查字符串是否为空的方法，你可以将它命名为"isEmpty"。
+
+
+
+
+
 # ==Spring boot 问题==
 
 ### ==1.==spring boot 项目一般分为几层
@@ -35,13 +71,212 @@
 >    >
 >    > 这样的排序可以使得整个应用程序的结构更加清晰明了，提高代码可读性和可维护性。
 
-### ==2.==在Spring Boot项目中，i18n（internationalization）指的是国际化的支持。
+### ==2.==在springboot项目中 一般都有什么文件夹 
+
+> 在Spring Boot项目中，常见的文件夹包括：
+>
+> 1. `src/main/java` - 存放Java源代码的目录。
+> 2. `src/main/resources` - 存放应用程序资源文件（如配置文件、静态资源、国际化文件等）的目录。
+> 3. `src/test/java` - 存放测试代码的目录。
+> 4. `src/test/resources` - 存放测试所需资源文件的目录。
+> 5. `target` - 存放编译后的类文件和构建产物的目录。
+>
+> 其中，`src/main/resources`是一个非常重要的目录，它通常有以下子目录：
+>
+> 1. `static` - 存放静态资源文件（如JavaScript、CSS、图片等）的目录。
+> 2. `templates` - 存放模板文件（如Thymeleaf、FreeMaker等模板）的目录。
+> 3. `application.yml`或`application.properties` - 应用程序的配置文件。
+> 4. `i18n` - 存放国际化文件（如messages.properties、messages_zh_CN.properties等）的目录。
+>
+> 另外，还有一些常用的目录，例如：
+>
+> 1. `logs` - 存放应用程序日志文件的目录。
+> 2. `db/migration` - 存放数据库迁移脚本的目录，用于版本控制和自动执行数据库升级脚本。
+> 3. `docs` - 存放应用程序文档的目录，如API文档、用户手册等。
+>
+> 需要注意的是，以上只是一些常见的目录和文件，具体应用程序可能会有不同的结构和组织方式，根据实际情况灵活调整。
+>
+> ---
+>
+> 在`src/main/resources`目录下，除了前面提到的常见子目录外，还有一些其他的目录和文件：
+>
+> 1. `META-INF` - 存放应用程序的元数据（如MANIFEST.MF、spring.factories等）。
+> 2. `public` - 存放公共资源文件的目录，这些资源可以被所有用户直接访问。
+> 3. `resources` - 存放通用的资源文件的目录，包括图标、XML配置文件等。
+> 4. `templates` - 存放模板文件的目录，通常与`src/main/resources/templates`目录是一致的。
+>
+> 另外，在Spring Boot应用程序中，我们也可以通过自定义配置文件来覆盖默认的配置，例如：
+>
+> - `application.yml`或`application.properties` - 应用程序的主配置文件。
+> - `bootstrap.yml`或`bootstrap.properties` - 应用程序启动时加载的配置文件。
+> - `application-{profile}.yml`或`application-{profile}.properties` - 带有指定 Spring 环境的配置文件，例如`application-dev.yml`、`application-prod.yml`等。
+>
+> 需要注意的是，这些自定义的配置文件必须放在`src/main/resources`目录下，并按照相应的命名规则进行命名。
+>
+> ---
+>
+> 除了前面提到的目录和文件之外，还有一些其他可能被用到的目录和文件：
+>
+> 1. `src/main/webapp` - 存放Web应用程序的静态资源文件（如HTML、JavaScript、CSS等）及WEB-INF目录下的JSP文件。
+> 2. `src/main/filters` - 存放URL过滤器的目录。
+> 3. `src/main/aspects` - 存放切面类的目录，用于AOP编程。
+> 4. `src/main/scripts` - 存放脚本文件（如Python、Ruby等）的目录，用于自动化部署和管理。
+> 5. `src/main/docker` - 存放Dockerfile文件和相关资源文件的目录，用于构建Docker镜像。
+> 6. `src/main/bash` - 存放Bash脚本文件的目录，用于自动化部署和管理。
+> 7. `.mvn` - 存放Maven Wrapper的配置文件，允许使用项目附带的Maven版本来构建项目，而不需要手动安装Maven。
+>
+> 当然，并不是所有的项目都需要上述目录和文件。具体情况要根据项目需求和开发者的习惯而定。
+>
+> ---
+>
+> 除了上述的目录和文件之外，还有一些在Spring Boot应用程序开发中常用的工具：
+>
+> 1. Lombok - 通过注解来简化Java代码，例如@Data、@Builder、@Slf4j等。
+> 2. MapStruct - 一个对象映射框架，通过注解来生成类型安全的DTO映射器。
+> 3. JUnit5 - 测试框架，支持参数化测试、动态测试、条件测试等。
+> 4. Mockito - 用于Mock测试的框架，支持Mock对象、Stub方法、Verify验证等。
+> 5. H2 Database - 嵌入式数据库，方便进行单元测试和集成测试。
+>
+> 这些工具可以有效地提高开发效率和测试质量，是Spring Boot应用程序开发中非常有价值的辅助工具。需要注意的是，使用这些工具前需要先引入相应的依赖。
+>
+> ---
+>
+> **如果是springboot web项目src/main/java里面包涵什么文件夹**
+>
+> 如果是Spring Boot Web应用程序，`src/main/java`中的目录结构通常会按照MVC（Model-View-Controller）模式来组织代码。以下是一个常见的MVC架构的目录结构：
+>
+> 1. `com.example.project` - 根目录。
+> 2. `config` - 存放配置类的目录，例如Spring Security的配置、Swagger的配置等。
+> 3. `controller` - 存放控制器类的目录，负责接收和处理HTTP请求，并返回响应数据。
+> 4. `service` - 存放服务层类的目录，负责业务逻辑处理。
+> 5. `dao`（或repository） - 存放数据访问层类的目录，负责与数据库进行交互，通常使用ORM框架（如MyBatis、Hibernate等）来简化操作。
+> 6. `model`（或entity） - 存放实体类的目录，表示业务对象。
+> 7. `exception` - 存放异常类的目录，例如自定义异常、全局异常处理器等。
+> 8. `utils` - 存放工具类的目录，例如日期时间工具、系统参数工具等。
+> 9. `dto`（或vo） - 存放数据传输对象（DTO）或值对象（VO）的目录，用于在不同层之间传递数据。
+>
+> 其中，`controller`、`service`和`dao`（或`repository`）是MVC三层的核心部分，负责完成Web应用程序的请求处理、业务逻辑处理和数据持久化等任务。其他目录都是为了更好地组织代码而设立的。需要注意的是，这只是一种常见的目录结构，具体实现方式可能因项目需求而有所不同。
+>
+> ---
+>
+>    > **怎么没有domain文件夹**
+>    >
+>    > 您提到的`domain`文件夹通常是用于存放领域模型（Domain Model）的目录，它是一种更加面向对象的设计方式。在Spring Boot应用程序中，我们可以使用`model`（或`entity`）目录来表示领域模型。
+>    >
+>    > 实际上，`model`（或`entity`）目录与`domain`目录的作用是类似的，都是用于存放业务对象的目录。不同之处在于，`model`（或`entity`）目录通常是与ORM框架（如MyBatis、Hibernate等）紧密相关的，而`domain`目录通常更加面向对象，强调领域驱动设计（DDD）的思想。
+>    >
+>    > 在具体实现时，可以根据项目需求和开发者的习惯选择是否创建`domain`目录，如果需要使用领域驱动设计的思想，则可以创建`domain`目录，并将领域模型放置在其中。
+>
+> ---
+>
+> >**pojo文件夹在什么时候用**
+> >
+> >POJO（Plain Old Java Object）文件夹通常用于存储Java类，这些类被设计为轻量级的数据传输对象。它们没有任何业务逻辑或其他复杂的处理逻辑，只是简单地保存数据的容器。
+> >
+> >通常情况下，POJO文件夹包含了应用程序的数据模型层，用于表示数据库中的表或其他数据源中的数据。这些Java类只包含属性和相应的getter/setter方法，以及一些简单的构造函数。
+> >
+> >使用POJO可以将数据从数据库中检索出来，并在Java应用程序中进行操作和处理。这种设计模式使得代码更加清晰、易于维护，也使得应用程序的开发速度更快，因为不需要处理过多的业务逻辑。
+> >
+> >总之，在Java应用程序中，POJO文件夹通常用于存储数据模型层的Java类。
 
 
 
+### ==3.==如果用springboot写一个博客 一般都包涵哪些注解
+
+> 使用SpringBoot编写博客应用程序时，一些常见的注解包括：
+>
+> 1. `@SpringBootApplication` - 这是一个复合注解，包含了`@Configuration`、`@EnableAutoConfiguration`和`@ComponentScan`等注解。它表示这是一个Spring Boot应用程序。
+>
+> 2. `@RestController` - 这个注解表明该控制器类处理HTTP请求，并且每个方法返回的数据都会通过`@ResponseBody`自动序列化到响应体中。
+>
+> 3. `@RequestMapping` - 这个注解用来映射URL和HTTP方法到控制器方法上。
+>
+> 4. `@RequestParam` - 用于将HTTP请求参数绑定到控制器方法的参数上。
+>
+> 5. `@PathVariable` - 用于将URL路径变量绑定到控制器方法的参数上。
+>
+> 6. `@Autowired` - 自动装配依赖项，使得代码更简洁。
+>
+> 7. `@Entity` - 表示该类是一个实体类。
+>
+> 8. `@Repository` - 标记数据访问组件，通常与`@Autowired`一起使用。
+>
+> 9. `@Service` - 在服务层中使用，标记业务逻辑组件。
+>
+> 10. `@ControllerAdvice` - 全局异常处理器，用于捕获控制器中抛出的异常并进行相应处理。
+>
+> 当然还有很多其他注解可以用于SpringBoot应用程序，具体使用哪些注解取决于应用程序需求和开发人员的喜好。
+>
+> 
 
 
 
+### ==4.==能用表格表示springboot的注解关系吗
+
+> 可以，下面是一个简单的表格，展示了Spring Boot中一些常见注解之间的关系：
+>
+> | 注解名                 | 作用                        | 细节                                                         |
+> | ---------------------- | --------------------------- | ------------------------------------------------------------ |
+> | @SpringBootApplication | 标记主类                    | 复合注解，包含@Configuration，@EnableAutoConfiguration和@ComponentScan等注解 |
+> | @RestController        | 标记控制器类                | 处理HTTP请求，并自动序列化返回结果到响应体中                 |
+> | @RequestMapping        | 映射 URL 和 HTTP 方法       | 可以设置请求路径、请求方法、请求参数、响应类型等             |
+> | @RequestParam          | 绑定请求参数到方法参数      | 可以设置参数名、是否必须等                                   |
+> | @PathVariable          | 绑定 URL 中的变量到方法参数 | 可以设置变量名、是否必须等                                   |
+> | @Autowired             | 自动装配依赖项              | 可以使用在属性、构造函数或者 setter 方法上                   |
+> | @Entity                | 标记实体类                  | 表示该类对应数据库中的一张表                                 |
+> | @Repository            | 标记数据访问组件            | 通常与@Autowired一起使用                                     |
+> | @Service               | 标记业务逻辑组件            | 在服务层中使用                                               |
+> | @ControllerAdvice      | 全局异常处理器              | 可以捕获控制器中抛出的异常并进行相应处理                     |
+>
+> 注意，这只是一个示例表格，实际使用中可能会根据具体需求使用不同的注解。
+>
+> 除了上面提到的注解，还有一些常用的注解可以在Spring Boot应用中使用。以下是一些常见的注解及其作用：
+>
+> | 注解名            | 作用                                                |
+> | ----------------- | --------------------------------------------------- |
+> | @Component        | 标记组件类，通用的注解                              |
+> | @Configuration    | 标记配置类                                          |
+> | @Bean             | 将方法返回值注册为一个 Bean                         |
+> | @Profile          | 按照不同的环境（如开发、测试、生产）定义不同的 Bean |
+> | @Value            | 注入配置文件中的属性值                              |
+> | @Qualifier        | 根据 Bean 名称或别名进行注入                        |
+> | @EnableScheduling | 开启定时任务                                        |
+> | @Scheduled        | 定义定时任务                                        |
+> | @Async            | 标识异步方法                                        |
+>
+> 需要注意的是，注解的具体作用和用法要根据具体情况而定，以上表格仅仅列出了一些比较常见的注解，并不能代表全部。
+>
+> 另外，在Spring Boot中还有一些用于处理Web请求、数据库操作等方面的注解，这里简单介绍一下：
+>
+> | 注解名           | 作用                             |
+> | ---------------- | -------------------------------- |
+> | @GetMapping      | 处理 GET 请求                    |
+> | @PostMapping     | 处理 POST 请求                   |
+> | @PutMapping      | 处理 PUT 请求                    |
+> | @DeleteMapping   | 处理 DELETE 请求                 |
+> | @PatchMapping    | 处理 PATCH 请求                  |
+> | @RequestBody     | 将请求体中的数据绑定到方法参数上 |
+> | @ResponseBody    | 将方法返回值序列化为响应体       |
+> | @PathVariable    | 用于获取 URL 路径中的变量        |
+> | @RequestParam    | 用于获取请求参数                 |
+> | @PageableDefault | 用于设置分页默认参数             |
+> | @Transactional   | 标记事务方法                     |
+>
+> 这些注解常常与其他注解一起使用，可以大幅度减少编写代码的工作量，提高开发效率。需要说明的是，这些注解都是Spring框架提供的，与Spring Boot本身并没有直接关联，但在Spring Boot应用程序中也可以自由地使用它们。
+>
+> 除了上面提到的注解外，Spring Boot还有一些用于集成其他框架或库的注解，例如：
+>
+> | 注解名                        | 作用                  |
+> | ----------------------------- | --------------------- |
+> | @EnableJpaRepositories        | 开启 JPA 数据访问     |
+> | @EntityScan                   | 扫描实体类            |
+> | @EnableBatchProcessing        | 开启批处理            |
+> | @EnableCaching                | 开启缓存支持          |
+> | @EnableAsync                  | 开启异步执行          |
+> | @EnableWebSocketMessageBroker | 开启 WebSocket 聊天室 |
+> | @EnableSwagger2               | 开启 Swagger API 文档 |
+>
+> 这些注解可以让我们更方便地集成其他框架或库，并在Spring Boot应用程序中使用它们。需要注意的是，使用这些注解前需要先引入相应的依赖。
 
 
 
@@ -214,7 +449,39 @@
 
 
 
+### ==3.==怎么向公网暴露本机的80端口
 
+> 要向公网暴露本机的80端口，您需要进行以下步骤：
+>
+> 1. 确保您的网络拥有一个公网IP地址，您可以通过访问“https://www.whatismyip.com/”等网站来获取该IP地址。
+>
+> 2. 确认您的路由器是否开启了端口转发功能，如果没有，请参考您的路由器说明书按照规定方法进行设置。
+>
+> 3. 在路由器中设置端口转发。将路由器的外部公网IP地址绑定到本地网络中服务器或设备的内部IP地址的80端口上。这通常可以在路由器的"端口映射"或"端口转发"选项下找到。
+>
+> 4. 确认您的防火墙是否已正确配置，允许外部请求通过80端口进入您的服务器或设备。
+>
+> 5. 最后，测试您的设置。您可以使用一个在线端口检查工具来验证您的80端口是否已成功开放。
+>
+> 请注意，在向公网暴露您的端口之前， 公网安全性问题必须得到重视。 您应谨慎权衡可能带来的风险，并采取适当的安全措施来确保您的系统和数据的安全。
+>
+> 
+>
+> **水星路由器怎么开启了端口转发功能**
+>
+> >以下是在水星路由器上开启端口转发功能的步骤：
+> >
+> >1. 登录水星路由器管理页面。一般情况下，您可以在浏览器地址栏中输入路由器的管理页面地址，例如：“192.168.1.1”。
+> >
+> >2. 在管理页面中，选择“高级设置”选项，然后找到“端口转发”或“虚拟服务器”选项。
+> >
+> >3. 单击“添加规则”按钮，然后选择“TCP/UDP”协议，并输入要开放的端口号。
+> >
+> >4. 输入您希望所在局域网的设备的IP地址来指定目标设备。
+> >
+> >5. 将规则的状态切换为“已启用”，单击“保存”以保存设置并应用于路由器。
+> >
+> >请注意，在向公网暴露您的端口之前， 公网安全性问题必须得到重视。 您应谨慎权衡可能带来的风险，并采取适当的安全措施来确保您的系统和数据的安全。
 
 
 
@@ -285,6 +552,51 @@
 
 
 
+### ==4.== 免安装软件 删除时怎么清理数据
+
+> 免安装软件一般不会在计算机上留下太多系统文件和注册表项，因此删除后对系统的影响较小。如果想彻底清理数据，可以按照以下步骤：
+>
+> 1. 打开软件所在的安装目录，查看是否有创建的文件或文件夹，如果有，直接删除即可。
+> 2. 检查是否在注册表中留下了相关的记录，可以在开始菜单中的“运行”中输入“regedit”打开注册表编辑器，搜索软件的名称，删除相关项。
+> 3. 清理软件留下的临时文件，可以在开始菜单中的“运行”中输入“%temp%”打开临时文件夹，找到软件创建的临时文件夹，将其删除即可。
+> 4. 建议使用专业的卸载工具，如Revo Uninstaller等来卸载应用程序，这种工具可以检测程序遗留的文件和注册表项，并帮助用户清理。
+>
+> ---
+>
+> >**用专门的清理软件清理注册表 免安装的会被处理掉吗**
+> >
+> >使用清理软件清理注册表时，免安装软件也会被处理掉。清理软件通常会扫描整个计算机的注册表，找出与其相关的所有记录，并根据用户选择进行清理。因此，即使免安装软件在计算机中没有留下任何安装记录，但是如果它们曾经在计算机上使用过，那么其相关的注册表记录也会被清理软件检测到并清理掉。我们建议使用专业的清理软件时要小心谨慎，确保只删除不需要的记录，以免不需要的记录被误删导致系统出现问题。
+>
+> ---
+>
+> >**用专门的清理软件清理注册表 会先判断的免安装的软件是否存在 还是会直接被处理掉**
+> >
+> >清理软件一般是根据注册表中的键值来判断软件是否存在，而不是根据软件的安装位置。因此，即使免安装软件没有留下相关的安装记录，但如果在注册表中有相关的键值，则也会被判断为存在并被进行处理。不过，一些较为智能的清理软件会提供排除列表或者不处理某些键值的选项，可以对特定的免安装软件进行保护和排除。
+
+
+
+### ==5.== 用cmd查看Wi-Fi密码
+
+> 您可以在计算机中查找已连接的Wi-Fi密码。可以打开命令提示符窗口（CMD）并使用以下命令：netsh wlan show profile，然后输入以下命令来查看Wi-Fi密码：netsh wlan show profile name=[Wifi名称] key=clear。
+>
+> 例如，如果你想查看名字为“test”的Wi-Fi密码，应输入以下命令：
+>
+> ```
+> netsh wlan show profile name=test key=clear
+> ```
+>
+> ![image-20230405233509440](./问chat笔记.assets/image-20230405233509440.png)
+>
+> > 在Windows系统中，保存WiFi网络的文件通常存储在" C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces "目录下。每个以太网接口和无线接口都有一个对应的文件夹来存储其已连接的网络信息。你可以找到与你当前连接的Wi-Fi网络相关的文件夹，并打开XML文件来查看该网络的详细信息，包括名称、加密类型和密码(加密了)。请注意，访问此目录需要管理员权限。
+> >
+> > 
+>
+> 
+
+
+
+
+
 # ==开源许可证==
 
 > **MIT 许可证、Apache 许可证、GPL 许可证**
@@ -334,3 +646,875 @@
 >   >   2. 提交代码并发布项目：将 LICENSE 文件提交到 GitHub 仓库中，并发布项目。这样，其他用户就可以查看你的代码，并了解你的许可证类型和使用条件。
 >   >
 >   >   需要注意的是，在使用许可证时应该严格遵守许可证的规定，包括版权声明、免责声明、限制条件等。否则可能会侵犯知识产权或者造成法律风险。建议在使用许可证前仔细阅读许可证文本，并咨询专业律师的意见。
+
+
+
+# ==js问题==
+
+### ==1.==js判断中 哪些非布尔类的值会是false
+
+> 在JavaScript中，以下值将被视为“falsy”，也就是假的：
+>
+> - false
+> - 0
+> - -0
+> - 0n (BigInt)
+> - "" (空字符串)
+> - null
+> - undefined
+> - NaN
+>
+> 除了以上列出的值之外，其他所有值都将被视为“truthy”，也就是真的。
+>
+> >---
+> >
+> >**上文“falsy”和“truthy”是什么意思**
+> >
+> >在JavaScript中，“falsy”和“truthy”是两个布尔值的概念，分别表示一个值在逻辑上被视为假或者真。
+> >
+> >一个“falsy”值在逻辑上被视为假。JavaScript中有七种“falsy”值：false、0、-0、""（空字符串）、null、undefined和NaN。如果一个值不是这些“falsy”值，那么它就是“truthy”，也就是在逻辑上被视为真。
+> >
+> >需要注意的是，“falsy”和“truthy”只是用于描述一个值在逻辑上被视为真还是假，并不意味着该值本身是布尔类型。在JavaScript中，任何值都可以被强制转换为布尔值，例如通过使用双重否定运算符“!!”，即“!!value”。所以说，一个“falsy”值在被强制转换为布尔值时会变成false，而一个“truthy”值则会变成true。
+
+### ==2.== document.querySelectorAll()和document.getElementsByClassName();的区别是什么
+
+> `document.querySelectorAll()`和`document.getElementsByClassName()`都是用于在Document对象中查找特定元素的方法，但它们有以下几个区别：
+>
+> 1. 返回值类型不同：`document.querySelectorAll()`返回的是一个NodeList对象，而`document.getElementsByClassName()`返回的是一个HTMLCollection对象。
+>
+> 2. 参数的写法不同：`document.querySelectorAll()`可以接受更复杂的选择器作为参数，例如类似CSS选择器的语法，而`document.getElementsByClassName()`只接受一个类名字符串作为参数。
+>
+> 3. 元素查找的范围不同：`document.querySelectorAll()`可以在整个文档中查找元素，而`document.getElementsByClassName()`只能在调用它的元素的子节点中查找元素。
+>
+> 4. 兼容性问题不同：`document.querySelectorAll()`支持IE8及以上版本，而`document.getElementsByClassName()`只支持IE9及以上版本。
+>
+> 因此，如果需要根据多个条件来查找元素，或者需要跨越整个文档查找元素，应该使用`document.querySelectorAll()`；如果只需要根据类名查找元素，并且不需要兼容IE9及以下版本，可以使用`document.getElementsByClassName()`。
+
+
+
+### ==3.==给谷歌浏览器导出来的书签.html 添加样式和脚本 让它和导航栏的书签有一样的效果 写一个完整的demo
+
+>  正在为您搜索：如何给谷歌浏览器导出的书签添加样式和脚本、如何让导出的书签和导航栏的书签有一样的效果、书签.html样式和脚本的完整demo
+>
+> 以下是一个完整的demo，实现了给谷歌浏览器导出来的书签.html添加样式和脚本，让它和导航栏的书签有一样的效果：
+>
+> ```html
+> <!DOCTYPE html>
+> <html>
+> <head>
+> 	<meta charset="UTF-8">
+> 	<title>My Bookmarks</title>
+> 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+> 	<style>
+> 		body {
+> 			padding: 20px;
+> 		}
+> 		.bookmark {
+> 			margin-bottom: 10px;
+> 		}
+> 		.bookmark .title {
+> 			padding: 5px 10px;
+> 			background-color: #f2f2f2;
+> 			font-weight: bold;
+> 			cursor: pointer;
+> 		}
+> 		.bookmark .content {
+> 			display: none;
+> 			padding: 5px 10px;
+> 		}
+> 		.bookmark .content a {
+> 			display: block;
+> 			padding: 2px 0;
+> 			color: #333;
+> 		}
+> 	</style>
+> </head>
+> <body>
+> 	
+> 	<div class="container">
+> 		
+> 		<div class="row">
+> 			<div class="col-md-6">
+> 				<div class="bookmark">
+> 					<div class="title">Bookmark Folder 1</div>
+> 					<div class="content">
+> 						<a href="https://www.google.com">Google</a>
+> 						<a href="https://www.baidu.com">Baidu</a>
+> 						<a href="https://www.taobao.com">Taobao</a>
+> 					</div>
+> 				</div>
+> 			</div>
+> 			<div class="col-md-6">
+> 				<div class="bookmark">
+> 					<div class="title">Bookmark Folder 2</div>
+> 					<div class="content">
+> 						<a href="https://www.github.com">Github</a>
+> 						<a href="https://www.microsoft.com">Microsoft</a>
+> 						<a href="https://www.apple.com">Apple</a>
+> 					</div>
+> 				</div>
+> 			</div>
+> 		</div>
+> 		
+> 	</div>
+> 
+> 	<script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+> 	<script src="https://cdn.staticfile.org/popper.js/1.16.0/umd/popper.min.js"></script>
+> 	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+> 	<script>
+> 		$(function() {
+> 			$('.bookmark .title').click(function() {
+> 				$(this).siblings('.content').slideToggle();
+> 			});
+> 		});
+> 	</script>
+> 
+> </body>
+> </html>
+> ```
+>
+> 在这个demo中，我们使用了Bootstrap库来提供样式和布局，并使用jQuery库来实现交互效果。我们首先定义了一个.bookmark的样式类，用于设置整个书签的样式，其中包含一个.title类和一个.content类，用于分别表示书签标题和书签内容。
+>
+> 接着我们使用了Bootstrap的网格系统，将两个书签放在同一行内，每个书签占据页面宽度的一半。
+>
+> 我们使用jQuery库来实现展开/折叠功能，当用户单击书签的标题时就可以切换其下方内容的可见性。
+>
+> 最后，我们引入了所需的库文件，并将我们的JavaScript脚本放在页面底部以确保文档完全加载后再执行。
+>
+> 以上是一个简单的demo，您可以下载并根据自己的需求对其进行修改。
+
+
+
+### ==4.== 异步问题
+
+> - ~~**我要在https://www.jianfast.com/网站上用js拿到下面网页内容打印在控制台: https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637 请求方法: GET 返回 第一个<p class="iQKjW6dr">到页面**~~
+>
+>   你可以使用以下代码来获取页面内容并打印在控制台中:
+>
+>   ```javascript
+>   fetch('https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637')
+>     .then(response => response.text())
+>     .then(text => {
+>       let parser = new DOMParser();
+>       let doc = parser.parseFromString(text, 'text/html');
+>       let element = doc.querySelector('.iQKjW6dr');
+>       console.log(element.textContent);
+>     });
+>   ```
+>
+>   请注意，这段代码可能不适用于所有网站，因为某些网站可能会阻止跨域请求。此外，如果页面结构发生变化，选择器也可能需要相应地进行更改。
+>
+>   ---
+>
+>   《如果报错《这个错误信息表明你的请求被CORS策略阻止了。CORS（跨域资源共享）是一种安全机制，它允许浏览器向不同域的服务器发送请求。然而，服务器需要在响应中包含一个`Access-Control-Allow-Origin`头，以指示浏览器允许来自特定域的请求。
+>
+>   在你的情况下，`https://www.douyin.com`服务器没有返回一个`Access-Control-Allow-Origin`头，所以浏览器阻止了你的请求。
+>
+>   有几种方法可以解决这个问题。一种方法是使用一个CORS代理，它会在你的请求和目标服务器之间充当中介，并在响应中添加适当的CORS头。另一种方法是在服务器端配置CORS策略，以允许来自你的域的请求。
+>
+>   请注意，更改服务器端的CORS策略需要对服务器有管理权限。》》
+>
+>   
+>
+> ---
+>
+> - **fetch是什么**
+>
+>   `fetch()`是一个JavaScript函数，它提供了一种简单的方法来获取网络资源。它返回一个`Promise`，该`Promise`在资源可用时解析为一个`Response`对象。你可以使用`Response`对象的方法来检查响应的状态和获取响应的内容。
+>
+>   例如，你可以使用`response.text()`方法来获取响应的文本内容，或者使用`response.json()`方法来获取响应的JSON内容。
+>
+>   下面是一个简单的例子，它使用`fetch()`函数从网络上获取一个JSON文件，并在控制台中打印出它的内容:
+>
+>   ```javascript
+>   fetch('<URL>')
+>     .then(response => response.json())
+>     .then(data => console.log(data));
+>   ```
+>
+>   请注意，由于`fetch()`返回一个`Promise`，所以你需要使用`.then()`方法来处理响应。你也可以使用`async/await`语法来简化代码。
+>
+>   ---
+>
+>   >**用js爬https://www.jianfast.com/ 来个简单的demo**
+>   >
+>   >下面是一个简单的JavaScript爬虫示例，它使用`fetch()`函数从`https://www.jianfast.com/`获取页面内容，并使用`DOMParser`来解析HTML并提取页面标题:
+>   >
+>   >```javascript
+>   >fetch('https://www.jianfast.com/')
+>   >  .then(response => response.text())
+>   >  .then(text => {
+>   >    let parser = new DOMParser();
+>   >    let doc = parser.parseFromString(text, 'text/html');
+>   >    let title = doc.querySelector('title').textContent;
+>   >    console.log(title);
+>   >  });
+>   >```
+>   >
+>   >请注意，这段代码可能不适用于所有网站，因为某些网站可能会阻止跨域请求。此外，如果页面结构发生变化，选择器也可能需要相应地进行更改。
+>   >
+>   >---
+>   >
+>   >**对于阻止跨域请求的网站应该怎么做呢**
+>   >
+>   >如果你遇到了阻止跨域请求的网站，你可以考虑使用以下方法之一来解决这个问题:
+>   >
+>   >1. **使用CORS代理**: 你可以使用一个CORS代理服务器，它会在你的请求和目标服务器之间充当中介，并在响应中添加适当的CORS头。这样，浏览器就可以接收到来自目标服务器的响应，而不会被CORS策略阻止。
+>   >
+>   >2. **在服务器端配置CORS策略**: 如果你有权访问目标服务器，你可以在服务器端配置CORS策略，以允许来自你的域的请求。这样，当浏览器向目标服务器发送请求时，服务器会在响应中包含一个`Access-Control-Allow-Origin`头，指示浏览器允许来自你的域的请求。
+>   >
+>   >3. **使用其他语言或工具**: 如果上述方法都不可行，你可以考虑使用其他语言（如Python或Ruby）或工具（如`curl`或`wget`）来获取网页内容。这些语言和工具通常不受浏览器的CORS策略限制，因此可以更容易地获取跨域资源。
+>   >
+>   >请注意，在使用爬虫程序获取网页内容时，请确保遵守网站的服务条款，并尊重服务器的资源限制。
+>
+>   ---
+>
+>   **那可以用<iframe>嵌入https://www.jianfast.com/ 再在<iframe>里面请求。可以应对跨域请求吗**
+>
+>   > 不行，使用`<iframe>`嵌入其他网站的内容并不能解决跨域请求的问题。即使你在`<iframe>`中嵌入了其他网站的内容，你仍然无法从父页面中访问`<iframe>`中的内容，除非两个页面都同意通过`postMessage` API进行通信。
+>   >
+>   > 此外，许多网站会使用`X-Frame-Options` HTTP头来阻止其他网站在`<iframe>`中嵌入它们的内容。这意味着，即使你尝试在`<iframe>`中嵌入其他网站的内容，浏览器也可能会阻止这种行为。
+>   >
+>   > 总之，使用`<iframe>`嵌入其他网站的内容并不能解决跨域请求的问题。你需要使用其他方法（如CORS代理或服务器端配置）来解决这个问题。
+>   >
+>   > >---
+>   > >
+>   > >**我想知道如何使用postMessage API进行通信。**
+>   > >
+>   > >`postMessage` API允许不同来源的窗口之间进行安全的通信。这意味着你可以使用`postMessage` API在`<iframe>`和父页面之间，或者在不同标签页之间传递消息。
+>   > >
+>   > >下面是一个简单的例子，它演示了如何在父页面和`<iframe>`之间使用`postMessage` API进行通信:
+>   > >
+>   > >**父页面:**
+>   > >
+>   > >```html
+>   > ><iframe src="iframe.html" id="my-iframe"></iframe>
+>   > >
+>   > ><script>
+>   > >  let iframe = document.querySelector('#my-iframe');
+>   > >
+>   > >  // 向iframe发送消息
+>   > >  iframe.contentWindow.postMessage('Hello from parent!', '*');
+>   > >
+>   > >  // 监听来自iframe的消息
+>   > >  window.addEventListener('message', event => {
+>   > >    console.log('Received message from iframe:', event.data);
+>   > >  });
+>   > ></script>
+>   > >```
+>   > >
+>   > >**iframe页面 (`iframe.html`):**
+>   > >
+>   > >```html
+>   > ><script>
+>   > >  // 监听来自父页面的消息
+>   > >  window.addEventListener('message', event => {
+>   > >    console.log('Received message from parent:', event.data);
+>   > >
+>   > >    // 向父页面发送消息
+>   > >    event.source.postMessage('Hello from iframe!', event.origin);
+>   > >  });
+>   > ></script>
+>   > >```
+>   > >
+>   > >在上面的例子中，父页面使用`postMessage`方法向`<iframe>`发送了一条消息。然后，`<iframe>`页面监听`message`事件，并在收到消息时向父页面发送一条回复。
+>   > >
+>   > >请注意，在使用`postMessage` API时，你应该始终验证消息的来源和数据，以确保通信的安全性。
+>   > >
+>   > >---
+>   > >
+>   > >**我想知道如何验证postMessage API中消息的来源和数据。**
+>   > >
+>   > >在使用`postMessage` API时，验证消息的来源和数据是非常重要的，以确保通信的安全性。下面是一些验证消息来源和数据的方法:
+>   > >
+>   > >1. **验证消息来源**: 当你监听`message`事件时，你可以检查`event.origin`属性来确定消息的来源。这个属性包含了发送消息的窗口的来源（即协议、主机名和端口）。你应该始终验证`event.origin`是否与你期望的来源匹配，以防止接收到来自不受信任来源的消息。
+>   > >
+>   > >2. **验证消息数据**: 在处理收到的消息时，你应该始终验证消息数据的格式和内容是否符合预期。例如，你可以检查数据是否为预期的类型（如字符串或对象），并验证数据中包含的字段是否符合预期。这样可以防止处理不符合预期的数据，从而提高应用程序的安全性。
+>   > >
+>   > >下面是一个简单的例子，它演示了如何在接收到`postMessage`消息时验证消息来源和数据:
+>   > >
+>   > >```javascript
+>   > >window.addEventListener('message', event => {
+>   > >  // 验证消息来源
+>   > >  if (event.origin !== '<URL>') {
+>   > >    console.log('Received message from unexpected origin:', event.origin);
+>   > >    return;
+>   > >  }
+>   > >
+>   > >  // 验证消息数据
+>   > >  if (typeof event.data !== 'object' || !event.data.myField) {
+>   > >    console.log('Received unexpected message data:', event.data);
+>   > >    return;
+>   > >  }
+>   > >
+>   > >  // 处理消息
+>   > >  console.log('Received message:', event.data.myField);
+>   > >});
+>   > >```
+>   > >
+>   > >在上面的例子中，我们首先检查了`event.origin`属性，以确保消息来自预期的来源。然后，我们检查了消息数据的格式和内容，以确保它符合预期。只有当这些检查都通过时，我们才会处理收到的消息。
+
+
+
+### ==5.== 现在好多要页面都不用通过事件绑定元素了，那是怎么知道点击了那个元素的并做出不同的反应的
+
+> 现在很多网页使用事件代理（Event Delegation）来处理这种情况。事件代理利用了事件冒泡（Event Bubbling）的原理，将事件监听器添加到父元素上，而不是直接添加到目标子元素上。当子元素触发事件时，事件会冒泡到父元素，然后在父元素的事件监听器中处理事件。
+>
+> 要实现这种方法，你可以按照以下步骤操作：
+>
+> 1. 为父元素添加事件监听器。
+> 2. 在事件监听器的回调函数中，检查事件的目标元素（`event.target`）。
+> 3. 根据目标元素的属性或其他信息（如类名、ID等），判断是哪个子元素被点击，并执行相应的操作。
+>
+> 以下是一个简单的例子，展示了如何使用事件代理处理点击事件：
+>
+> ```html
+> <!DOCTYPE html>
+> <html lang="en">
+> <head>
+>     <meta charset="UTF-8">
+>     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+>     <title>Event Delegation Example</title>
+> </head>
+> <body>
+>     <div id="parent">
+>         <button class="child">Button 1</button>
+>         <button class="child">Button 2</button>
+>         <button class="child">Button 3</button>
+>     </div>
+> 
+>     <script>
+>         document.getElementById('parent').addEventListener('click', function(event) {
+>             const target = event.target;
+> 
+>             if (target.classList.contains('child')) {
+>                 alert('Clicked: ' + target.textContent);
+>             }
+>         });
+>     </script>
+> </body>
+> </html>
+> ```
+>
+> 在这个例子中，我们将事件监听器添加到了ID为`parent`的父元素上。当用户点击按钮时，我们检查事件的目标元素是否包含`child`类，并根据点击的按钮弹出相应的提示信息。
+>
+> 这种方法的优势在于可以减少事件监听器的数量，提高性能。此外，即使在事件监听器绑定之后动态添加子元素，事件代理依然有效，无需为新添加的子元素重新绑定事件。
+>
+> **解释上面的script是什么意思**
+>
+> >这段代码是注册了parent元素的点击事件监听器。当parent元素或其子元素被点击时,会触发这个事件监听器。
+> >
+> >在监听器的回调函数中,它会获取被点击的目标元素target。
+> >
+> >然后它会检查这个目标元素target是否具有class名为child的class。如果有,则会弹出一个警告框,显示被点击元素的textContent。
+> >
+> >所以简而言之,这段代码检测parent元素或其子元素的点击,如果点击的是拥有class="child"的子元素,则会弹出一个警告框显示那个元素的文本。
+
+### ==6.== JSONP夸域调用
+
+> 你好！这是一个JSONP（JSON with Padding）跨域请求的示例。在这个例子中，你正在使用百度的搜索建议API。
+>
+> 首先，让我们分析这个URL：
+>
+> ```
+> https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?jsoncallback=jQuery18002568176207224737_1681129677419&wd=%E4%BD%A0%E5%B9%B2%E5%98%9B&cb=keydata&_=1681129959331
+> ```
+>
+> 这个URL包含以下参数：
+>
+> - `jsoncallback`: 用于指定回调函数名称，这里的回调函数名称是`jQuery18002568176207224737_1681129677419`。
+> - `wd`: 搜索词，这里是经过URL编码的“你干嘛”。
+> - `cb`: 可选参数，可以自定义回调函数的参数名称。在这个例子中，回调函数的参数名称为`keydata`。
+> - `_`: 时间戳，用于缓存防止。这个参数的值通常是当前时间的毫秒数。
+>
+> 这是一个简单的JSONP跨域请求示例。为了使这个例子完整，我将展示一个HTML页面，里面包含一个JavaScript代码片段，用于发起这个JSONP请求并处理返回的数据：
+>
+> ```html
+> <!DOCTYPE html>
+> <html lang="zh-CN">
+> <head>
+>     <meta charset="UTF-8">
+>     <title>JSONP 跨域调用示例</title>
+>     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+> </head>
+> <body>
+>     <h1>搜索建议</h1>
+>     <input type="text" id="search" placeholder="输入搜索词">
+>     <ul id="suggestions"></ul>
+> 
+>     <script>
+>         //这个是报错修复方法
+> 		function keydata(data) {
+>             $('#suggestions').empty();
+>             $.each(data.s, function(index, suggestion) {
+>                 $('#suggestions').append('<li>' + suggestion + '</li>');
+>             });
+>         }
+>         
+>         //GPT4 给的方法
+>         $(document).ready(function() {
+>             $('#search').on('input', function() {
+>                 var searchWord = $(this).val();
+>                 var url = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?jsoncallback=?&wd=' + encodeURIComponent(searchWord) + '&cb=keydata';
+> 
+>                 $.getJSON(url, function(keydata) {
+>                     $('#suggestions').empty();
+>                     $.each(keydata.s, function(index, suggestion) {
+>                         $('#suggestions').append('<li>' + suggestion + '</li>');
+>                     });
+>                 });
+>             });
+>         });
+>     </script>
+> </body>
+> </html>
+> ```
+>
+> 在这个例子中，当用户在文本框中输入搜索词时，页面将发送JSONP请求并处理返回的搜索建议数据。这是一个完整的JSONP跨域请求示例。
+>
+> **上面报错**（修复了）
+>
+> 在这个示例中,跨域服务器返回的 JSON 数据中带有一个 keydata callback 函数名,但是在当前页面这个函数未定义,所以报错 Uncaught ReferenceError: keydata is not defined。
+>
+> 修复方法很简单,我们只需要在页面中提前定义这个 callback 函数即可:
+>
+> ```html
+> <script>
+> function keydata(data) {
+>     // Use data
+> } 
+> </script>
+> ```
+>
+> 这样,当跨域 JS 资源加载完毕,调用 keydata 函数时,就不会报错了。
+>
+> **==GPT3回答 JSONP夸域调用==**
+>
+> ```html
+> <!DOCTYPE html>
+> <html>
+> <head>
+>     <meta charset="UTF-8">
+>     <title>JSONP Demo</title>
+> </head>
+> <body>
+>   <p id="result"></p>
+> 
+>   <script>
+> 	  //Claude+修复bug方法
+> 	  function keydata(data) {
+>     handleResponse(data.s[0]);
+>   }
+> 	  //gpt3直接运行报错方法
+>     function handleResponse(response) {
+>       document.getElementById('result').textContent = response;
+>     }
+> 
+>     const script = document.createElement('script');
+>     script.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?jsoncallback=jQuery18002568176207224737_1681129677419&wd=%E4%BD%A0%E5%B9%B2%E5%98%9B&cb=keydata&_=1681129959331';
+>     document.body.appendChild(script);
+>   </script>
+> </body>
+> </html>
+> ```
+>
+
+
+
+
+
+### ==7.== 油猴来获取跨域请求html/text类型
+
+>  正在为您搜索：页面https://www.jianfast.com/通过油猴来获取跨域请求html/text类型可以吗、帮我写一个demo
+>
+> 根据知识来源[1]中描述，"简法主页"是一个可以自定义搜索引擎的网站，并且没有提到它允许跨域请求，因此无法确切判断它是否可以通过油猴来获取跨域请求html/text类型。如果您要获取百度主页（https://www.baidu.com/）的html/text类型响应，可以使用以下代码作为参考：
+>
+> ```javascript
+> // ==UserScript==
+> // @name     Get Baidu HTML by Cross-Domain Request
+> // @version  1
+> // @grant    GM_xmlhttpRequest
+> // ==/UserScript==
+> 
+> GM_xmlhttpRequest({
+>     method: 'GET',
+>     url: 'https://www.baidu.com/',
+>     onload: function(response) {
+>         console.log(response.responseText);
+>     }
+> });
+> ```
+>
+> 这个油猴脚本会在安装后向百度主页发送一个GET请求，然后通过控制台输出响应文本。需要注意的是，有些网站可能不允许跨域请求，这时候就不能通过油猴获取跨域请求的html/text。
+>
+> 
+>
+>  **GM_xmlhttpRequest是？**
+>
+> >`GM_xmlhttpRequest`是一个特定于油猴（Tampermonkey）的XMLHttpRequest对象，用于发起跨域http/https请求和获取响应[[1](https://www.tampermonkey.net/documentation.php#_gm_xmlhttprequest)]。该对象并非标准浏览器内置的XMLHttpRequest对象，而是油猴为了方便脚本编写者进行跨域请求而提供的一个扩展。与普通的XMLHttpRequest对象相比，`GM_xmlhttpRequest`的使用方法基本相同，但它可以处理跨域请求、包括对https协议的支持，并提供更方便的回调函数，如onload、onerror等。另外需要注意的是，一些高保护级别的Chrome浏览器（如Google Chrome 87及以上版本）已经禁止了GM_xmlhttpRequest的使用，如果需要使用跨域请求，请使用GM.fetch()函数[[2](https://www.jianshu.com/p/f880878c1398)]。
+>
+> 
+>
+> **这段代码放在油猴里面会，进入页面是运行一次还是一直运行的**
+>
+> >```	javascript
+> >    GM_xmlhttpRequest({
+> >        method: 'GET',
+> >        url: 'https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637',
+> >        onload: function(response) {
+> >            //console.log(response.responseText);
+> >            // 处理返回结果
+> >            let data = response.responseText;
+> >            let parser = new DOMParser();
+> >            let doc = parser.parseFromString(data, "text/html");
+> >            let element = doc.querySelector("p.iQKjW6dr");
+> >            document.getElementsByClassName("site-title")[0].innerText=element.textContent;
+> >        }
+> >```
+> >
+> >>该代码片段只会在页面加载时运行一次
+> >
+> > 
+> >
+> >**报错（不影响使用）Unchecked runtime.lastError: The message port closed before a response was received.**
+> >
+> >>这个错误是由于Chrome浏览器对于扩展的代码执行时间做了限制，如果超过了一定时间（通常为10秒），则会被认为是未响应的代码，从而被Chrome自动终止。当您尝试在油猴脚本中请求一个较慢的URL时，可能会遇到这个错误。解决这个问题的方法有：
+> >>
+> >>1. 缩短代码执行时间：优化您的代码，尽量减少需要花费大量时间的操作和网络请求，从而缩短代码执行时间。
+> >>
+> >>2. 延长超时时间：在油猴脚本中使用GM.xmlHttpRequest()发起请求时，可以设置timeout属性来延长请求的超时时间。例如：
+> >>
+> >>   ```javascript
+> >>   GM.xmlHttpRequest({
+> >>      method: "GET",
+> >>      url: "https://www.example.com",
+> >>      headers: {
+> >>         "User-Agent": "Mozilla/5.0", //模拟浏览器请求
+> >>         "Accept-Language": "zh-CN,zh;q=0.9" //设置接受语言
+> >>      },
+> >>      timeout: 20000, //延长请求超时时间（单位：毫秒）
+> >>      onload: function(response) {
+> >>          console.log(response.responseText);
+> >>      }
+> >>   });
+> >>   ```
+> >>
+> >>   在上述代码中，timeout属性设置为20000，即20秒，表示请求的超时时间为20秒。如果在20秒内请求没有得到响应，将会触发onerror回调函数。
+> >>
+> >>3. 禁用油猴的自动更新：在某些情况下，油猴的自动更新会导致脚本执行时间过长，从而触发上述错误。您可以禁用油猴的自动更新功能，在油猴的设置中关闭“自动更新脚本”选项。
+> >>
+
+
+
+# ==Linux相关==
+
+## ==1.==shell的常用命令
+
+> 在 Linux 和 Unix-like 系统中，`shell` 是一个命令行界面，用于与操作系统进行交互。它允许用户执行各种命令来完成任务，如创建和管理文件、文件夹，运行程序，管理进程等。下面是一些常用的 shell 命令：
+>
+> 1. `ls`：列出目录中的文件和文件夹。
+>
+>    例如：`ls` 或 `ls /etc`
+>
+> 2. `cd`：切换当前工作目录。
+>
+>    例如：`cd /var/log`
+>
+> 3. `pwd`：显示当前工作目录的绝对路径。
+>
+> 4. `mkdir`：创建一个新的目录。
+>
+>    例如：`mkdir my_new_directory`
+>
+> 5. `rmdir`：删除一个空目录。
+>
+>    例如：`rmdir my_empty_directory`
+>
+> 6. `rm`：删除文件或目录。
+>
+>    例如：`rm myfile.txt` 或 `rm -r my_directory`
+>
+> 7. `cp`：复制文件或目录。
+>
+>    例如：`cp source.txt destination.txt` 或 `cp -r source_directory destination_directory`
+>
+> 8. `mv`：移动或重命名文件或目录。
+>
+>    例如：`mv old_name.txt new_name.txt` 或 `mv file.txt target_directory`
+>
+> 9. `cat`：输出文件内容到标准输出。
+>
+>    例如：`cat myfile.txt`
+>
+> 10. `grep`：在文件中搜索指定的文本模式。
+>
+>     例如：`grep "search_pattern" myfile.txt`
+>
+> 11. `find`：在目录中搜索文件。
+>
+>     例如：`find / -name myfile.txt`
+>
+> 12. `tar`：创建或提取 tar 归档文件。
+>
+>     例如：`tar -czvf archive.tar.gz my_directory` 或 `tar -xzvf archive.tar.gz`
+>
+> 13. `wget`：从网络上下载文件。
+>
+>     例如：`wget https://example.com/myfile.txt`
+>
+> 14. `curl`：与服务器进行数据传输。
+>
+>     例如：`curl -O https://example.com/myfile.txt`
+>
+> 15. `chmod`：更改文件或目录的权限。
+>
+>     例如：`chmod 755 myfile.txt`
+>
+> 16. `chown`：更改文件或目录的所有者和/或所属组。
+>
+>     例如：`chown user:group myfile.txt`
+>
+> 
+>
+> 这些只是 shell 命令的一部分，你可以在各种 Linux 和 Unix-like 系统中使用这些命令完成各种任务。每个命令都有许多选项和参数，可以根据需要调整命令的行为。要查看命令的详细信息和可用选项，请使用 `man` 命令查看命令的手册页，例如：`man ls`。
+>
+> 继续为您介绍更多的 shell 命令：
+>
+> 
+>
+> 17. `tail`：查看文件的末尾部分。
+>
+>     例如：`tail myfile.txt` 或 `tail -n 20 myfile.txt`（查看最后20行）
+>
+> 18. `head`：查看文件的开头部分。
+>
+>     例如：`head myfile.txt` 或 `head -n 20 myfile.txt`（查看前20行）
+>
+> 19. `sort`：对文件内容进行排序。
+>
+>     例如：`sort myfile.txt`
+>
+> 20. `uniq`：从排序后的文件中删除重复行。
+>
+>     例如：`sort myfile.txt | uniq`
+>
+> 21. `diff`：比较两个文件的差异。
+>
+>     例如：`diff file1.txt file2.txt`
+>
+> 22. `nano`、`vim`、`vi`、`emacs`：命令行文本编辑器。
+>
+>     例如：`nano myfile.txt` 或 `vim myfile.txt` 或 `vi myfile.txt` 或 `emacs myfile.txt`（根据你的喜好选择编辑器）
+>
+> 23. `du`：查看文件或目录占用的磁盘空间。
+>
+>     例如：`du -sh my_directory`
+>
+> 24. `df`：查看磁盘空间使用情况。
+>
+>     例如：`df -h`
+>
+> 25. `ps`：查看当前运行的进程。
+>
+>     例如：`ps aux`
+>
+> 26. `kill`：关闭进程。
+>
+>     例如：`kill 12345`（其中12345是进程ID）
+>
+> 27. `top`、`htop`：实时查看系统进程、内存和CPU使用情况。
+>
+>     例如：`top` 或 `htop`（需要先安装htop）
+>
+> 28. `uptime`：显示系统运行时间、负载和登录用户数。
+>
+> 29. `ping`：检查网络连接和延迟。
+>
+>     例如：`ping example.com`
+>
+> 30. `traceroute`：查看数据包在网络中的传输路径。
+>
+>     例如：`traceroute example.com`
+>
+> 31. `ssh`：通过安全 Shell（SSH）远程登录到其他计算机。
+>
+>     例如：`ssh user@example.com`
+>
+> 32. `scp`：通过安全 Shell（SSH）在计算机之间复制文件。
+>
+>     例如：`scp myfile.txt user@example.com:/target/directory`
+>
+> 33. `crontab`：管理定时任务。
+>
+>     例如：`crontab -e`（编辑定时任务）或 `crontab -l`（列出当前用户的所有定时任务）
+>
+> 
+>
+> 这只是 shell 命令的一部分，实际上还有许多其他命令和功能。要查看命令的详细信息和可用选项，请使用 `man` 命令查看命令的手册页，例如：`man tail`。熟练掌握这些命令可以帮助您更高效地完成许多系统管理和文件操作任务。
+>
+> 
+>
+> 以下是更多有用的 shell 命令：
+>
+> 34. `touch`：创建一个空文件或更新文件的访问和修改时间。
+>
+>     例如：`touch newfile.txt`
+>
+> 35. `ln`：创建一个指向文件或目录的硬链接或符号链接。
+>
+>     例如：`ln -s target.txt symlink.txt`（创建一个符号链接）
+>
+> 36. **`alias`：为命令创建别名。**
+>
+>     **例如：`alias ll='ls -la'`（创建一个名为 ll 的别名，用于显示详细的文件列表）**
+>
+> 37. `history`：显示命令历史记录。
+>
+> 38. `zip`、`unzip`：创建和解压 ZIP 归档文件。
+>
+>     例如：`zip archive.zip file1.txt file2.txt` 或 `unzip archive.zip`
+>
+> 39. `awk`：用于文本处理和数据提取的编程语言。
+>
+>     例如：`awk '{print $1}' myfile.txt`（输出文件中的第一列）
+>
+> 40. `sed`：流式编辑器，用于对输入文本进行基本文本转换。
+>
+>     例如：`sed 's/old/new/g' input.txt > output.txt`（将 input.txt 中的所有'old'替换为'new'，并将结果写入 output.txt）
+>
+> 41. `cut`：从文件的每一行中删除一部分文本。
+>
+>     例如：`cut -f 1,3 -d , myfile.csv`（显示文件中的第1和第3列）
+>
+> 42. `paste`：将多个文件的对应行连接在一起。
+>
+>     例如：`paste file1.txt file2.txt`
+>
+> 43. `wc`：统计文件中的行数、字数和字节数。
+>
+>     例如：`wc myfile.txt`
+>
+> 44. `bg`：将一个暂停的前台进程放到后台继续运行。
+>
+>     例如：`bg` 或 `bg %1`（其中 %1 是暂停的作业ID）
+>
+> 45. `fg`：将一个后台进程放到前台继续运行。
+>
+>     例如：`fg` 或 `fg %1`（其中 %1 是后台作业ID）
+>
+> 46. `jobs`：显示当前的作业（后台或暂停的进程）列表。
+>
+> 47. `nohup`：在后台运行命令，并在终端关闭时使其保持运行。
+>
+>     例如：`nohup my_command &`
+>
+> 48. `screen`、`tmux`：终端复用器，可以在一个终端窗口中运行多个会话。
+>
+>     例如：`screen` 或 `tmux`（需要先安装相应的软件包）
+>
+> 49. `mount`：挂载文件系统。
+>
+>     例如：`mount /dev/sdb1 /mnt/my_drive`
+>
+> 50. `umount`：卸载文件系统。
+>
+>     例如：`umount /mnt/my_drive`
+>
+> 这仅仅是 shell 命令的一部分，实际上还有许多其他命令和功能。要查看命令的详细信息和可用选项，请使用 `man` 命令查看命令的手册页，例如：`man touch`。熟练掌握这些命令可以帮助您更高效地完成许多系统管理和文件操作任务。
+
+
+
+## ==2.==win10子系统（WLS）
+
+**怎么进去**
+
+> 1. 打开“开始”菜单，然后在搜索框中输入“cmd”或“命令提示符”，按回车键打开命令提示符。
+>
+> 2. 在命令提示符中输入`wsl`，然后按回车键。这将启动默认的WSL发行版（例如，Ubuntu）。
+>
+> 3. 您还可以直接从“开始”菜单运行已安装的WSL发行版。只需在“开始”菜单中找到对应的WSL发行版（例如，Ubuntu），点击它以启动终端。
+>
+> 4. > 如果您想要运行特定的WSL发行版，您可以在命令提示符中输入以下命令，其中`<发行版名称>`是您希望运行的WSL发行版的名称（例如，`Ubuntu-20.04`）：
+>    >
+>    > ```shell
+>    > wsl -d <发行版名称>
+>    > ```
+>
+>    如果您不确定已安装了哪些WSL发行版，可以在命令提示符中输入以下命令查看可用的WSL发行版列表：
+>
+>    ```shell
+>    wsl --list --verbose
+>    ```
+
+---
+
+
+
+**忘记root密码**
+
+> 1. 打开Windows命令提示符（cmd）或PowerShell。
+>
+> 2. 先列出您的WSL发行版，以找到您要重置密码的发行版的名称。在命令提示符或PowerShell中输入以下命令：
+>
+>    ```shell
+>    wsl --list
+>    ```
+>
+>    这将显示您已安装的WSL发行版列表。
+>
+>    
+>
+> 3. 假设您要重置的发行版名称为`Ubuntu-20.04`（请根据实际情况替换为您的发行版名称），使用以下命令以root用户身份启动WSL发行版：
+>
+>    ```shell
+>    wsl -u root -d Ubuntu-20.04
+>    ```
+>
+>    这将以root权限打开WSL终端。
+>
+>    > 如果默认发行版是`Ubuntu`
+>    >
+>    > ```shell
+>    > wsl -u root
+>    > ```
+>
+> 4. 现在，您可以使用`passwd`命令重置您的用户密码。将`<your-username>`替换为您的用户名（例如，yc556）：
+>
+>    ```shell
+>    passwd <your-username>
+>    ```
+>
+>    按照提示输入新密码，然后再次输入以确认。
+>
+>    
+>
+> 5. 完成密码重置后，输入`exit`退出WSL终端。
+>
+> 现在，您应该已经成功重置了WSL用户密码。尝试使用新密码登录或运行`sudo`命令。
+
+
+
+
+
+# ==其他问题==
+
+## 1.临时邮箱
+
+> 美国临时邮件网站提供一次性或临时电子邮件地址，以帮助用户避免垃圾邮件和保护隐私。以下是一些受欢迎的临时邮件网站：
+>
+> 1. **Temp Mail** (https://temp-mail.org/zh/)
+>    提供临时、安全、匿名、免费、一次性的电子邮件地址。
+>
+> 2. **10 Minute Mail** (https://10minutemail.com)
+>    提供一个随机生成的临时电子邮件地址，有效期为10分钟，可延长时间。
+>
+> 3. **Mailinator** (https://www.mailinator.com)
+>    提供免费的公共临时电子邮件地址，无需注册，但收件箱对所有人可见。
+>
+> 4. **Guerrilla Mail** (https://www.guerrillamail.com)
+>    提供自定义用户名的临时邮件地址，有效期为1小时，可接收和发送邮件。
+>
+> 5. **ThrowAwayMail** (https://www.throwawaymail.com)
+>    提供一个新的临时邮件地址，只要在浏览器中保留页面，邮件地址将保持有效。
+>
+> 请注意，临时邮件服务可能不适用于所有情况，有时会被一些网站和服务识别并拒绝接受。尽管如此，它们在一些场景下仍然是非常有用的工具，特别是在需要保护隐私或避免垃圾邮件时。
