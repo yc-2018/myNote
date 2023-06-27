@@ -32,6 +32,59 @@
 
 
 
+### ==2.==Java中不常见的关键字
+
+> Java有许多关键字，其中一些可能对初学者来说不太常见。以下是一些例子：
+>
+> 1. `transient`: 这个关键字用于声明一个对象的某些字段不应该被序列化。例如：
+>
+>    ```java
+>    public class MyClass implements Serializable {
+>        private transient int id; // 这个字段不会被序列化
+>        private String name;
+>    }
+>    ```
+>
+> 2. `volatile`: 这个关键字用于表示一个变量可能会被多个线程同时修改，因此JVM会在每次访问该变量时都从主内存中读取其值，而不是从线程的本地缓存。例如：
+>
+>    ```java
+>    public class MyThread extends Thread {
+>        private volatile boolean running = true;
+>
+>        public void run() {
+>            while (running) {
+>                // do something
+>            }
+>        }
+>
+>        public void stopRunning() {
+>            running = false;
+>        }
+>    }
+>    ```
+>
+> 3. `strictfp`: 这个关键字用于指定一个类或方法必须严格遵守IEEE 754标准中定义的浮点运算规则。例如：
+>
+>    ```java
+>    public strictfp class MyStrictClass {
+>        // 所有的浮点运算都将严格遵守IEEE 754标准
+>    }
+>    ```
+>
+> 4. `synchronized`: 这个关键字用于指定一个方法或代码块在任何时候只能被一个线程访问。例如：
+>
+>    ```java
+>    public class MyClass {
+>        public synchronized void myMethod() {
+>            // 这个方法在任何时候只能被一个线程访问
+>        }
+>    }
+>    ```
+>
+> 以上就是一些可能对Java初学者来说不太常见的关键字。
+
+
+
 
 
 # ==Spring boot 问题==
@@ -1491,6 +1544,83 @@
 > 5. 完成密码重置后，输入`exit`退出WSL终端。
 >
 > 现在，您应该已经成功重置了WSL用户密码。尝试使用新密码登录或运行`sudo`命令。
+
+
+
+## ==3.==关于开启ssh
+
+> 非gpt4解决：https://www.tinymind.net.cn/articles/da5b6aecd85361
+>
+> 在腾讯云上拿到的Ubuntu主机分配给的用户是ubuntu用户，并不是root用户，而阿里云上拿到的Ubuntu主机分配给的用户就是root用户。如果没有root用户权限做事情会变得麻烦，每次做什么都要sudo一下，下面介绍怎么设置root用户的ssh登录：
+>
+> ### 1、设置root密码，可以修改成和ubuntu用户一样，方便记忆。先使用ubuntu用户ssh登录腾讯云，然后执行命令
+>
+> ```
+> sudo passwd root
+> ```
+>
+> 接着输入root密码，屏幕不会像Windows那样出现星号，输完密码敲回车键就可以了，要输入两次密码。
+>
+> ### 2、修改ssh登录的配置，即/etc/ssh/sshd_config文件，修改为允许root登录，可以执行命令
+>
+> ```
+> sudo vim /etc/ssh/sshd_config
+> ```
+>
+> 这里的sudo前缀不可少，否则接下来的修改无法保存。进入vim编辑，用方向键向下滚动找到PermitRootLogin这项，按下insert键进入插入模式，将PermitRootLogin后面的prohibit-password改为yes，再按下Esc键，然后依次按下:键(英文冒号键)、w键和q键，最后按下回车键，保存修改成功。
+>
+> ### 3、重启ssh服务使刚才的ssh配置的修改生效，执行命令
+> ```
+> sudo service ssh restart
+> ```
+>
+> >问gpt4
+> >
+> >>[C:\~]$ 
+> >>
+> >>Connecting to 172.23.72.37:22...
+> >>Could not connect to '172.23.72.37' (port 22): Connection failed.
+> >>
+> >>Type `help' to learn how to use Xshell prompt.
+> >>==为什么会这样==
+> >
+> >>这个错误可能是由于几个原因造成的：
+> >>
+> >>1. **SSH服务未启动**：在WSL中，你需要确保SSH服务已经启动。你可以通过运行`service ssh start`来启动SSH服务。
+> >>
+> >>2. **防火墙阻止了连接**：你的防火墙可能阻止了对端口22的连接。你需要检查你的防火墙设置，确保它允许对端口22的连接。
+> >>
+> >>3. **WSL和Xshell不在同一网络**：你需要确保WSL和Xshell在同一网络中。如果它们在不同的网络中，那么你可能无法建立连接。
+> >>
+> >>4. **端口22被其他服务占用**：如果端口22被其他服务占用，那么你可能无法通过这个端口连接到WSL。你可以通过运行`netstat -tuln`来查看哪些端口正在被使用。
+> >>
+> >>如果以上都无法解决问题，你可能需要查看更详细的错误信息，或者尝试使用其他工具（如PuTTY）进行连接，看看是否能成功。
+> >
+> >>==能连接了，但是我的密码是123456，但是在xshell里面显示SSH服务器拒绝了密码。请再试一次==
+> >>
+> >>如果你确定你的密码是正确的，但是SSH服务器仍然拒绝你的密码，那么可能是因为SSH配置文件中禁止了密码认证。
+> >>
+> >>你可以按照以下步骤检查并修改你的SSH配置：
+> >>
+> >>1. 在WSL中，打开SSH配置文件。你可以使用`nano`或`vi`等文本编辑器打开它。命令是`sudo nano /etc/ssh/sshd_config`或`sudo vi /etc/ssh/sshd_config`。
+> >>
+> >>2. 在配置文件中，找到`PasswordAuthentication`这一行。如果这一行的值是`no`，那么就意味着禁止了密码认证。你需要将它改为`yes`。
+> >>
+> >>3. 保存并关闭配置文件。
+> >>
+> >>4. 重新启动SSH服务。命令是`sudo service ssh restart`。
+> >>
+> >>现在，你应该可以使用密码连接到SSH服务器了。如果你仍然无法连接，那么可能需要检查你的用户名是否正确，或者是否有其他的SSH配置问题。
+> >
+> >>==执行命令sudo nano /etc/ssh/sshd_config 修改后无法esc ：qw==
+> >
+> >>你使用的是`nano`编辑器，而不是`vi`或`vim`编辑器，所以退出和保存文件的命令是不同的。
+> >>
+> >>在`nano`编辑器中，你可以按下`Ctrl+X`来退出编辑器。然后，如果你对文件进行了修改，它会询问你是否要保存修改。你可以按下`Y`来保存修改，然后按下`Enter`来确认文件名。
+> >>
+> >>所以，如果你在`nano`编辑器中修改了文件，你应该按下`Ctrl+X`，然后按下`Y`，最后按下`Enter`来保存修改并退出编辑器。
+> >>
+> >>
 
 
 
