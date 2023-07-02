@@ -1549,7 +1549,7 @@
 
 ## ==3.==关于开启ssh
 
-> 非gpt4解决：https://www.tinymind.net.cn/articles/da5b6aecd85361
+> 非gpt4解决：https://www.tinymind.net.cn/articles/da5b6aecd85361  但是gpt4也解决了要先打开ssh的问题
 >
 > 在腾讯云上拿到的Ubuntu主机分配给的用户是ubuntu用户，并不是root用户，而阿里云上拿到的Ubuntu主机分配给的用户就是root用户。如果没有root用户权限做事情会变得麻烦，每次做什么都要sudo一下，下面介绍怎么设置root用户的ssh登录：
 >
@@ -1574,6 +1574,8 @@
 > sudo service ssh restart
 > ```
 >
+> >---
+> >
 > >问gpt4
 > >
 > >>[C:\~]$ 
@@ -1624,11 +1626,197 @@
 
 
 
+## ==4.关于wsl环境改为中文
+
+> 要将 WSL（Windows Subsystem for Linux）的默认语言更改为中文，您需要更新系统的语言环境。以下是一种方法，适用于基于 Debian 和 Ubuntu 的 WSL 发行版（如 Ubuntu、Kali Linux、Debian 等）：
+>
+> 1. **更新软件包列表**：
+>
+>    首先，更新软件包列表以确保您可以安装最新版本的软件包：
+>
+>    ```bash
+>    sudo apt update
+>    ```
+>
+> 2. **安装中文语言包**：
+>
+>    使用以下命令安装中文语言包：
+>
+>    ```bash
+>    sudo apt install -y locales
+>    sudo apt install -y language-pack-zh-hans language-pack-zh-hans-base
+>    ```
+>
+> 3. **配置系统区域设置**：
+>
+>    使用以下命令配置系统区域设置：
+>
+>    ```bash
+>    sudo dpkg-reconfigure locales
+>    ```
+>
+>    在出现的界面中，使用上下箭头选择 `zh_CN.UTF-8`，然后按空格键选中它。接下来，按回车键继续。在下一个界面中，选择 `zh_CN.UTF-8` 作为默认区域设置。
+>
+> 4. **更新环境变量**：
+>
+>    打开文件 `~/.bashrc` 或 `~/.profile`（具体取决于您的系统配置），在文件末尾添加以下内容：
+>
+>    ```bash
+>    export LANG=zh_CN.UTF-8
+>    export LANGUAGE=zh_CN:zh
+>    export LC_ALL=zh_CN.UTF-8
+>    ```
+>
+>    保存并关闭文件。
+>
+>    >**再次检查环境变量**：
+>    >
+>    >运行以下命令，检查当前环境变量是否已设置为中文：
+>    >
+>    >```bash
+>    >echo $LANG
+>    >echo $LANGUAGE
+>    >echo $LC_ALL
+>    >```
+>    >
+>    >如果这些变量现在显示为中文设置，请注意，并非所有命令和程序都会根据系统语言自动更改为中文。某些程序可能需要单独配置才能使用中文界面。
+>    >
+>    >>如果运行结构为↓则是成功
+>    >>
+>    >>`yc556@yc2023:/mnt/c/Users/Administrator$ echo $LANG`
+>    >>**`zh_CN.UTF-8`**
+>    >>`yc556@yc2023:/mnt/c/Users/Administrator$ echo $LANGUAGE`
+>    >>**`zh_CN:zh`**
+>    >>`yc556@yc2023:/mnt/c/Users/Administrator$ echo $LC_ALL`
+>    >>**`zh_CN.UTF-8`**
+>
+> 5. **应用更改**：
+>
+>    要使更改生效，重新启动 WSL 或运行以下命令：
+>
+>    ```bash
+>    source ~/.bashrc
+>    ```
+>
+>    或者：
+>
+>    ```bash
+>    source ~/.profile
+>    ```
+>
+> 现在，您的 WSL 系统应该使用中文作为默认语言。但请注意，并非所有命令和程序都会根据系统语言自动更改为中文。某些程序可能需要单独配置才能使用中文界面。
+>
+> ​	    **重启 WSL**：
+>
+> ​	**如果**更改仍未生效，请尝试关闭 WSL，然后重新启动它。要关闭 WSL，请运行以下命令：
+>
+> ```bash
+> exit
+> ```
+>
+> 然后，在 Windows 中重新启动 WSL。
+
+==6.==安装ssh
+
+**root@yc2023:~# service ssh start**
+**`Failed to start ssh.service: Unit ssh.service not found.`**
+
+> 您遇到的问题是尝试启动 SSH 服务时，系统找不到 `ssh.service`。这通常意味着 SSH 服务未安装或安装不完整。以下是在不同操作系统上安装并启动 SSH 服务的方法：
+>
+> **对于 Ubuntu/Debian 系统：**
+>
+> 1. 首先，确保安装了 `openssh-server` 软件包。使用以下命令安装：
+>
+>    ```bash
+>    sudo apt update
+>    sudo apt install openssh-server
+>    ```
+>
+> 2. 安装完成后，使用以下命令启动 SSH 服务：
+>
+>    ```bash
+>    sudo systemctl start ssh
+>    ```
+>
+> 3. 若要在系统启动时自动启动 SSH 服务，请运行：
+>
+>    ```bash
+>    sudo systemctl enable ssh
+>    ```
+>
+> **对于 CentOS/RHEL 系统：**
+>
+> 1. 首先，确保安装了 `openssh-server` 软件包。使用以下命令安装：
+>
+>    ```bash
+>    sudo yum install openssh-server
+>    ```
+>
+> 2. 安装完成后，使用以下命令启动 SSH 服务：
+>
+>    ```bash
+>    sudo systemctl start sshd
+>    ```
+>
+> 3. 若要在系统启动时自动启动 SSH 服务，请运行：
+>
+>    ```bash
+>    sudo systemctl enable sshd
+>    ```
+>
+> 根据您提供的错误信息，看起来您可能在使用 Ubuntu/Debian 系统。请按照上述说明进行操作，如果问题仍然存在，请提供更多详细信息，以便我们为您提供更好的支持。
+
+
+
+# ==Git问题==
+
+==1.== git**怎么对已管理的文件夹取消管理**
+
+> 要让 Git 取消对已管理文件夹的跟踪，您需要执行以下步骤：
+>
+> 1. **将文件夹添加到 `.gitignore` 文件**：
+>
+>    在项目根目录下，打开或创建一个名为 `.gitignore` 的文件。然后，将需要取消管理的文件夹添加到此文件中。假设您想取消对 `untracked_folder/` 文件夹的管理，可以将以下内容添加到 `.gitignore` 文件：
+>
+>    ```gitignore
+>    untracked_folder/
+>    ```
+>
+>    请注意，末尾的斜杠表示这是一个文件夹。添加文件夹名称后，保存并关闭 `.gitignore` 文件。
+>
+> 2. **从 Git 仓库中删除文件夹**：
+>
+>    虽然已将文件夹添加到了 `.gitignore` 文件中，但它仍在 Git 仓库中。要从仓库中删除文件夹（但保留在工作目录中），请执行以下命令：
+>
+>    ```bash
+>    git rm -r --cached untracked_folder/
+>    ```
+>
+>    这将会从 Git 的索引中移除 `untracked_folder/` 及其下的所有文件和子文件夹，但它们仍会保留在您的工作目录中。
+>
+> 3. **提交更改**：
+>
+>    最后，您需要提交这些更改：
+>
+>    ```bash
+>    git commit -m "从版本控制中删除未跟踪的文件夹"
+>    ```
+>
+> 现在，`untracked_folder/` 及其下的所有文件和子文件夹将不再受 Git 管理。
+>
+> >如果要取消对单个文件的跟踪，您不需要使用 `-r` 选项，因为它是用于递归地处理文件夹的。您可以使用以下命令来取消对文件的跟踪：
+> >
+> >```
+> >git rm --cached 文件名
+> >```
+
+
+
 
 
 # ==其他问题==
 
-## 1.临时邮箱
+## ==1.==临时邮箱
 
 > 美国临时邮件网站提供一次性或临时电子邮件地址，以帮助用户避免垃圾邮件和保护隐私。以下是一些受欢迎的临时邮件网站：
 >
