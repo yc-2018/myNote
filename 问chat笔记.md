@@ -544,7 +544,7 @@
 
 > 是的，有几种方法可以让应用程序在开机时自动运行：
 >
-> 1. **将应用程序的快捷方式添加到Windows启动文件夹中。要打开该文件夹，请按下Windows + R键，在运行对话框中输入shell:startup，然后按Enter键。将应用程序的快捷方式拖放到此文件夹中即可。**
+> 1. ==**将应用程序的快捷方式添加到Windows启动文件夹中。要打开该文件夹，请按下Windows + R键，在运行对话框中输入shell:startup，然后按Enter键。将应用程序的快捷方式拖放到此文件夹中即可。**==
 > 2. 使用Windows任务计划程序。打开任务计划程序（按下Windows + R键，输入taskschd.msc并按Enter键），然后创建一个新任务。在“触发器”选项卡中，选择“开始任务时”并选择“开机”作为触发器。在“操作”选项卡中，指定要启动的应用程序。完成后，单击“确定”以保存任务。
 > 3. 编辑注册表。请注意，更改注册表可能会对系统产生负面影响，因此请确保备份您的注册表并小心进行操作。要编辑注册表，请按下Windows + R键，输入regedit并按Enter键。在注册表编辑器中，导航到HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run。右键单击空白处，选择“新建 > 字符串值”，然后为其命名并将路径指定为应用程序。
 >
@@ -1503,7 +1503,7 @@
 
 
 
-**忘记root密码**
+### **忘记root密码**
 
 > 1. 打开Windows命令提示符（cmd）或PowerShell。
 >
@@ -1547,6 +1547,48 @@
 
 
 
+### WSL文件夹移到D盘
+
+（==还没试过==）
+
+> 要将WSL（Windows Subsystem for Linux）的默认安装位置更改为D盘，您需要创建一个符号链接（symlink）来将WSL默认路径重定向到D盘。请遵循以下步骤：
+>
+> 1. 首先确保WSL未运行。在PowerShell（以管理员身份运行）中输入以下命令停止WSL服务：
+>
+>    ```
+>    wsl --shutdown
+>    ```
+>
+> 2. 接下来，将现有的WSL文件夹移到D盘。在PowerShell中输入以下命令（请根据实际情况替换`<D:\your\desired\path>`）：
+>
+>    ```
+>    Move-Item "$env:USERPROFILE\AppData\Local\Packages" "<D:\your\desired\path>"
+>    ```
+>
+>    例如，如果您希望将文件夹移动到D盘上的`WSL`文件夹中，可以使用以下命令：
+>
+>    ```
+>    Move-Item "$env:USERPROFILE\AppData\Local\Packages" "D:\WSL"
+>    ```
+>
+> 3. 创建一个指向新位置的符号链接。在PowerShell中输入以下命令（请根据实际情况替换`<D:\your\desired\path>`）：
+>
+>    ```
+>    New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Packages" -Target "<D:\your\desired\path>"
+>    ```
+>
+>    例如，如果您将文件夹移动到了D盘上的`WSL`文件夹中，可以使用以下命令：
+>
+>    ```
+>    New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Packages" -Target "D:\WSL"
+>    ```
+>
+> 完成以上步骤后，WSL将使用D盘上的新路径作为默认存储位置。
+>
+> 请注意，这个方法仅适用于将整个`Packages`文件夹（包括所有WSL发行版）移动到D盘。如果您只想将特定的WSL发行版移动到D盘，可以考虑使用`wsl --export`和`wsl --import`命令。
+
+
+
 ## ==3.==关于开启ssh
 
 > 非gpt4解决：https://www.tinymind.net.cn/articles/da5b6aecd85361  但是gpt4也解决了要先打开ssh的问题
@@ -1576,57 +1618,141 @@
 >
 > >---
 > >
-> >问gpt4
+> >#### ==问gpt4==
 > >
 > >>[C:\~]$ 
-> >>
+> >
 > >>Connecting to 172.23.72.37:22...
 > >>Could not connect to '172.23.72.37' (port 22): Connection failed.
-> >>
+> >
 > >>Type `help' to learn how to use Xshell prompt.
 > >>==为什么会这样==
 > >
 > >>这个错误可能是由于几个原因造成的：
-> >>
+> >
 > >>1. **SSH服务未启动**：在WSL中，你需要确保SSH服务已经启动。你可以通过运行`service ssh start`来启动SSH服务。
-> >>
+> >
 > >>2. **防火墙阻止了连接**：你的防火墙可能阻止了对端口22的连接。你需要检查你的防火墙设置，确保它允许对端口22的连接。
-> >>
+> >
 > >>3. **WSL和Xshell不在同一网络**：你需要确保WSL和Xshell在同一网络中。如果它们在不同的网络中，那么你可能无法建立连接。
-> >>
+> >
 > >>4. **端口22被其他服务占用**：如果端口22被其他服务占用，那么你可能无法通过这个端口连接到WSL。你可以通过运行`netstat -tuln`来查看哪些端口正在被使用。
-> >>
+> >
 > >>如果以上都无法解决问题，你可能需要查看更详细的错误信息，或者尝试使用其他工具（如PuTTY）进行连接，看看是否能成功。
 > >
 > >>==能连接了，但是我的密码是123456，但是在xshell里面显示SSH服务器拒绝了密码。请再试一次==
-> >>
+> >
 > >>如果你确定你的密码是正确的，但是SSH服务器仍然拒绝你的密码，那么可能是因为SSH配置文件中禁止了密码认证。
-> >>
+> >
 > >>你可以按照以下步骤检查并修改你的SSH配置：
-> >>
+> >
 > >>1. 在WSL中，打开SSH配置文件。你可以使用`nano`或`vi`等文本编辑器打开它。命令是`sudo nano /etc/ssh/sshd_config`或`sudo vi /etc/ssh/sshd_config`。
-> >>
-> >>2. 在配置文件中，找到`PasswordAuthentication`这一行。如果这一行的值是`no`，那么就意味着禁止了密码认证。你需要将它改为`yes`。
-> >>
+> >
+> >>2. 在配置文件中，找到==`PasswordAuthentication`==这一行。如果这一行的值是`no`，那么就意味着禁止了密码认证。你需要将它改为`yes`。
+> >
 > >>3. 保存并关闭配置文件。
+> >
+> >>4. 重新启动SSH服务。命令是
 > >>
-> >>4. 重新启动SSH服务。命令是`sudo service ssh restart`。
+> >>   ```
+> >>   sudo service ssh restart
+> >>   ```
 > >>
+> >>   
+> >
 > >>现在，你应该可以使用密码连接到SSH服务器了。如果你仍然无法连接，那么可能需要检查你的用户名是否正确，或者是否有其他的SSH配置问题。
 > >
 > >>==执行命令sudo nano /etc/ssh/sshd_config 修改后无法esc ：qw==
 > >
 > >>你使用的是`nano`编辑器，而不是`vi`或`vim`编辑器，所以退出和保存文件的命令是不同的。
-> >>
+> >
 > >>在`nano`编辑器中，你可以按下`Ctrl+X`来退出编辑器。然后，如果你对文件进行了修改，它会询问你是否要保存修改。你可以按下`Y`来保存修改，然后按下`Enter`来确认文件名。
-> >>
+> >
 > >>所以，如果你在`nano`编辑器中修改了文件，你应该按下`Ctrl+X`，然后按下`Y`，最后按下`Enter`来保存修改并退出编辑器。
-> >>
-> >>
+> >
+> >
+
+### 安装ssh
+
+Ubuntu 自带了一个名为 OpenSSH 的 SSH 客户端和服务器软件包。在大多数情况下，您无需额外安装。
+
+**SSH 客户端**
+
+在默认情况下，Ubuntu 包含了 OpenSSH 客户端，您可以使用 `ssh` 命令连接到远程服务器。要验证您的系统上是否已经安装了 SSH 客户端，您可以在终端中运行：
+
+```bash
+ssh -V
+```
+
+此命令应返回 SSH 版本信息。如果没有安装 SSH 客户端，您可以通过以下命令安装：
+
+```bash
+sudo apt update
+sudo apt install openssh-client
+```
+
+**SSH 服务器**
+
+对于 SSH 服务器（允许其他人使用 SSH 连接到您的计算机），它不会在默认情况下安装。如果您想在您的 Ubuntu 系统上设置 SSH 服务器，您可以通过以下命令安装 OpenSSH 服务器：
+
+```bash
+sudo apt update
+sudo apt install openssh-server
+```
+
+安装完成后，SSH 服务器将自动启动并运行。您可以通过以下命令检查 SSH 服务器的状态：
+
+```bash
+sudo systemctl status ssh
+```
+
+现在，您的 Ubuntu 系统应该可以接受来自其他计算机的 SSH 连接。确保在防火墙中允许 SSH 端口（默认为 22）。如果您使用的是 `ufw` 防火墙，可以使用以下命令允许 SSH：
+
+```bash
+sudo ufw allow ssh
+```
+
+#### 如果启动不了头大报错就先卸载重装
+
+> 如果您的 SSH 配置文件变得混乱，重新安装 SSH 服务以恢复默认配置文件是一个有效的解决方案。以下是在 Ubuntu/Debian 系统上卸载和重新安装 OpenSSH 服务器的步骤：
+>
+> 1. 首先，卸载 OpenSSH 服务器：
+>
+>   ```bash
+>    sudo apt-get remove --purge openssh-server
+>   ```
+> 
+> 2. 清除相关的配置文件和数据：
+> 
+>   ```bash
+>    sudo rm -rf /etc/ssh
+>   ```
+> 
+> 3. 更新软件包列表：
+> 
+>   ```bash
+>    sudo apt-get update
+>   ```
+> 
+> 4. 重新安装 OpenSSH 服务器：
+> 
+>   ```bash
+>    sudo apt-get install openssh-server
+>   ```
+> 
+> 重新安装完成后，您将获得一个全新的 `/etc/ssh/sshd_config` 默认配置文件。您可以根据需要对其进行修改。完成修改后，请确保运行 `sudo sshd -t` 命令以检查配置文件的语法和有效性。最后，重新启动 SSH 服务以应用新配置：
+> 
+> ```bash
+> sudo systemctl restart ssh
+> ```
+> 
+> 现在，您应该拥有一个干净的 SSH 配置文件，并且 SSH 服务应该可以正常运行。如果您在执行这些步骤后仍然遇到问题，请提供有关错误的详细信息，以便我可以为您提供更多帮助。
 
 
 
-## ==4.关于wsl环境改为中文
+
+
+## ==4.==关于Ubuntu环境改为中文
 
 > 要将 WSL（Windows Subsystem for Linux）的默认语言更改为中文，您需要更新系统的语言环境。以下是一种方法，适用于基于 Debian 和 Ubuntu 的 WSL 发行版（如 Ubuntu、Kali Linux、Debian 等）：
 >
@@ -1814,6 +1940,78 @@
 
 
 
+# ==py问题==
+
+## ==1.==TOML在py中怎么用
+
+> 在 Python 中使用 TOML（Tom's Obvious, Minimal Language），您需要安装一个 TOML 库，例如 `toml` 或 `tomli`。这些库允许您解析 TOML 文件并将其内容转换为 Python 数据结构，例如字典。相反，您还可以将 Python 数据结构转换为 TOML 格式的字符串。
+>
+> 我将向您展示如何使用 `tomli` 库。首先，使用以下命令安装 `tomli`：
+>
+> ```bash
+> pip install tomli
+> ```
+>
+> 安装完成后，您可以按照以下示例使用 `tomli`：
+>
+> ### 1. 从 TOML 文件读取
+>
+> 假设您有一个名为 `config.toml` 的 TOML 文件，内容如下：
+>
+> ```toml
+> [database]
+> host = "localhost"
+> port = 5432
+> user = "myuser"
+> password = "mypassword"
+> ```
+>
+> 要在 Python 中解析此文件，您可以执行以下操作：
+>
+> ```python
+> import tomli
+> 
+> # 读取 TOML 文件
+> with open("config.toml", "r", encoding="utf-8") as file:
+>     config = tomli.load(file)
+> 
+> # 访问配置数据
+> host = config["database"]["host"]
+> port = config["database"]["port"]
+> user = config["database"]["user"]
+> password = config["database"]["password"]
+> 
+> print(host, port, user, password)
+> ```
+>
+> ### 2. 将 Python 数据结构转换为 TOML
+>
+> 假设您有一个 Python 字典，您想将其转换为 TOML 格式并将其保存到文件中：
+>
+> ```python
+> import tomli
+> 
+> config = {
+>     "database": {
+>         "host": "localhost",
+>         "port": 5432,
+>         "user": "myuser",
+>         "password": "mypassword",
+>     }
+> }
+> 
+> # 将 Python 字典转换为 TOML 字符串
+> toml_string = tomli.dumps(config)
+> 
+> # 将 TOML 字符串写入文件
+> with open("config_new.toml", "w", encoding="utf-8") as file:
+>     file.write(toml_string)
+> ```
+>
+> 这将创建一个名为 `config_new.toml` 的文件，其中包含字典的 TOML 表示。
+
+
+
 # ==其他问题==
 
 ## ==1.==临时邮箱
@@ -1836,3 +2034,37 @@
 >    提供一个新的临时邮件地址，只要在浏览器中保留页面，邮件地址将保持有效。
 >
 > 请注意，临时邮件服务可能不适用于所有情况，有时会被一些网站和服务识别并拒绝接受。尽管如此，它们在一些场景下仍然是非常有用的工具，特别是在需要保护隐私或避免垃圾邮件时。
+
+
+
+
+
+## ==2.== v2rayN绕过大陆还是有跑到代理去的
+
+>  版本有点旧，新版界面变化有点大但核心点还是没有变的
+>
+> ![img](https://img-blog.csdnimg.cn/17d980c5006c4bb79d0fa3c8e712d228.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+>
+>  ![img](https://img-blog.csdnimg.cn/c63398b28ff64052b2b81cf3b80450b8.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+>
+>  <img src="https://img-blog.csdnimg.cn/c0884614d81f4961864d69d01c4ff475.png" alt="img" style="zoom:33%;" />![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+>
+>  ↑双击进去
+>
+> 
+>
+> **注意，这里有个坑，它是按排序来的，我试过代理在最前面直连都不会走就直接走代理了，所以一定要先把直连放最前面**
+>
+> ![img](https://img-blog.csdnimg.cn/5df0048ce77d4735a14a28848810a814.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+>
+>  然后一路确定就好了
+>
+> 
+>
+>  ![img](https://img-blog.csdnimg.cn/fb8098b5e6b04438aefd7311c801a527.jpeg)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+>
+> 
+>
+> ![img](https://img-blog.csdnimg.cn/dd5bdc0640ad4140a4ef8e8940ddbefa.jpeg)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+>
+>  ![img](https://img-blog.csdnimg.cn/f8edf2dca5bf481f9afeb0731f7906d6.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
