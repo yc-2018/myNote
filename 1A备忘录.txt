@@ -1,0 +1,72 @@
+在 Windows 中，环境变量可以用来简化文件路径。你可以使用 %USERPROFILE% 环境变量来替换 C:\Users\Administrator 部分。
+    所以，你可以将路径改为：
+    %USERPROFILE%\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc\LocalState
+    这样的路径在任何 Windows 用户账户下都可以工作，因为 %USERPROFILE% 会自动被替换为当前用户的用户目录。
+
+海贼王= 1069集
+
+在cmd看系统信息   systeminfo
+
+把两个文件放进d盘根目录，命令行切换到d:根目录下（在命令行输入D：就可以切换到d:根目录了）；输入命令：copy /b 1.jpg + 2.rar 3.jpg（注意这命令里的空格，最好是复制命令就去就好了）
+
+
+
+{c5aec3ec-e812-4677-a9a7-4fee1f9aa000}
+
+{c5aec3ec-e812-4677-a9a7-4fee1f9aa000}
+
+556556556lm百度云盘
+
+
+水仙花数************************************************************************
+#include <stdio.h>
+int main()
+{
+int g,s,b;
+printf("水仙花数分别有：");
+for(int i=100;i<=999;i++){
+g = i/1%10;
+s = i/10%10;
+b = i/100;
+if(g*g*g+s*s*s+b*b*b==i)printf("%d\t",i);
+}
+return 0;
+}
+************************************************************************
+现将已输入的字符串的非数字字符剔除，并将数字字符在品目上显示（如输
+入”ab*12cx_3Y”，输出”123”），请完成
+#include <stdio.h>
+
+int main()
+{
+char a[999];
+int i=0; 
+gets(a);
+while(1){
+    if(a[i]>='0'&&a[i]<='9')
+        printf("%c",a[i]);
+    i++;    
+    if(a[i]=='\0')break;
+}
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
