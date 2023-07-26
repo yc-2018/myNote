@@ -2,7 +2,7 @@
 :: 用于控制环境变量的扩展行为
 setlocal enabledelayedexpansion  
 
-
+:: 当你在任务计划程序中设置一个任务时，如果没有明确指定 "Start In"（起始目录）字段，任务计划程序可能会在一个默认的位置，如 C:\Windows\System32，运行你的 .bat 文件，而不是在你的 .bat 文件所在的目录。
 :: 改变当前的工作目录     :: /d选项允许你在改变工作目录时跨驱动器进行切换。
 cd /d E:\Users\Dell\Desktop\笔记
 
