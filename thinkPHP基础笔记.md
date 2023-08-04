@@ -1,4 +1,4 @@
-# 1.安装集成环境
+# ==1==.安装集成环境
 
 https://www.phpenv.cn/download.html
 
@@ -57,3 +57,114 @@ composer create-project topthink/think tp
 > ```
 >
 > ==实际部署中，应该是绑定域名访问到`public`目录，确保其它目录不在WEB目录下面。==
+
+
+
+
+
+# ==2.==thinkphp6命名规范
+
+> `ThinkPHP6.0`遵循`PSR-2`命名规范和`PSR-4`自动加载规范，并且注意如下规范：
+>
+> ### 目录和文件
+>
+> - 目录使用小写+下划线；
+> - 类库、函数文件统一以`.php`为后缀；
+> - 类的文件名均以命名空间定义，并且命名空间的路径和类库文件所在路径一致；
+> - 类（包含接口和Trait）文件采用驼峰法命名（首字母大写），其它文件采用小写+下划线命名；
+> - 类名（包括接口和Trait）和文件名保持一致，统一采用驼峰法命名（首字母大写）；
+>
+> ### 函数和类、属性命名
+>
+> - 类的命名采用驼峰法（首字母大写），例如 `User`、`UserType`；
+> - 函数的命名使用小写字母和下划线（小写字母开头）的方式，例如 `get_client_ip`；
+> - 方法的命名使用驼峰法（首字母小写），例如 `getUserName`；
+> - 属性的命名使用驼峰法（首字母小写），例如 `tableName`、`instance`；
+> - 特例：以双下划线`__`打头的函数或方法作为魔术方法，例如 `__call` 和 `__autoload`；
+>
+> ### 常量和配置
+>
+> - 常量以大写字母和下划线命名，例如 `APP_PATH`；
+> - 配置参数以小写字母和下划线命名，例如 `url_route_on` 和`url_convert`；
+> - 环境变量定义使用大写字母和下划线命名，例如`APP_DEBUG`；
+>
+> ### 数据表和字段
+>
+> - 数据表和字段采用小写加下划线方式命名，并注意字段名不要以下划线开头，例如 `think_user` 表和 `user_name`字段，不建议使用驼峰和中文作为数据表及字段命名。
+
+
+
+## PHP 关键词
+
+| [__halt_compiler()](https://www.php.net/manual/zh/function.halt-compiler.php) | [abstract](https://www.php.net/manual/zh/language.oop5.abstract.php) | [and](https://www.php.net/manual/zh/language.operators.logical.php) | [array()](https://www.php.net/manual/zh/function.array.php)  | [as](https://www.php.net/manual/zh/control-structures.foreach.php) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [break](https://www.php.net/manual/zh/control-structures.break.php) | [callable](https://www.php.net/manual/zh/language.types.callable.php) | [case](https://www.php.net/manual/zh/control-structures.switch.php) | [catch](https://www.php.net/manual/zh/language.exceptions.php) | [class](https://www.php.net/manual/zh/language.oop5.basic.php#language.oop5.basic.class) |
+| [clone](https://www.php.net/manual/zh/language.oop5.cloning.php) | [const](https://www.php.net/manual/zh/language.oop5.constants.php) | [continue](https://www.php.net/manual/zh/control-structures.continue.php) | [declare](https://www.php.net/manual/zh/control-structures.declare.php) | [default](https://www.php.net/manual/zh/control-structures.switch.php) |
+| [die()](https://www.php.net/manual/zh/function.die.php)      | [do](https://www.php.net/manual/zh/control-structures.do.while.php) | [echo](https://www.php.net/manual/zh/function.echo.php)      | [else](https://www.php.net/manual/zh/control-structures.else.php) | [elseif](https://www.php.net/manual/zh/control-structures.elseif.php) |
+| [empty()](https://www.php.net/manual/zh/function.empty.php)  | [enddeclare](https://www.php.net/manual/zh/control-structures.declare.php) | [endfor](https://www.php.net/manual/zh/control-structures.alternative-syntax.php) | [endforeach](https://www.php.net/manual/zh/control-structures.alternative-syntax.php) | [endif](https://www.php.net/manual/zh/control-structures.alternative-syntax.php) |
+| [endswitch](https://www.php.net/manual/zh/control-structures.alternative-syntax.php) | [endwhile](https://www.php.net/manual/zh/control-structures.alternative-syntax.php) | [eval()](https://www.php.net/manual/zh/function.eval.php)    | [exit()](https://www.php.net/manual/zh/function.exit.php)    | [extends](https://www.php.net/manual/zh/language.oop5.basic.php#language.oop5.basic.extends) |
+| [final](https://www.php.net/manual/zh/language.oop5.final.php) | [finally](https://www.php.net/manual/zh/language.exceptions.php) | [fn](https://www.php.net/manual/zh/functions.arrow.php)（从 PHP 7.4 开始） | [for](https://www.php.net/manual/zh/control-structures.for.php) | [foreach](https://www.php.net/manual/zh/control-structures.foreach.php) |
+| [function](https://www.php.net/manual/zh/functions.user-defined.php) | [global](https://www.php.net/manual/zh/language.variables.scope.php) | [goto](https://www.php.net/manual/zh/control-structures.goto.php) | [if](https://www.php.net/manual/zh/control-structures.if.php) | [implements](https://www.php.net/manual/zh/language.oop5.interfaces.php) |
+| [include](https://www.php.net/manual/zh/function.include.php) | [include_once](https://www.php.net/manual/zh/function.include-once.php) | [instanceof](https://www.php.net/manual/zh/language.operators.type.php) | [insteadof](https://www.php.net/manual/zh/language.oop5.traits.php#language.oop5.traits.conflict) | [interface](https://www.php.net/manual/zh/language.oop5.interfaces.php) |
+| [isset()](https://www.php.net/manual/zh/function.isset.php)  | [list()](https://www.php.net/manual/zh/function.list.php)    | [match](https://www.php.net/manual/zh/control-structures.match.php)（从 PHP 8.0 开始） | [namespace](https://www.php.net/manual/zh/language.namespaces.php) | [new](https://www.php.net/manual/zh/language.oop5.basic.php#language.oop5.basic.new) |
+| [or](https://www.php.net/manual/zh/language.operators.logical.php) | [print](https://www.php.net/manual/zh/function.print.php)    | [private](https://www.php.net/manual/zh/language.oop5.visibility.php) | [protected](https://www.php.net/manual/zh/language.oop5.visibility.php) | [public](https://www.php.net/manual/zh/language.oop5.visibility.php) |
+| [readonly](https://www.php.net/manual/zh/language.oop5.properties.php#language.oop5.properties.readonly-properties)（自 PHP 8.1.0 起）* | [require](https://www.php.net/manual/zh/function.require.php) | [require_once](https://www.php.net/manual/zh/function.require-once.php) | [return](https://www.php.net/manual/zh/function.return.php)  | [static](https://www.php.net/manual/zh/language.variables.scope.php) |
+| [switch](https://www.php.net/manual/zh/control-structures.switch.php) | [throw](https://www.php.net/manual/zh/language.exceptions.php) | [trait](https://www.php.net/manual/zh/language.oop5.traits.php) | [try](https://www.php.net/manual/zh/language.exceptions.php) | [unset()](https://www.php.net/manual/zh/function.unset.php)  |
+| [use](https://www.php.net/manual/zh/language.namespaces.php) | [var](https://www.php.net/manual/zh/language.oop5.properties.php) | [while](https://www.php.net/manual/zh/control-structures.while.php) | [xor](https://www.php.net/manual/zh/language.operators.logical.php) | [yield](https://www.php.net/manual/zh/language.generators.php) |
+| [yield from](https://www.php.net/manual/zh/language.generators.syntax.php#control-structures.yield.from) |                                                              |                                                              |                                                              |                                                              |
+
+\* `readonly` 可用作函数名。
+
+---
+
+**编译时常量**
+
+| [__CLASS__](https://www.php.net/manual/zh/language.constants.predefined.php) | [__DIR__](https://www.php.net/manual/zh/language.constants.predefined.php) | [__FILE__](https://www.php.net/manual/zh/language.constants.predefined.php) | [__FUNCTION__](https://www.php.net/manual/zh/language.constants.predefined.php) | [__LINE__](https://www.php.net/manual/zh/language.constants.predefined.php) | [__METHOD__](https://www.php.net/manual/zh/language.constants.predefined.php) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [__NAMESPACE__](https://www.php.net/manual/zh/language.namespaces.nsconstants.php) | [__TRAIT__](https://www.php.net/manual/zh/language.constants.predefined.php) |                                                              |                                                              |                                                              |                                                              |
+
+
+
+==3==开启调试模式
+
+> 一、开启调试
+>
+> 在开发阶段,我们建议开启框架的调试模式。
+>
+> 1. 调试模式开启后,会牺牲一些执行效率,但大大提高了开发排错的能力。
+>
+> 2. 当项目部署到生产环境时,再关闭调试模式即可。
+>
+> 3. 安装好的 TP6 默认并没有开启调试,可以在域名后面胡乱输入字符回车。
+>
+> 4. 此时,页面只会提示:“页面错误,请稍后再试~”,表示调试未开启。
+>
+> 5. 通过命令行安装的 TP6.0,会自动在根目录生成一个 .env 文件。
+>
+> 6. ==这个 .env 文件是环境配置文件,我们只要删除前面的 .example 即可生效。==
+>
+> 7. ==此时,刷新页面,右下角会出现 Trace 调试小图标,说明调试开启了。==
+>
+> 8. ==查看 .env 文件,打开调试的环境变量为 APP_DEBUG = true,false 关闭。==
+>
+> 9. 那么,开启调试模式有哪些显著的优势呢?
+>
+>    a. 记录系统运行流程的执行过程;
+>
+>    b. 展示错误和调试信息,并开启日志记录;
+>
+>    c. 模板修改可以及时生效(不会被缓存干扰);
+>
+>    d. 启动右下角的 Trace 调试功能,更加强大;
+>
+>    e. 发生异常时,也会显示异常信息。
+>
+> 10. 当然,还有一种模式,就是关闭调试的时候,也可以显示简要的错误信息。
+>
+> 11. 首先 .env 文件设置 APP_DEBUG = false。
+>
+> 12. 然后,根目录下 config 的 app.php 最后一样设置为:'show_error_msg'=> true,
+>
+
+
+
