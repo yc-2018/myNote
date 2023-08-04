@@ -60,6 +60,43 @@ composer create-project topthink/think tp
 
 
 
+### 域名重写
+
+**==如果是通过phpEnv运行就要==**，如果是，命令行就不需要
+
+没配：`http://demo.org/index.php/index/ikun`
+
+配了：`http://demo.org/index/ikun`
+
+![image-20230804174405719](https://gitee.com/yc556/md-pic/raw/master/image-20230804174405719.png)
+
+> ```
+> location ~* (runtime|application)/{
+>     return 403;
+> }
+> location / {
+>     if (!-e $request_filename){
+>         rewrite  ^(.*)$  /index.php?s=$1  last;   break;
+>     }
+> }
+> ```
+>
+> >1. location ~* (runtime|application)/{}: 对 runtime 和 application 目录,返回 403 禁止访问。
+> >2. location / {}: 对所有的请求路径,如果请求的文件不存在,则重写到 index.php,参数为请求路径。
+> >3. rewrite ^(.*)$ /index.php?s=$1 last; break;: 将路径重写到 index.php,参数命名为 s。
+> >4. if (!-e $request_filename): 检查请求的文件是否存在,如果不存在则执行重写。
+> >
+> >所以这段 Nginx 配置的作用是:
+> >
+> >- 禁止直接访问 ThinkPHP 的 runtime 和 application 目录
+> >- 如果请求的文件不存在,则将请求重写到 index.php 路由处理
+> >
+> >这是 ThinkPHP 项目部署时的典型 Nginx 配置,可以实现URL美化和保护系统目录。
+> >
+> >Nginx 的配置语言采用类似 DSL 的格式,通过 location、rewrite等指令来定义路由和重写规则。这段代码实现了针对 ThinkPHP 的重写配置。
+
+
+
 
 
 # ==2.==thinkphp6命名规范
@@ -125,7 +162,7 @@ composer create-project topthink/think tp
 
 
 
-==3==开启调试模式
+# ==3.==开启调试模式
 
 > 一、开启调试
 >
@@ -168,3 +205,98 @@ composer create-project topthink/think tp
 
 
 
+# ==4.==thinkPHP基础
+
+## 4.1 默认方法
+
+> 在ThinkPHP的控制器中,index()方法是一个特殊的默认方法。
+>
+> 如果URL中没有指定控制器方法,会自动调用index()方法。
+>
+> 例如:
+>
+> ```php
+> namespace app\controller;
+> 
+> class Index
+> {
+>     public function index()
+>     {
+>         // 默认方法
+>     }
+> 
+>     public function hello()
+>     {
+>        // 其他方法 
+>     }
+> }
+> ```
+>
+> 那么:
+>
+> - 访问`/index/index` 会执行index()方法
+>
+> - 访问`/index`也会执行index()方法
+>
+>  index()方法不需要在URL中指定,是默认的方法。
+>
+> 这是因为index()这个方法名对应首页的概念,作为控制器的默认入口是合理的。
+>
+> 另外,默认方法名称可以在配置文件中修改:
+>
+> ```php
+> 'controller' => [
+>     'default_action' => 'otherMethod' 
+> ]
+> ```
+>
+> 这种默认方法的设计可以简化URL,同时也提高了系统的灵活性。
+>
+> 所以在开发ThinkPHP项目时,我们通常会把主要逻辑放在index()方法中,作为控制器的默认访问方法。
+
+
+
+
+
+## 4.2 URL解析
+
+1. ThinkPHP框架非常多的操作都是通过URL来实现的。
+
+2. 多应用:http://serverName/index.php/应用/控制器/操作/参数/值...
+
+3. 单应用:http://serverName/index.php/控制器/操作/参数/值...
+
+4. 由于TP6默认是单应用模式,多应用需要作为扩展安装,避免混乱暂时搁置。 
+
+5. http://serverName是域名地址,比如127.0.0.1:8000或localhost/tp6。
+
+6. index.php这个文件,是根目录下public/下的index.php(入口文件)。
+
+7. 控制器:app目录下有一个controller控制器目录的Test.php(控制器)。
+
+8. Test.php控制器的类名也必须是class Test,否则错误。
+
+9. 操作就是控制器类里面的方法,比如:index(默认免写)或hello(必写)。
+
+10. 那么完整形式为:
+
+a. http://localhost/tp6/public/index.php/test/hello/value/world
+
+b. http://127.0.0.1:8000/index.php/test/hello/value/world
+
+```php
+class Test {
+
+  public function index() {
+    return "test"; 
+  }
+
+}
+```
+
+11. public/index.php 中的 index.php 可以省略,只要设置 URL 重写即可。
+12. httpd.conf 配置文件中加载了 mod_rewrite.so 模块。
+13. AllowOverride None 将None改为All,开启.htaccess文件的支持。
+14. 此时,路径变更为:
+
+http://localhost/tp6/public/test/hello/value/world
