@@ -294,9 +294,92 @@ class Test {
 }
 ```
 
-11. public/index.php 中的 index.php 可以省略,只要设置 URL 重写即可。
-12. httpd.conf 配置文件中加载了 mod_rewrite.so 模块。
-13. AllowOverride None 将None改为All,开启.htaccess文件的支持。
-14. 此时,路径变更为:
+11. public/index.php 中的 index.php 可以省略,只要设置 URL 重写即可。（域名重写在1就写了在）
+12. httpd.conf 配置文件中加载了 mod_rewrite.so 模块。（阿帕奇）
+13. AllowOverride None 将None改为All。（阿帕奇）
+14. 此时,路径变更为:（阿帕奇）
 
 http://localhost/tp6/public/test/hello/value/world
+
+15. 上个要点已经了解了 URL 所有访问规则，通过创建 Test 控制器更加了解:
+16. 如果上面那种形式的 URL 不支持的话，可以使用兼容模式的方式来访问:http://localhost/tp6test3/public/?s=test/hello/value/world
+
+> 兼容模式下,URL需要添加s参数,将原本的路由信息作为参数值,例如:`?s=模块/控制器/操作`
+
+
+
+## 4.3 控制器
+
+1. 如果你创建的控制器类名是双字母组合，例如 `Helloworld`，那么访问 URL 的格式如下：
+    * `http://localhost/tp6test3/public/helloworld`
+    * `http://localhost/tp6test3/public/hello_world`
+
+  2. 如果你想避免引入同类名时的冲突，可以将 `route.php` 文件中设置控制器后缀`controller_suffix=> ture`，例如 `Controller`。这样，当你访问 URL 时，控制器类名就会自动加上这个后缀。此时，Test.php 就必须改成 TestController.php，并类名也需要增加后缀;
+
+    
+
+  3. 如果你想使用 JSON 格式输出数据，可以使用 `json()` 函数。例如，以下代码会输出一个 JSON 数组：
+
+    $data = array('a' => 1, 'b' => 2, 'c' => 3);
+    return json($data);
+
+  4. 不推荐使用 `die()` 和 `exit()` 函数中断代码执行，推荐使用 `halt()` 函数。`halt()` 函数除了可以中断代码执行之外，还可以传入一个参数，用于显示错误信息。例如，以下代码会中断代码执行，并显示错误信息：
+
+    halt('中断测试');
+
+### 基础控制器
+
+大多数情况下，我们建议给你的控制器继承一个基础控制器。
+
+默认安装后，系统提供了一个`app\BaseController`基础控制器类，你可以对该基础控制器进行修改。
+
+> 基础控制器的位置可以随意放置，只需要注意更改命名空间即可。
+
+该基础控制器仅仅提供了控制器验证功能，并注入了`think\App`和`think\Request`对象，因此你可以直接在控制器中使用`app`和`request`属性调用`think\App`和`think\Request`对象实例，下面是一个例子：
+
+```
+namespace app\controller;
+
+use app\BaseController;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $action = $this->request->action();
+        $path = $this->app->getBasePath();
+    }
+}
+```
+
+## 
+
+
+
+### 空控制器
+
+空控制器的概念是指当系统找不到指定的控制器名称的时候，系统会尝试定位当前应用下的空控制器(`Error`)类，利用这个机制我们可以用来定制错误页面和进行URL的优化。
+
+例如，下面是单应用模式下，我们可以给项目定义一个`Error`控制器类。
+
+```php
+<?php
+
+namespace app\controller;
+
+class Error
+{
+    public function index() :string
+    {
+        return 'ikun：当前控制器不存在哇';
+    }
+}
+```
+
+### 多级控制器
+
+所谓多级控制器，就是在控制器 controller 目录下再建立目录并创建控制器:
+
+我们在 controller 目录下建立 group 目录，并创建Blog.php 控制器;
+
+而此时，我们需要访问的地址为: http://localhost:8000/group.blog
