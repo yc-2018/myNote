@@ -130,6 +130,8 @@ Docker可以运行在MAC、Windows、CentOS、UBUNTU等操作系统上。官网�
 
    `docker exec 参数 # 退出容器，容器不会关闭`
 
+   如==docker exec -it name bash==
+
    <img src="./Docker笔记++.assets/image-20230227002154270.png" alt="image-20230227002154270" style="zoom: 39%;" />
 
 - **停止容器** 
@@ -309,7 +311,7 @@ Docker可以运行在MAC、Windows、CentOS、UBUNTU等操作系统上。官网�
 > **案例：实现步骤**
 >
 >  		① 搜索Nginx镜像 
-> 	 	 	 	 	 	
+> 	 	 	 	 	 	 	
 >  		② 拉取Nginx镜像 
 >
 > ​		 ③ 创建容器
@@ -490,13 +492,13 @@ Docker可以运行在MAC、Windows、CentOS、UBUNTU等操作系统上。官网�
 > **案例：实现步骤**
 >
 >  	① 定义父镜像：`FROM java:8` 
-> 	 	
+> 	 	 	
 >  	② 定义作者信息：`MAINTAINER itheima <ikun@qq.org>`
-> 	 	
+> 	 	 	
 >  	③ 将jar包添加到容器： `ADD springboot.jar app.jar` 
-> 	 	
+> 	 	 	
 >  	④ 定义容器启动执行的命令：`CMD java–jar app.jar`
-> 	 	
+> 	 	 	
 >  	⑤ 通过dockerfile构建镜像：`docker bulid –f dockerfile文件路径 –t 镜像名称:版本`
 
 ![image-20230227004200970](./Docker笔记++.assets/image-20230227004200970.png)
