@@ -538,9 +538,13 @@
 
 
 
+
+
+
+
 # ==玩转win==
 
-### ==1.==我有一个应用demo.exe 每次开机用双击才能运行  有没有办法让这个应用在我开机的时候就自动运行
+### ==1.== 设置应用开机自启
 
 > 是的，有几种方法可以让应用程序在开机时自动运行：
 >
@@ -554,7 +558,7 @@
 
 
 
-### ==2.==我还有一个应用d.exe 每次要双击才能运行，我想有一个快捷键也能运行 win10能做到吗
+### ==2.== 我还有一个应用d.exe 每次要双击才能运行，我想有一个快捷键也能运行 win10能做到吗
 
 > 是的，你可以使用 Windows 的快捷键功能来实现这个目标。以下是在 Windows 10 中创建快捷键以运行应用程序的步骤：
 >
@@ -771,60 +775,6 @@
 
 
 
-# ==开源许可证==
-
-> **MIT 许可证、Apache 许可证、GPL 许可证**
->
->   >   MIT 许可证、Apache 许可证和 GPL 许可证都是常见的开源软件许可证。
->   >
->   >   1. MIT 许可证：MIT 许可证是一种宽松的许可证，允许代码被自由地使用、修改和再分发，只要在代码中包含原始许可证和版权声明即可。MIT 许可证适用于大多数类型的应用程序和库，也非常适合商业软件。
->   >   2. Apache 许可证：Apache 许可证也是一种宽松的许可证，允许代码被自由地使用、修改和再分发，但要求在代码中包含原始许可证和版权声明，并且明确指出任何变更的部分。同时，Apache 许可证还涉及特定的专利授权条款，帮助保护贡献者和用户的知识产权。
->   >   3. GPL 许可证：GPL 许可证是一种相对严格的许可证，要求采用 GPL 许可证授权的代码必须公开源代码，并且任何基于该代码的派生作品也必须采用相同的协议授权。因此，如果你以 GPL 许可证授权的代码为基础开发自己的软件，那么你也必须遵守 GPL 许可证的规定，即公开你的源代码并采用 GPL 许可证授权。
->   >
->   >   总之，这三种许可证各有特点，选择哪种许可证取决于项目的性质和要求。需要开源软件作者谨慎选择适当的许可证，并在发布代码前仔细阅读许可证文本，并理解其限制和规定。
->
-> ---
->
-> **GitHub 上怎么编写MIT 许可证**
->
->   >   如果你想在 GitHub 上创建一个使用 MIT 许可证的开源项目，可以按照以下步骤编写许可证文件：
->   >
->   >   1. 创建 LICENSE 文件：在 GitHub 仓库的根目录下创建一个名为 LICENSE 的文件。
->   >   2. 拷贝许可证文本：从 MIT 许可证模板中复制许可证文本，然后将其粘贴到 LICENSE 文件中。MIT 许可证文本如下：
->   >
->   >   ```shell
->   >   MIT License
->   >   
->   >   Copyright (c) [year] [author]
->   >   
->   >   Permission is hereby granted, free of charge, to any person obtaining a copy 
->   >   of this software and associated documentation files (the "Software"), to deal 
->   >   in the Software without restriction, including without limitation the rights 
->   >   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
->   >   copies of the Software, and to permit persons to whom the Software is furnished 
->   >   to do so, subject to the following conditions:
->   >   
->   >   The above copyright notice and this permission notice shall be included in 
->   >   all copies or substantial portions of the Software.
->   >   
->   >   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
->   >   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
->   >   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
->   >   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
->   >   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
->   >   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
->   >   THE SOFTWARE.
->   >   ```
->   >
->   >   1. 修改许可证内容：将其中的 [year] 和 [author] 替换为自己的年份和作者信息。
->   >   2. 提交代码并发布项目：将 LICENSE 文件提交到 GitHub 仓库中，并发布项目。这样，其他用户就可以查看你的代码，并了解你的许可证类型和使用条件。
->   >
->   >   需要注意的是，在使用许可证时应该严格遵守许可证的规定，包括版权声明、免责声明、限制条件等。否则可能会侵犯知识产权或者造成法律风险。建议在使用许可证前仔细阅读许可证文本，并咨询专业律师的意见。
-
-
-
-
-
 # ==CSS相关==
 
 ## ==1.== Emmet 语法
@@ -970,7 +920,7 @@
 
 
 
-## ==3.==伪类选择器:active对div不起作用
+## ==3.== 伪类选择器:active对div不起作用
 
 > 伪类选择器 `:active` 通常用于匹配鼠标按下但尚未释放时的元素。它最常用于链接（`a`标签），但它可以用于任何可交互的元素。
 >
@@ -1059,7 +1009,7 @@
 
 
 
-### ==3.==给谷歌浏览器导出来的书签.html 添加样式和脚本 让它和导航栏的书签有一样的效果 写一个完整的demo
+### ==3.== 给谷歌浏览器导出来的书签.html 添加样式和脚本 让它和导航栏的书签有一样的效果 写一个完整的demo
 
 >  正在为您搜索：如何给谷歌浏览器导出的书签添加样式和脚本、如何让导出的书签和导航栏的书签有一样的效果、书签.html样式和脚本的完整demo
 >
@@ -2334,6 +2284,27 @@ sudo ufw allow ssh
 
 
 
+## ==7.==查看进程命令
+
+> ps还有许多其他选项,可以通过man ps来查看完整的帮助信息。
+>
+> 一些常用的ps命令示例:
+>
+> - ps aux | grep nginx 查看nginx进程
+> - ==ps -ef | grep ikun 查看ikun守护进程==
+> - ps -u root u 查看root用户进程
+> - ps axo pid,ppid,comm 查看指定输出列
+>
+> >
+> >
+> >`kill`：关闭进程。
+> >
+> >例如：`kill 12345`（其中12345是进程ID）
+> >
+> >`kill -9 12345` 强杀-9
+
+
+
 # ==Git问题==
 
 ## ==1.== git怎么对已管理的文件夹取消管理
@@ -2604,3 +2575,62 @@ sudo ufw allow ssh
 > ![img](https://img-blog.csdnimg.cn/dd5bdc0640ad4140a4ef8e8940ddbefa.jpeg)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 >
 >  ![img](https://img-blog.csdnimg.cn/f8edf2dca5bf481f9afeb0731f7906d6.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+
+
+
+
+
+
+## ==3.== 开源许可证
+
+> **MIT 许可证、Apache 许可证、GPL 许可证**
+>
+>   >   MIT 许可证、Apache 许可证和 GPL 许可证都是常见的开源软件许可证。
+>   >
+>   >   1. MIT 许可证：MIT 许可证是一种宽松的许可证，允许代码被自由地使用、修改和再分发，只要在代码中包含原始许可证和版权声明即可。MIT 许可证适用于大多数类型的应用程序和库，也非常适合商业软件。
+>   >   2. Apache 许可证：Apache 许可证也是一种宽松的许可证，允许代码被自由地使用、修改和再分发，但要求在代码中包含原始许可证和版权声明，并且明确指出任何变更的部分。同时，Apache 许可证还涉及特定的专利授权条款，帮助保护贡献者和用户的知识产权。
+>   >   3. GPL 许可证：GPL 许可证是一种相对严格的许可证，要求采用 GPL 许可证授权的代码必须公开源代码，并且任何基于该代码的派生作品也必须采用相同的协议授权。因此，如果你以 GPL 许可证授权的代码为基础开发自己的软件，那么你也必须遵守 GPL 许可证的规定，即公开你的源代码并采用 GPL 许可证授权。
+>   >
+>   >   总之，这三种许可证各有特点，选择哪种许可证取决于项目的性质和要求。需要开源软件作者谨慎选择适当的许可证，并在发布代码前仔细阅读许可证文本，并理解其限制和规定。
+>
+> ---
+>
+> **GitHub 上怎么编写MIT 许可证**
+>
+>   >   如果你想在 GitHub 上创建一个使用 MIT 许可证的开源项目，可以按照以下步骤编写许可证文件：
+>   >
+>   >   1. 创建 LICENSE 文件：在 GitHub 仓库的根目录下创建一个名为 LICENSE 的文件。
+>   >   2. 拷贝许可证文本：从 MIT 许可证模板中复制许可证文本，然后将其粘贴到 LICENSE 文件中。MIT 许可证文本如下：
+>   >
+>   >   ```shell
+>   >   MIT License
+>   >   
+>   >   Copyright (c) [year] [author]
+>   >   
+>   >   Permission is hereby granted, free of charge, to any person obtaining a copy 
+>   >   of this software and associated documentation files (the "Software"), to deal 
+>   >   in the Software without restriction, including without limitation the rights 
+>   >   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+>   >   copies of the Software, and to permit persons to whom the Software is furnished 
+>   >   to do so, subject to the following conditions:
+>   >   
+>   >   The above copyright notice and this permission notice shall be included in 
+>   >   all copies or substantial portions of the Software.
+>   >   
+>   >   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+>   >   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+>   >   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+>   >   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+>   >   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+>   >   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+>   >   THE SOFTWARE.
+>   >   ```
+>   >
+>   >   1. 修改许可证内容：将其中的 [year] 和 [author] 替换为自己的年份和作者信息。
+>   >   2. 提交代码并发布项目：将 LICENSE 文件提交到 GitHub 仓库中，并发布项目。这样，其他用户就可以查看你的代码，并了解你的许可证类型和使用条件。
+>   >
+>   >   需要注意的是，在使用许可证时应该严格遵守许可证的规定，包括版权声明、免责声明、限制条件等。否则可能会侵犯知识产权或者造成法律风险。建议在使用许可证前仔细阅读许可证文本，并咨询专业律师的意见。
+
+
+
