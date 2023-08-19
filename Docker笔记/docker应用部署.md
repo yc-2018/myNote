@@ -199,6 +199,23 @@ docker run -id --name=c_nginx \
 nginx
 ```
 
+新版不是html不在/usr/share/nginx/html
+
+
+
+```shell
+docker run -id --name=n1 \
+-p 88:80 \
+-v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v $PWD/logs:/var/log/nginx \
+-v $PWD/html:/etc/nginx/html \
+nginx
+```
+
+
+
+
+
 - 参数说明：
   - **-p 80:80**：将容器的 80端口映射到宿主机的 80 端口。
   - **-v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf**：将主机当前目录下的 /conf/nginx.conf 挂载到容器的 :/etc/nginx/nginx.conf。配置目录

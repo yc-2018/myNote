@@ -76,7 +76,7 @@ Docker可以运行在MAC、Windows、CentOS、UBUNTU等操作系统上。官网�
 
 - **查看镜像:** 查看本地所有的镜像
 
-   `docker images`
+    
 
   `docker images docker images –q # 查看所用镜像的id` 
 
@@ -311,7 +311,7 @@ Docker可以运行在MAC、Windows、CentOS、UBUNTU等操作系统上。官网�
 > **案例：实现步骤**
 >
 >  		① 搜索Nginx镜像 
-> 	 	 	 	 	 	 	
+> 	 	 	 	 	 	 	 	
 >  		② 拉取Nginx镜像 
 >
 > ​		 ③ 创建容器
@@ -492,13 +492,13 @@ Docker可以运行在MAC、Windows、CentOS、UBUNTU等操作系统上。官网�
 > **案例：实现步骤**
 >
 >  	① 定义父镜像：`FROM java:8` 
-> 	 	 	
+> 	 	 	 	
 >  	② 定义作者信息：`MAINTAINER itheima <ikun@qq.org>`
-> 	 	 	
+> 	 	 	 	
 >  	③ 将jar包添加到容器： `ADD springboot.jar app.jar` 
-> 	 	 	
+> 	 	 	 	
 >  	④ 定义容器启动执行的命令：`CMD java–jar app.jar`
-> 	 	 	
+> 	 	 	 	
 >  	⑤ 通过dockerfile构建镜像：`docker bulid –f dockerfile文件路径 –t 镜像名称:版本`
 
 ![image-20230227004200970](./Docker笔记++.assets/image-20230227004200970.png)
