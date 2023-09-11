@@ -1911,6 +1911,42 @@
 
 
 
+### wsl的默认路径
+
+> ```
+> %USERPROFILE%\AppData\Local\Packages\虚拟机文名字\LocalState\rootfs\
+> ```
+>
+> 如 Ubuntu20.04LTS
+>
+> ```
+> C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx
+> ```
+>
+> 
+
+### wsl打开非默认
+
+用  `wsl -l -v`  参看名字
+
+再用`wsl -d 虚拟机名字`
+
+如果有同名也可以用路径 `wsl -d <Path to WSL installation>`
+
+如 `wsl -d /mnt/<username>/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows/rootfs`
+
+
+
+### wsl删除单个
+
+> 如：WSL中删除CentOS 7
+>
+> 1. 使用wsl命令列出已安装的所有Linux发行版:`wsl -l`
+> 2. 找到CentOS 7对应的名称,比如"CentOS7"
+> 3. 使用wsl命令卸载CentOS:`wsl --unregister CentOS7`
+
+
+
 ## ==3.==关于开启ssh
 
 > 非gpt4解决：https://www.tinymind.net.cn/articles/da5b6aecd85361  但是gpt4也解决了要先打开ssh的问题
@@ -2164,56 +2200,6 @@ sudo ufw allow ssh
 >
 > 然后，在 Windows 中重新启动 WSL。
 
-==6.==安装ssh
-
-**root@yc2023:~# service ssh start**
-**`Failed to start ssh.service: Unit ssh.service not found.`**
-
-> 您遇到的问题是尝试启动 SSH 服务时，系统找不到 `ssh.service`。这通常意味着 SSH 服务未安装或安装不完整。以下是在不同操作系统上安装并启动 SSH 服务的方法：
->
-> **对于 Ubuntu/Debian 系统：**
->
-> 1. 首先，确保安装了 `openssh-server` 软件包。使用以下命令安装：
->
->    ```bash
->    sudo apt update
->    sudo apt install openssh-server
->    ```
->
-> 2. 安装完成后，使用以下命令启动 SSH 服务：
->
->    ```bash
->    sudo systemctl start ssh
->    ```
->
-> 3. 若要在系统启动时自动启动 SSH 服务，请运行：
->
->    ```bash
->    sudo systemctl enable ssh
->    ```
->
-> **对于 CentOS/RHEL 系统：**
->
-> 1. 首先，确保安装了 `openssh-server` 软件包。使用以下命令安装：
->
->    ```bash
->    sudo yum install openssh-server
->    ```
->
-> 2. 安装完成后，使用以下命令启动 SSH 服务：
->
->    ```bash
->    sudo systemctl start sshd
->    ```
->
-> 3. 若要在系统启动时自动启动 SSH 服务，请运行：
->
->    ```bash
->    sudo systemctl enable sshd
->    ```
->
-> 根据您提供的错误信息，看起来您可能在使用 Ubuntu/Debian 系统。请按照上述说明进行操作，如果问题仍然存在，请提供更多详细信息，以便我们为您提供更好的支持。
-
 
 
 ## ==5.==改变提示符颜色
@@ -2273,6 +2259,48 @@ sudo ufw allow ssh
 > ```bash
 > PS1='\[\033[01;35m\]\u@\h\[\033[00m\]:\w\$ '
 > ```
+>
+>  ---
+>
+> >==**Linux怎么把[root@yc2023 ~]#的样式更改为绿色**==
+> >
+> >你可以通过编辑bash提示符 (PS1) 来改变命令行提示符的颜色。这需要在你的 `.bashrc` 文件中添加一些代码。下面是一个例子，它将把提示符更改为绿色：
+> >
+> >打开 `.bashrc` 文件，你可以使用 `vi` 命令或你喜欢的任何其他编辑器：
+> >
+> >```bash
+> >vi ~/.bashrc
+> >```
+> >
+> >==然后在文件的底部添加以下代码：==
+> >
+> >```bash
+> >export PS1='\[\e[0;32m\][\u@\h \W]\$\[\e[0m\] '
+> >```
+> >这里是 `PS1` 变量的一些基本元素：
+> >
+> >- `\u`：当前用户名
+> >- `\h`：主机名
+> >- `\W`：当前工作目录的基本名称
+> >- `\[\e[0;32m\]`：设置颜色为绿色
+> >- `\[\e[0m\]`：重置颜色为默认值
+> >
+> >保存并关闭文件后，你需要重新加载 `.bashrc` 文件让更改生效：
+> >
+> >```bash
+> >source ~/.bashrc
+> >```
+> >
+> >这样，你的提示符就会变成绿色了。
+> >
+> >请注意，这些更改只适用于当前用户。如果你需要对所有用户进行此更改，你应该编辑 `/etc/bash.bashrc` 或 `/etc/profile` 文件（取决于你的系统）。
+> >
+> >
+
+
+
+
+
 
 
 
@@ -2302,6 +2330,102 @@ sudo ufw allow ssh
 > >例如：`kill 12345`（其中12345是进程ID）
 > >
 > >`kill -9 12345` 强杀-9
+
+
+
+## ==8.==安装ssh
+
+**root@yc2023:~# service ssh start**
+**`Failed to start ssh.service: Unit ssh.service not found.`**
+
+> 您遇到的问题是尝试启动 SSH 服务时，系统找不到 `ssh.service`。这通常意味着 SSH 服务未安装或安装不完整。以下是在不同操作系统上安装并启动 SSH 服务的方法：
+>
+> **对于 Ubuntu/Debian 系统：**
+>
+> 1. 首先，确保安装了 `openssh-server` 软件包。使用以下命令安装：
+>
+>    ```bash
+>    sudo apt update
+>    sudo apt install openssh-server
+>    ```
+>
+> 2. 安装完成后，使用以下命令启动 SSH 服务：
+>
+>    ```bash
+>    sudo systemctl start ssh
+>    ```
+>
+> 3. 若要在系统启动时自动启动 SSH 服务，请运行：
+>
+>    ```bash
+>    sudo systemctl enable ssh
+>    ```
+>
+> **对于 CentOS/RHEL 系统：**
+>
+> 1. 首先，确保安装了 `openssh-server` 软件包。使用以下命令安装：
+>
+>    ```bash
+>    sudo yum install openssh-server
+>    ```
+>
+> 2. 安装完成后，使用以下命令启动 SSH 服务：
+>
+>    ```bash
+>    sudo systemctl start sshd
+>    ```
+>
+> 3. 若要在系统启动时自动启动 SSH 服务，请运行：
+>
+>    ```bash
+>    sudo systemctl enable sshd
+>    ```
+>
+> 根据您提供的错误信息，看起来您可能在使用 Ubuntu/Debian 系统。请按照上述说明进行操作，如果问题仍然存在，请提供更多详细信息，以便我们为您提供更好的支持。
+
+
+
+## ==9.== 设置命令的简写或别名
+
+> 在Linux系统中,可以通过shell的alias功能来设置命令的简写或别名。
+>
+> 例如在bash shell中,可以在~/.bashrc文件中添加alias:
+>
+> ```bash
+> alias l='ls -a'
+> ```
+>
+> 这样就设置了l为ls -a的别名。
+>
+> 将alias命令添加到~/.bashrc文件中,可以使其对当前用户永久生效。
+>
+> 除了.bashrc,也可以在/etc/profile或者/etc/bashrc中添加system-wide的alias。
+>
+> 设置好alias后,可以用source命令立即生效:
+>
+> ```bash
+> source ~/.bashrc
+> ```
+>
+> 或者重启shell:
+>
+> ```bash
+> exec bash
+> ```
+>
+> 此外,还可以使用unalias删除不需要的alias:
+>
+> ```bash
+> unalias l 
+> ```
+>
+> bash也支持暂时的交互式alias,但是它们不会永久保存。
+>
+> 总之,利用alias和相应的配置文件,可以方便地自定义命令的简写或别名,提高Linux使用效率。
+
+
+
+
 
 
 
