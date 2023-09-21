@@ -1927,13 +1927,17 @@
 
 ### wsl打开非默认
 
-用  `wsl -l -v`  参看名字
+> 用  `wsl -l -v`  参看名字
+>
+> 再用`wsl -d 虚拟机名字`
+>
+> 如果有同名也可以用路径 `wsl -d <Path to WSL installation>`
+>
+> 如 `wsl -d /mnt/<username>/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows/rootfs`
+>
+> >要更改默认的Linux发行版，请运行`wslconfig /setdefault Name`命令，这里的`Name`就是虚拟机名字
 
-再用`wsl -d 虚拟机名字`
 
-如果有同名也可以用路径 `wsl -d <Path to WSL installation>`
-
-如 `wsl -d /mnt/<username>/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows/rootfs`
 
 
 
@@ -2260,7 +2264,7 @@ sudo ufw allow ssh
 > PS1='\[\033[01;35m\]\u@\h\[\033[00m\]:\w\$ '
 > ```
 >
->  ---
+> ---
 >
 > >==**Linux怎么把[root@yc2023 ~]#的样式更改为绿色**==
 > >
