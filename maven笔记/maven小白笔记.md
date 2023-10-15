@@ -4,13 +4,13 @@
 
 - 配置文件
 
-- `<groupId>com.itheima</groupId>`
+- `<groupId>com.kun</groupId>`
 
 - Java代码
 - `Statement stat =con.createstatement ();`
 
 - 示例
-- `<groupId>com.itheima</groupId>`
+- `<groupId>com.ikun</groupId>`
 
 - 命令
 - `mwn test`
@@ -23,7 +23,7 @@
 
 - POM (Project Object Model) : 项目对象模型
 
-![image-20230216022934798](E:\Users\Dell\Desktop\笔记\maven笔记img\image-20230216022934798.png)
+![image-20230216022934798](.\maven笔记img\image-20230216022934798.png)
 
 ### Maven的作用
 
@@ -33,7 +33,7 @@
 
 - 统一开发结构:提供标准的、统一的项目结构
 
-![image-20230216023159480](E:\Users\Dell\Desktop\笔记\maven笔记img\image-20230216023159480.png)
+![image-20230216023159480](.\maven笔记img\image-20230216023159480.png)
 
 
 
@@ -50,4 +50,4 @@
 
 - 下载地址:http://maven.apache.org/download.cgi
 
-![image-20230216041601508](E:\Users\Dell\Desktop\笔记\maven笔记img\image-20230216041601508.png)
+![image-20230216041601508](.\maven笔记img\image-20230216041601508.png)
