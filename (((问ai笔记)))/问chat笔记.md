@@ -1971,6 +1971,33 @@
 
 
 
+
+
+### Windows 访问 WSL的root目录
+
+> 非gpt，原文：[Windows 怎样访问 WSL2子系统的root文件夹？](https://www.zhihu.com/question/418396436/answer/2754045936)
+>
+> ---
+>
+> 编辑 `/etc/wsl.conf`
+>
+> ```bash
+> vi /etc/wsl.conf
+> ```
+>
+> 在里面添加
+>
+> ```toml
+> [user]
+> default=root
+> ```
+>
+> 
+
+
+
+
+
 ## ==3.==关于开启ssh
 
 > 非gpt4解决：https://www.tinymind.net.cn/articles/da5b6aecd85361  但是gpt4也解决了要先打开ssh的问题
@@ -2543,6 +2570,31 @@ sudo ufw allow ssh
 > >git config https.proxy 'https://127.0.0.1:2334'
 > >```
 > >如果你想移除这些代理设置，你可以运行 `git config --unset http.proxy` 和 `git config --unset https.proxy`。
+
+## ==3== git怎么把整个仓库复制下来(全部分支)
+
+git怎么把整个仓库复制下来，因为我要把完整的项目换到别的远端仓库去
+
+> 如果直接使用`git clone`命令，确实只会克隆包含在`.git/config`文件中`[remote "origin"]`设置的分支。如果想要克隆所有分支，您可以使用以下步骤：
+> 1. 克隆仓库，但不检出到工作目录：
+>    ```bash
+>    git clone --bare [原仓库的URL]
+>    ```
+>    使用`--bare`选项会克隆仓库的所有分支和标签，但不会创建工作目录。
+> 2. 然后，进入到克隆下来的裸仓库目录中：
+>    ```bash
+>    cd [仓库名.git]
+>    ```
+> 3. 接下来，将裸仓库镜像推送到新的远端仓库：
+>    ```bash
+>    git push --mirror [新仓库的URL]
+>    ```
+>    这会推送所有的分支和标签到新仓库。
+> 4. 如果你需要一个非裸仓库的工作副本，可以从新的远端仓库克隆一个：
+>    ```bash
+>    git clone [新仓库的URL]
+>    ```
+>    请替换`[原仓库的URL]`和`[新仓库的URL]`为实际的仓库地址，以及将`[仓库名.git]`替换为克隆下来的裸仓库目录名。在执行`git push --mirror`时，请确保你有权限向新仓库推送代码。
 
 
 
