@@ -2659,7 +2659,59 @@ git怎么把整个仓库复制下来，因为我要把完整的项目换到别�
 
 
 
+## ==2.== 在 Ubuntu 20.04 上安装 Docker
 
+==未验证==
+
+> 在 Ubuntu 20.04 上安装 Docker 并配置镜像的步骤如下：
+> 1. **更新软件包索引**：
+>    打开终端，首先更新软件包列表，确保访问到最新的 Ubuntu 软件包。执行命令：
+>    ```bash
+>    sudo apt update
+>    ```
+> 2. **安装必要的软件包**：
+>    安装 `apt-transport-https`、`ca-certificates`、`curl`、`software-properties-common` 这些软件包，以便 `apt` 可以通过 HTTPS 使用仓库：
+>    ```bash
+>    sudo apt install apt-transport-https ca-certificates curl software-properties-common
+>    ```
+> 3. **添加 Docker 的官方 GPG 密钥**：
+>    ```bash
+>    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+>    ```
+> 4. **添加 Docker 仓库**：
+>    为 Docker 添加稳定版仓库：
+>    ```bash
+>    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+>    ```
+> 5. **安装 Docker CE**：
+>    再次更新软件包索引，然后安装 Docker 社区版（CE）：
+>    ```bash
+>    sudo apt update
+>    sudo apt install docker-ce
+>    ```
+> 6. **验证 Docker 安装**：
+>    安装后，可以运行以下命令来检查 Docker 是否正确安装：
+>    ```bash
+>    sudo systemctl status docker
+>    ```
+> 7. **配置 Docker 镜像**：
+>    为了提高 Docker 拉取镜像的速度，可以配置 Docker 镜像加速器。编辑 Docker 的配置文件：
+>    ```bash
+>    sudo nano /etc/docker/daemon.json
+>    ```
+>    添加以下内容（以阿里云镜像加速器为例）：
+>    ```json
+>    {
+>      "registry-mirrors": ["https://<your-mirror>.mirror.aliyuncs.com"]
+>    }
+>    ```
+>    保存文件并退出编辑器。
+> 8. **重启 Docker**：
+>    修改配置后，重启 Docker 以使配置生效：
+>    ```bash
+>    sudo systemctl restart docker
+>    ```
+>    完成以上步骤后，你就在 Ubuntu 20.04 上成功安装并配置了 Docker。使用镜像加速器可以提高拉取镜像的速度，特别是在中国大陆地区。注意替换 `<your-mirror>` 为实际的镜像加速器地址。
 
 
 
