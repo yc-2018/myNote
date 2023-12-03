@@ -255,6 +255,14 @@ docker pull redis:5.0
 docker run -id --name=c_redis -p 6379:6379 redis:5.0
 ```
 
+>如果要密码就
+>
+>```sh
+>docker run -id --name=c_redis -p 6379:6379 redis:5.0 --requirepass 你的密码
+>```
+>
+>
+
 4. 使用外部机器连接redis
 
 ```shell

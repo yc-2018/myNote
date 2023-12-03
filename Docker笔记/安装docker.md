@@ -4,7 +4,7 @@
 
 ```shell
 # 1、yum 包更新到最新 
-yum update
+ 
 # 2、安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的 
 yum install -y yum-utils device-mapper-persistent-data lvm2
 # 3、 设置yum源
