@@ -271,7 +271,30 @@ docker run -id --name=c_redis -p 6379:6379 redis:5.0
 
 
 
+---
 
+docker安装redis无法远程访问 - 钧一 - 博客园
+https://www.cnblogs.com/junyi-bk/p/15056343.html
+
+本来也可以远程访问的，今天不知道是不是电脑问题，突然就不行了(搞完也是不行)
+
+redis.conf 里面的参数
+
+```redis
+bind 0.0.0.0         #改成0.0.0.0，使redis可以外部访问
+
+requirepass 你的密码   #给redis设置密码
+
+appendonly yes       #redis持久化　　默认是no
+```
+
+```sh
+docker run -id \
+-p 6333:6379 --name redis \
+-v /data/redis/redis.conf:/etc/redis/redis.conf \
+-v /data/redis/data:/data \
+ redis:5.0
+```
 
 
 
