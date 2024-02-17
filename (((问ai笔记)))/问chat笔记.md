@@ -129,6 +129,31 @@
 
 
 
+### ==4.== 函数式接口的泛型是什么意思
+
+> 在Java中，函数式接口是只有一个抽象方法的接口。这种接口可以表示 lambda 表达式、方法引用或者构造方法引用。函数式接口可以用 `@FunctionalInterface` 注解来标记，这样如果你不小心添加了第二个抽象方法，编译器会报错。
+> 函数式接口可以声明泛型，常见的如 `Function<T, R>`, `Predicate<T>`, `Consumer<T>`等。具体解释如下：
+> 1. `Function<T, R>`：它接受一个输入参数，返回一个结果。`T` 是输入参数的类型，`R` 是结果的类型。例如，可以使用这种函数式接口来代表一个将 `Integer` 转换为 `String` 的函数：
+>     ```java
+>     Function<Integer, String> intToString = Object::toString;
+>     String result = intToString.apply(5);
+>     ```
+> 2. `Predicate<T>`：它接受一个输入参数，返回一个布尔值结果。`T` 是输入参数的类型。例如，可以使用这种函数式接口来代表一个检查整数是否为偶数的函数：
+>     ```java
+>     Predicate<Integer> isEven = x -> x % 2 == 0;
+>     boolean result = isEven.test(4);
+>     ```
+> 3. `Consumer<T>`：它接受一个输入参数并执行一些操作，但不返回任何结果。`T` 是输入参数的类型。例如，可以使用这种函数式接口来代表一个打印输入整数的函数：
+>     ```java
+>     Consumer<Integer> print = System.out::println;
+>     print.accept(5);
+>     ```
+>     函数式接口的泛型类型可以让你创建更灵活的代码，因为你可以用同一种接口来表示接受不同类型或返回不同类型的函数。
+
+
+
+
+
 # ==Spring boot 问题==
 
 ### ==1.==spring boot 项目一般分为几层
@@ -372,6 +397,40 @@
 > | @EnableSwagger2               | 开启 Swagger API 文档 |
 >
 > 这些注解可以让我们更方便地集成其他框架或库，并在Spring Boot应用程序中使用它们。需要注意的是，使用这些注解前需要先引入相应的依赖。
+
+
+
+### ==5.==Swagger常用注解和说明
+
+> Swagger是一种API文档生成工具，它可以帮助开发人员设计、构建、记录和使用RESTful Web服务。以下是Swagger和Swagger UI常用的一些注解（annotation）及其说明：
+> 1. `@Api`: 用于类；表示这个类是Swagger的资源
+>    - tags: 提供一个或多个标签名，这些标签在文档中用于对API进行分组和分类。
+>    - value: 如果tags未定义，则使用此值作为默认标签。
+> 2. `@ApiOperation`: 用于方法；表示一个http请求的操作
+>    - value: 操作的简短描述。
+>    - notes: 操作的详细描述。
+>    - response: 操作成功时返回的类型。
+>    - httpMethod: HTTP请求方法，比如"GET", "POST"等。
+> 3. `@ApiImplicitParams`, `@ApiImplicitParam`: 表示单个请求参数的注解
+>    - name: 参数名。
+>    - value: 参数的简短描述。
+>    - required: 参数是否必需。
+>    - paramType: 参数类型（"header", "query", "path", "body"等）。
+>    - dataType: 参数的数据类型。
+> 4. `@ApiResponse`, `@ApiResponses`: 表示操作可能返回的响应的注解
+>    - code: HTTP响应状态码。
+>    - message: 对响应的描述。
+> 5. `@ApiModel`: 提供对类的额外信息
+>    - description: 对类的简短描述。
+> 6. `@ApiModelProperty`: 用于模型属性
+>    - value: 对属性的简短描述。
+>    - required: 是否必需。
+>    - position: 当属性被显示或排序时的位置。
+>    - allowableValues: 此属性允许的值范围。
+>    注意：`@Api`和`@ApiOperation`等注解是用于注释类和方法的，而`@ApiModel`和`@ApiModelProperty`是用于注释模型类和其属性的。
+>    Swagger可以自动检测这些注解，并生成相应的文档，这对于API的设计和使用非常有帮助。
+
+
 
 
 
@@ -1074,6 +1133,78 @@
 
 
 
+## ==4.== 各种居中
+
+> 在CSS中，实现元素的居中有多种方式，这取决于你要居中的内容和上下文。下面是几种常见的居中方法：
+> ### 水平居中
+> 1. **对于行内元素或行内块元素**：可以使用 `text-align: center;` 属性在其父元素上实现水平居中。
+>    ```css
+>    .parent {
+>      text-align: center;
+>    }
+>    ```
+> 2. **对于块级元素**：可以使用 `margin: auto;` 使元素的左右外边距相等，从而实现水平居中。
+>    ```css
+>    .block {
+>      width: 50%; /* 必须指定宽度 */
+>      margin: 0 auto;
+>    }
+>    ```
+> ### 垂直居中
+> 1. **使用Flexbox**：通过设置父元素为Flex容器并使用 `align-items: center;` 实现垂直居中。
+>    ```css
+>    .parent {
+>      display: flex;
+>      align-items: center;
+>      height: 100px; /* 父元素需要指定高度 */
+>    }
+>    ```
+> 2. **使用Grid**：Grid布局也能轻松实现垂直居中，方法类似于Flexbox。
+>    ```css
+>    .parent {
+>      display: grid;
+>      align-items: center;
+>      height: 100px;
+>    }
+>    ```
+> ### 水平和垂直居中
+> 1. **Flexbox**：在Flex容器中同时使用 `justify-content: center;` 和 `align-items: center;`。
+>    ```css
+>    .parent {
+>      display: flex;
+>      justify-content: center;
+>      align-items: center;
+>      height: 100px; /* 父元素需要指定高度 */
+>    }
+>    ```
+> 2. **Grid**：同样的效果可以通过Grid布局实现。
+>    ```css
+>    .parent {
+>      display: grid;
+>      justify-content: center;
+>      align-items: center;
+>      height: 100px;
+>    }
+>    ```
+> 3. **绝对定位与transform**：使用 `position: absolute;` 和 `transform: translate(-50%, -50%);` 来实现。
+>    ```css
+>    .centered {
+>      position: absolute;
+>      top: 50%;
+>      left: 50%;
+>      transform: translate(-50%, -50%);
+>    }
+>    ```
+>    这些方法适用于大多数情况。选择哪种方法取决于你的具体需求和布局的上下文。
+> ---
+> <kbd>2024.01.26</kbd> <kbd>MindGen 4.0</kbd> 
+
+
+
+
+
+
+
 # ==js问题==
 
 ### ==1.==js判断中 哪些非布尔类的值会是false
@@ -1628,6 +1759,18 @@
 > >>
 > >>3. 禁用油猴的自动更新：在某些情况下，油猴的自动更新会导致脚本执行时间过长，从而触发上述错误。您可以禁用油猴的自动更新功能，在油猴的设置中关闭“自动更新脚本”选项。
 > >>
+
+
+
+==8.== && || ?? 的区别
+
+> `&&`，`||` 和 `??` 都是 JavaScript 中的逻辑操作符，但它们的行为有所不同：
+> - `&&` （逻辑与）：如果左操作数为真（truthy），则返回右操作数的值。如果左操作数为假（falsy），则返回左操作数的值。比如 `false && "ikun"` 返回 `false`，因为 `false` 是 falsy。
+> - `||` （逻辑或）：如果左操作数为真（truthy），则返回左操作数的值。如果左操作数为假（falsy），则返回右操作数的值。比如 `false || "ikun"` 返回 `"ikun"`，因为 `false` 是 falsy。
+> - `??` （空值合并）：如果左操作数为 `null` 或 `undefined`，则返回右操作数的值。否则，返回左操作数的值。比如 `false ?? "ikun"` 返回 `false`，因为 `false` 不是 `null` 或 `undefined`。
+> 所以，`&&` 和 `||` 操作符与 `??` 的主要区别在于它们如何处理 falsy 值。对于 `&&` 和 `||`，所有 falsy 值（如 `false`、`0`、`""`、`null`、`undefined` 和 `NaN`）都会导致操作数被忽略。但是，对于 `??`，只有 `null` 和 `undefined` 会导到操作数被忽略。
+
+
 
 
 
