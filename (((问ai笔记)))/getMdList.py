@@ -37,10 +37,10 @@ def save_to_json(data, output_file):
 
 if __name__ == '__main__':
     # 设置要扫描的 md 文件夹路径
-    md_folder_path = './'  # 替换为你的 md 文件夹路径
+    md_folder_path = './博客md'  # 替换为你的 md 文件夹路径
     
     # 设置输出的 JSON 文件名
-    output_file = 'mdList.json'
+    output_file = './博客md/mdList.json'
 
     # 扫描 md 文件夹，获取文件夹和 .md 文件列表
     md_list = scan_md_folder(md_folder_path)
