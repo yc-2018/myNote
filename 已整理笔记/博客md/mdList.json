@@ -16,7 +16,8 @@
     "2.  Git 使用代理.md",
     "3.  git怎么把整个仓库复制下来(全部分支).md",
     "4.  https克隆转换为ssh.md",
-    "5.  git clone指定分支.md"
+    "5.  git clone指定分支.md",
+    "6.  生成ssh公钥.md"
   ],
   [
     "java问题",

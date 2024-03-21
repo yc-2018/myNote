@@ -1343,7 +1343,7 @@
 
 ## ==4.== 异步问题
 
-> - ~~**我要在https://www.jianfast.com/网站上用js拿到下面网页内容打印在控制台: https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637 请求方法: GET 返回 第一个<p class="iQKjW6dr">到页面**~~
+> - ~~**我要在https://www.jianfast.com/网站上用js拿到下面网页内容打印在控制台: https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637 请求方法: GET 返回 第一个`<p class="iQKjW6dr">`到页面**~~
 >
 >   你可以使用以下代码来获取页面内容并打印在控制台中:
 >
@@ -1425,7 +1425,7 @@
 >
 >   ---
 >
->   **那可以用<iframe>嵌入https://www.jianfast.com/ 再在<iframe>里面请求。可以应对跨域请求吗**
+>   **那可以用`<iframe>`嵌入https://www.jianfast.com/ 再在`<iframe>`里面请求。可以应对跨域请求吗**
 >
 >   > 不行，使用`<iframe>`嵌入其他网站的内容并不能解决跨域请求的问题。即使你在`<iframe>`中嵌入了其他网站的内容，你仍然无法从父页面中访问`<iframe>`中的内容，除非两个页面都同意通过`postMessage` API进行通信。
 >   >
@@ -2106,7 +2106,7 @@
 
 
 
-### 这么看wsl是1还是2
+### 怎么看wsl是1还是2
 
 > 要确定您正在使用的是 WSL 1 还是 WSL 2，您可以在 Windows 命令提示符或 PowerShell 中运行以下命令：
 >
@@ -2917,6 +2917,22 @@ git怎么把整个仓库复制下来，因为我要把完整的项目换到别�
 > 这样就会将 `origin` 远程仓库上的 `dev` 分支对应的代码克隆到本地，并在本地创建一个名为 `repo/` 的文件夹（假设该远程仓库地址为 https://github.com/user/repo.git）。
 
 
+
+## ==6.== 生成ssh公钥
+
+> - 生成SSH公钥
+>
+>   - `ssh-keygen -t rsa`
+>
+>   - 不断回车
+>     - 如果公钥已经存在，则自动覆盖
+>
+> - Gitee设置账户共公钥
+>   - 获取公钥
+>     - `cat ~/.ssh/id_rsa.pub`
+>   - 验证是否配置成功
+>
+>     - `ssh -T git@gitee.com`
 
 
 
