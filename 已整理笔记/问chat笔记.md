@@ -689,6 +689,43 @@
 
 
 
+## ==5.== Nginx怎么运行多个域名跨域
+
+我想让http://localhost:3000 http://localhost:3001 还有https://yc556.gitee.io/允许跨域怎么改
+location /md {
+add_header Access-Control-Allow-Origin 'http://localhost:3000';
+
+==（静态页面且不想用*的情况）==
+
+> 要允许跨域请求，你需要在Nginx的配置中为每个需要跨域的源设置`Access-Control-Allow-Origin`头部。由于你想要从三个不同的源（`http://localhost:3000`, `http://localhost:3001`, `https://yc556.gitee.io/`）进行跨域请求，而HTTP头部`Access-Control-Allow-Origin`在一个响应中只能设置一个值，你需要根据请求的来源动态设置这个头部。
+> 这里有一个在Nginx中实现这一目的的方法：
+>
+> 1. **创建一个映射**来根据请求的`Origin`头部动态设置`Access-Control-Allow-Origin`。这个映射可以在Nginx配置的`http`块中定义，这样它就可以被所有的`server`块共享。
+> 2. **应用这个映射**到你的`location /md`块中，使用`add_header`指令设置正确的`Access-Control-Allow-Origin`。
+> 下面是具体的配置示例：
+> ```nginx
+> http {
+>     map $http_origin $allow_origin {
+>         default "";
+>         "http://localhost:3000"  $http_origin;
+>         "http://localhost:3001"  $http_origin;
+>         "https://yc556.gitee.io" $http_origin;
+>     }
+>     server {
+>         ...
+>         location /md {
+>             ...
+>             add_header Access-Control-Allow-Origin $allow_origin;
+>             ...
+>         }
+>     }
+> }
+> ```
+> 这个配置首先检查请求的`Origin`是否是你指定的三个之一，如果是，则将`Access-Control-Allow-Origin`设置为该`Origin`。这样，只有这三个指定的源可以接收来自`location /md`的跨域请求。
+> <kbd>2024.04.06</kbd> <kbd>通用助手4.0</kbd> 
+
+
+
 # ==玩转win==
 
 ## ==1.== 设置应用开机自启
@@ -2420,7 +2457,9 @@ sudo ufw allow ssh
 
 
 
-## ==4.==关于Ubuntu环境改为中文
+## ==4.==关于系统环境改为中文
+
+### ==Ubuntu==
 
 > 要将 WSL（Windows Subsystem for Linux）的默认语言更改为中文，您需要更新系统的语言环境。以下是一种方法，适用于基于 Debian 和 Ubuntu 的 WSL 发行版（如 Ubuntu、Kali Linux、Debian 等）：
 >
@@ -2509,6 +2548,36 @@ sudo ufw allow ssh
 > ```
 >
 > 然后，在 Windows 中重新启动 WSL。
+
+### ==centos7==
+
+> 1、安装简体中文语言包
+>
+> ```shell
+> yum install kde-l10n-Chinese
+> ```
+>
+> 2、设置为中文
+>
+> 临时修改，重启服务器之后就会还原之前的设置
+>
+> ```sh
+> LANG="zh_CN.UTF-8"
+> ```
+>
+> 永久修改就要把配置写入文件里面(重启窗口生效)
+>
+> ```sh
+> localectl  set-locale LANG=zh_CN.UTF8
+> ```
+>
+> 
+
+
+
+
+
+
 
 
 
@@ -2759,6 +2828,14 @@ sudo ufw allow ssh
 >    - 更改此文件仅影响当前用户的环境。
 >    简单来说，`/etc/profile`是为所有用户设置全局环境和行为的地方，而`.bashrc`是用于设置当前用户的特定环境和行为的文件。通常，`.bashrc`中的设置会覆盖`/etc/profile`中的相同设置。
 >    需要注意的是，当以图形界面方式登录时，通常不会读取`.bashrc`，除非图形终端模拟器（如GNOME Terminal）被配置为在登录时运行bash作为登录shell。另外，其他shell（如zsh或fish）可能不会读取这些文件，或者有自己的配置文件。
+
+
+
+
+
+
+
+
 
 
 
