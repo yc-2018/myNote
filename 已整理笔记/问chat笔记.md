@@ -1,6 +1,6 @@
-# ==java问题==
+# ==Java==
 
-## ==1.== java类名命名规范
+## ==1.== Java类名命名规范
 
 > Java类名的命名规范一般遵循以下几点：
 >
@@ -16,7 +16,7 @@
 >
 > ---
 >
-> **java方法命名规范**
+> **Java方法命名规范**
 >
 > Java方法的命名规范一般遵循以下几点：
 >
@@ -154,7 +154,7 @@
 
 
 
-# ==Spring boot 问题==
+# ==SpringBoot==
 
 ## ==1.==spring boot 项目一般分为几层
 
@@ -434,299 +434,7 @@
 
 
 
-# ==关于服务器==
-
-## ==1.==有什么工具可以进行端口映射
-
-> 有很多工具可以进行端口映射，以下是几个常见的工具：
->
-> 1. Ngrok：这是一个非常流行的端口映射工具，它可以将本地端口暴露到公网上，从而方便远程访问。
-> 2. FRP：这是一款基于Go语言开发的高性能的反向代理工具，它可以将内网服务映射到公网上。
-> 3. Nginx：这是一款常用的Web服务器，它还可以用来进行端口映射，通过配置Nginx反向代理实现端口映射。
-> 4. Haproxy：这是一款高性能的TCP/HTTP负载均衡器，也可以用来进行端口映射。
->
-> 以上是几个常用的端口映射工具，每个工具都有其特点和适用场景，需要根据实际需求选择使用。
->
->    > ---
->    >
->    > **springboot项目怎么用Nginx来暴露端口**
->    >
->    > 要通过Nginx来暴露Spring Boot项目的端口，需要进行以下步骤：
->    >
->    > 1. 安装Nginx，并确保Nginx服务已启动。
->    >
->    > 2. 在Nginx配置文件中添加一个反向代理规则。在Ubuntu系统上，配置文件位于`/etc/nginx/sites-available/default`。
->    >
->    >    打开该文件并添加以下内容：
->    >
->    >    ```shell
->    >    server {
->    >        listen 80;
->    >        server_name yourdomain.com;
->    >        location / {
->    >            proxy_pass http://localhost:8080;
->    >            proxy_set_header X-Real-IP $remote_addr;
->    >            proxy_set_header Host $host;
->    >            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
->    >        }
->    >    }
->    >    ```
->    >
->    >    此配置将所有来自yourdomain.com域名的HTTP请求转发到本地Spring Boot应用程序的8080端口。这里还设置了一些HTTP头，以便将客户端的真实IP地址传递给Spring Boot应用程序。
->    >
->    > 3. 保存并关闭文件，然后重新加载Nginx配置文件。在Ubuntu系统上，可以使用以下命令重新加载Nginx配置文件：
->    >
->    >    ```shell
->    >    sudo systemctl reload nginx
->    >    ```
->    >
->    > 4. [现在可以从Internet浏览器中访问yourdomain.com](http://xn--internetyourdomain-7o22a05g1no92gjumlleb09ozw8auxzjqrld45e.com/)，就可以看到已经代理到Spring Boot应用程序的内容。
->    >
->    > 注意：在上述配置中，我们假设您已经将Spring Boot应用程序部署在本地服务器上，并且正在监听端口8080。如果您的应用程序正在运行其他端口，请相应地更改Nginx配置文件中的端口号和代理端口号。
-
-
-
-## ==2.==怎么把服务器当vpn
-
-> 将服务器作为VPN服务器需要进行以下几个步骤：
->
-> 1. 安装VPN服务器软件：可以选择安装一些开源或商业的VPN服务器软件，例如OpenVPN、SoftEther等。
-> 2. 配置VPN服务器：安装完VPN服务器软件后，需要对其进行配置，包括设置认证方式、网络协议、加密方式、IP地址池等参数。具体配置方法可以参考相关软件的文档。
-> 3. 授权用户访问VPN：配置完成后，你需要添加用户并授权他们使用VPN。这通常涉及到创建用户名和密码，并分配VPN访问权限。
-> 4. 连接VPN：在客户端上安装VPN客户端软件，并输入VPN服务器的IP地址和登录凭据，即可连接到VPN服务器。此时，你的电脑的网络流量将被路由到VPN服务器并通过VPN连接传输。
->
-> 需要注意的是，在配置VPN服务器时需要遵循安全的最佳实践，确保所有的数据都得到了充分的保护和加密。同时也要遵守当地的法律法规以及互联网服务提供商（ISP）的使用政策，以免违反相关规定导致不必要的法律风险。
->
-> ---
->
-> **v2rayN**
->
-> v2rayN是一款基于V2Ray协议的Windows客户端程序，用于代理网络连接并实现VPN功能。它具有使用简单、界面友好、配置灵活等特点，适合普通用户使用。
->
-> 以下是v2rayN的使用步骤：
->
-> 1. 下载v2rayN客户端程序：你可以从v2rayN的官方网站（https://github.com/2dust/v2rayN/releases）下载最新版本的v2rayN客户端程序，并安装到电脑上。
-> 2. 配置v2rayN客户端：打开v2rayN客户端程序，点击“服务器”按钮，添加你的VPN服务器和配置信息。这里需要注意，你需要先有一个可用的V2Ray服务器，或者购买V2Ray服务提供商的服务。
-> 3. 连接VPN：在v2rayN客户端程序中选择你要使用的VPN服务器，并点击“连接”按钮。此时，你的电脑将会通过VPN连接到服务器，并使用该服务器进行访问互联网。
->
-> 需要注意的是，在使用v2rayN时，你需要遵循当地的法律法规及服务条款，并确保VPN连接的稳定性和安全性。同时也需要注意隐私保护，例如不要访问敏感信息或使用未知来源的第三方应用程序。
->
-> ---
->
-> **什么是可用的V2Ray服务器**
->
-> V2Ray是一种网络协议，用于代理网络连接并实现VPN功能。为了使用V2Ray协议，你需要有一个可用的V2Ray服务器，或者购买V2Ray服务提供商的服务。
->
-> 可用的V2Ray服务器在构建和使用中具有以下特点：
->
-> 1. 稳定性：可用的V2Ray服务器应该能够提供高度稳定的网络连接，避免因服务器故障或其他问题导致的服务中断。
-> 2. 速度：与VPN相关的速度是非常重要的，因此可用的V2Ray服务器应该能够提供快速的网络连接速度，以保证用户能够流畅地访问互联网。
-> 3. 隐私保护：V2Ray的目标之一是保护用户的隐私和身份安全，因此可用的V2Ray服务器应该能够提供安全的数据传输和加密服务。
-> 4. 支持性：V2Ray是一个开源项目，拥有广泛的社区支持和开发人员支持。因此，可用的V2Ray服务器应该能够支持各种不同的客户端和操作系统，并提供易于使用的API和配置文件。
->
-> 如果你想寻找可用的V2Ray服务器，可以通过搜索引擎或论坛等渠道查询相关信息，并评估其稳定性、速度、隐私保护和支持性等方面的特点。同时也需要注意当地的法律法规及服务条款，确保自己的合法权益和使用安全。
->
-> ---
->
-> **使用v2rayN  服务器需要阿里云服务器需要配置什么**
->
-> 要配置一个阿里云服务器用于v2rayN，您需要执行以下步骤：
->
-> 1. 创建一个阿里云ECS实例。
-> 2. 在安全组规则中设置允许传入的TCP流量的端口范围。默认情况下，v2ray使用的端口是10000-65535之间的任意端口，因此您可以选择将所有TCP端口打开或只打开这个范围。
-> 3. 安装v2rayN到您的本地计算机上，并按照v2rayN的指南，将其连接到您的阿里云服务器。
-> 4. 在阿里云服务器上安装和配置v2ray服务和相应的协议（例如VMess）以及相关的加密方式（如TLS）。
-> 5. 配置v2rayN以与您的阿里云服务器进行通信，并确保所有配置文件正确。
->
-> 请注意，这只是v2rayN和阿里云服务器之间通信的基本配置。您还需要考虑其他因素，如服务器性能、网络稳定性和安全性等。
->
-> ---
->
-> **服务器上怎么安装和配置v2ray服务和相应的协议**
->
-> 要在服务器上安装和配置v2ray服务和相应的协议，您可以按照以下步骤进行操作：
->
-> 1. 在服务器上安装v2ray，可以使用以下命令：
->
-> ```shell
-> bash <(curl -L -s https://install.direct/go.sh)
-> ```
->
-> 这将下载并安装v2ray。
->
-> 1. 安装完成后，您需要编辑v2ray的配置文件。配置文件通常位于`/etc/v2ray/config.json`。
-> 2. 打开配置文件，您将看到一个JSON格式的文本。在此文件中，您需要定义v2ray服务器的监听端口、协议、传输层安全（TLS）等信息。例如，以下是一个VMess协议的示例配置：
->
-> ```json
-> {
->   "inbounds": [
->     {
->       "port": 10086, // 监听端口
->       "protocol": "vmess", // 协议类型
->       "settings": {
->         "clients": [
->           {
->             "id": "b831381d-6324-4d53-ad4f-8cda48b30811", // UUID
->             "level": 1,
->             "alterId": 64
->           }
->         ]
->       },
->       "streamSettings": {
->         "network": "tcp",
->         "security": "tls",
->         "tlsSettings": {
->           "certificates": [
->             {
->               "certificateFile": "/path/to/cert.pem",
->               "keyFile": "/path/to/key.pem"
->             }
->           ]
->         }
->       }
->     }
->   ],
->   "outbounds": [
->     {
->       "protocol": "freedom",
->       "settings": {}
->     }
->   ]
-> }
-> ```
->
-> 1. 配置完成后，保存文件并重启v2ray服务，以使更改生效。
->
-> 以上是基本的v2ray服务和协议配置示例，具体的配置取决于您所需的协议和网络环境。如果您不熟悉v2ray的配置文件语法，请参考v2ray官方文档或寻求专业人士的帮助。
-
-
-
-
-
-## ==3.==怎么向公网暴露本机的80端口
-
-> 要向公网暴露本机的80端口，您需要进行以下步骤：
->
-> 1. 确保您的网络拥有一个公网IP地址，您可以通过访问“https://www.whatismyip.com/”等网站来获取该IP地址。
->
-> 2. 确认您的路由器是否开启了端口转发功能，如果没有，请参考您的路由器说明书按照规定方法进行设置。
->
-> 3. 在路由器中设置端口转发。将路由器的外部公网IP地址绑定到本地网络中服务器或设备的内部IP地址的80端口上。这通常可以在路由器的"端口映射"或"端口转发"选项下找到。
->
-> 4. 确认您的防火墙是否已正确配置，允许外部请求通过80端口进入您的服务器或设备。
->
-> 5. 最后，测试您的设置。您可以使用一个在线端口检查工具来验证您的80端口是否已成功开放。
->
-> 请注意，在向公网暴露您的端口之前， 公网安全性问题必须得到重视。 您应谨慎权衡可能带来的风险，并采取适当的安全措施来确保您的系统和数据的安全。
->
-> 
->
-> **水星路由器怎么开启了端口转发功能**
->
-> >以下是在水星路由器上开启端口转发功能的步骤：
-> >
-> >1. 登录水星路由器管理页面。一般情况下，您可以在浏览器地址栏中输入路由器的管理页面地址，例如：“192.168.1.1”。
-> >
-> >2. 在管理页面中，选择“高级设置”选项，然后找到“端口转发”或“虚拟服务器”选项。
-> >
-> >3. 单击“添加规则”按钮，然后选择“TCP/UDP”协议，并输入要开放的端口号。
-> >
-> >4. 输入您希望所在局域网的设备的IP地址来指定目标设备。
-> >
-> >5. 将规则的状态切换为“已启用”，单击“保存”以保存设置并应用于路由器。
-> >
-> >请注意，在向公网暴露您的端口之前， 公网安全性问题必须得到重视。 您应谨慎权衡可能带来的风险，并采取适当的安全措施来确保您的系统和数据的安全。
-
-
-
-## ==4.== 配置二级域名
-
-我在阿里云买了个域名，也用Nginx配置了顶级域名，现在我想有个二级域名要怎么处理
-
-> 要配置二级域名，你需要在域名管理服务（如阿里云的域名服务）中添加一个二级域名的记录，然后在Nginx中进行相应配置。以下是一个简单的步骤指南：
-> ### 1. 添加二级域名DNS记录
-> 在你的域名注册商（这里是阿里云）的控制面板中，你需要为你想要的二级域名添加一条DNS记录。
-> - 登录到阿里云控制台，找到你的域名管理服务。
-> - 选择你的顶级域名，进入其DNS管理界面。
-> - 添加一条新的记录。常用的记录类型有A记录和CNAME记录：
->   - **A记录**：将二级域名指向一个IP地址。
->   - **CNAME记录**：将二级域名指向另一个域名（例如，你的顶级域名或任何其他域名）。
->   例如，如果你想要`blog.example.com`指向一台服务器的IP地址，则添加一条A记录，记录值为那台服务器的IP地址。
-> ### 2. 配置Nginx
-> 在Nginx中配置二级域名主要是通过编辑或创建一个新的服务器块（server block）来完成的。
-> 1. 找到Nginx的配置文件所在目录，通常在`/etc/nginx/sites-available/`。
-> 2. 创建一个新的配置文件或编辑现有文件，用于你的二级域名。例如，`blog.example.com`。
-> 3. 在这个文件中，设置一个新的`server`块，其中包括你的二级域名作为`server_name`，并配置适当的`location`块以处理请求。下面是一个简单的例子：
-> ```nginx
-> server {
->     listen 80;
->     server_name blog.example.com;
->     location / {
->         root /var/www/blog; # 你的网站文件存放位置
->         index index.html index.htm;
->     }
->     # 其他配置，如日志文件路径、错误页面等
-> }
-> ```
-> 4. 保存文件并创建一个符号链接（如果你是在`sites-available`目录下创建的文件），将其链接到`sites-enabled`目录，以便Nginx可以读取到这个配置。
->    
-> ```bash
-> sudo ln -s /etc/nginx/sites-available/blog.example.com /etc/nginx/sites-enabled/
-> ```
-> 5. 检查Nginx配置文件的语法是否正确：
-> ```bash
-> sudo nginx -t
-> ```
-> 6. 如果检查通过，重新加载Nginx使配置生效：
-> ```bash
-> sudo systemctl reload nginx
-> ```
-> 完成这些步骤后，你的二级域名应该就配置好了，能够处理指向它的请求了。确保你的DNS记录已经生效（这可能需要一些时间），然后你就可以通过二级域名访问对应的内容了。
->
-> <kbd>2024.03.25</kbd> <kbd>MindGen 4.0</kbd> 
-
-
-
-
-
-## ==5.== Nginx怎么运行多个域名跨域
-
-我想让http://localhost:3000 http://localhost:3001 还有https://yc556.gitee.io/允许跨域怎么改
-location /md {
-add_header Access-Control-Allow-Origin 'http://localhost:3000';
-
-==（静态页面且不想用*的情况）==
-
-> 要允许跨域请求，你需要在Nginx的配置中为每个需要跨域的源设置`Access-Control-Allow-Origin`头部。由于你想要从三个不同的源（`http://localhost:3000`, `http://localhost:3001`, `https://yc556.gitee.io/`）进行跨域请求，而HTTP头部`Access-Control-Allow-Origin`在一个响应中只能设置一个值，你需要根据请求的来源动态设置这个头部。
-> 这里有一个在Nginx中实现这一目的的方法：
->
-> 1. **创建一个映射**来根据请求的`Origin`头部动态设置`Access-Control-Allow-Origin`。这个映射可以在Nginx配置的`http`块中定义，这样它就可以被所有的`server`块共享。
-> 2. **应用这个映射**到你的`location /md`块中，使用`add_header`指令设置正确的`Access-Control-Allow-Origin`。
-> 下面是具体的配置示例：
-> ```nginx
-> http {
->     map $http_origin $allow_origin {
->         default "";
->         "http://localhost:3000"  $http_origin;
->         "http://localhost:3001"  $http_origin;
->         "https://yc556.gitee.io" $http_origin;
->     }
->     server {
->         ...
->         location /md {
->             ...
->             add_header Access-Control-Allow-Origin $allow_origin;
->             ...
->         }
->     }
-> }
-> ```
-> 这个配置首先检查请求的`Origin`是否是你指定的三个之一，如果是，则将`Access-Control-Allow-Origin`设置为该`Origin`。这样，只有这三个指定的源可以接收来自`location /md`的跨域请求。
-> <kbd>2024.04.06</kbd> <kbd>通用助手4.0</kbd> 
-
-
-
-# ==玩转win==
+# ==Windows==
 
 ## ==1.== 设置应用开机自启
 
@@ -979,7 +687,7 @@ add_header Access-Control-Allow-Origin 'http://localhost:3000';
 
 
 
-# ==CSS相关==
+# ==CSS==
 
 ==1.== Emmet 语法
 
@@ -1242,7 +950,7 @@ add_header Access-Control-Allow-Origin 'http://localhost:3000';
 
 
 
-# ==js问题==
+# ==JavaScript==
 
 ## ==1.==js判断中 哪些非布尔类的值会是false
 
@@ -1811,7 +1519,7 @@ add_header Access-Control-Allow-Origin 'http://localhost:3000';
 
 
 
-# ==Linux相关==
+# ==Linux==
 
 ## ==1.==shell的常用命令
 
@@ -2833,13 +2541,115 @@ sudo ufw allow ssh
 
 
 
+## ==11.== 配置二级域名
+
+我在阿里云买了个域名，也用Nginx配置了顶级域名，现在我想有个二级域名要怎么处理
+
+> 要配置二级域名，你需要在域名管理服务（如阿里云的域名服务）中添加一个二级域名的记录，然后在Nginx中进行相应配置。以下是一个简单的步骤指南：
+>
+> ### 1. 添加二级域名DNS记录
+>
+> 在你的域名注册商（这里是阿里云）的控制面板中，你需要为你想要的二级域名添加一条DNS记录。
+>
+> - 登录到阿里云控制台，找到你的域名管理服务。
+> - 选择你的顶级域名，进入其DNS管理界面。
+> - 添加一条新的记录。常用的记录类型有A记录和CNAME记录：
+>   - **A记录**：将二级域名指向一个IP地址。
+>   - **CNAME记录**：将二级域名指向另一个域名（例如，你的顶级域名或任何其他域名）。
+>     例如，如果你想要`blog.example.com`指向一台服务器的IP地址，则添加一条A记录，记录值为那台服务器的IP地址。
+>
+> ### 2. 配置Nginx
+>
+> 在Nginx中配置二级域名主要是通过编辑或创建一个新的服务器块（server block）来完成的。
+>
+> 1. 找到Nginx的配置文件所在目录，通常在`/etc/nginx/sites-available/`。
+> 2. 创建一个新的配置文件或编辑现有文件，用于你的二级域名。例如，`blog.example.com`。
+> 3. 在这个文件中，设置一个新的`server`块，其中包括你的二级域名作为`server_name`，并配置适当的`location`块以处理请求。下面是一个简单的例子：
+>
+> ```nginx
+> server {
+>     listen 80;
+>     server_name blog.example.com;
+>     location / {
+>         root /var/www/blog; # 你的网站文件存放位置
+>         index index.html index.htm;
+>     }
+>     # 其他配置，如日志文件路径、错误页面等
+> }
+> ```
+>
+> 4. 保存文件并创建一个符号链接（如果你是在`sites-available`目录下创建的文件），将其链接到`sites-enabled`目录，以便Nginx可以读取到这个配置。
+>
+> ```bash
+> sudo ln -s /etc/nginx/sites-available/blog.example.com /etc/nginx/sites-enabled/
+> ```
+>
+> 5. 检查Nginx配置文件的语法是否正确：
+>
+> ```bash
+> sudo nginx -t
+> ```
+>
+> 6. 如果检查通过，重新加载Nginx使配置生效：
+>
+> ```bash
+> sudo systemctl reload nginx
+> ```
+>
+> 完成这些步骤后，你的二级域名应该就配置好了，能够处理指向它的请求了。确保你的DNS记录已经生效（这可能需要一些时间），然后你就可以通过二级域名访问对应的内容了。
+>
+> <kbd>2024.03.25</kbd> <kbd>MindGen 4.0</kbd> 
+
+
+
+
+
+## ==12.== Nginx怎么运行多个域名跨域
+
+我想让http://localhost:3000 http://localhost:3001 还有https://yc556.gitee.io/允许跨域怎么改
+location /md {
+add_header Access-Control-Allow-Origin 'http://localhost:3000';
+
+==（静态页面且不想用*的情况）==
+
+> 要允许跨域请求，你需要在Nginx的配置中为每个需要跨域的源设置`Access-Control-Allow-Origin`头部。由于你想要从三个不同的源（`http://localhost:3000`, `http://localhost:3001`, `https://yc556.gitee.io/`）进行跨域请求，而HTTP头部`Access-Control-Allow-Origin`在一个响应中只能设置一个值，你需要根据请求的来源动态设置这个头部。
+> 这里有一个在Nginx中实现这一目的的方法：
+>
+> 1. **创建一个映射**来根据请求的`Origin`头部动态设置`Access-Control-Allow-Origin`。这个映射可以在Nginx配置的`http`块中定义，这样它就可以被所有的`server`块共享。
+> 2. **应用这个映射**到你的`location /md`块中，使用`add_header`指令设置正确的`Access-Control-Allow-Origin`。
+>    下面是具体的配置示例：
+>
+> ```nginx
+> http {
+>     map $http_origin $allow_origin {
+>         default "";
+>         "http://localhost:3000"  $http_origin;
+>         "http://localhost:3001"  $http_origin;
+>         "https://yc556.gitee.io" $http_origin;
+>     }
+>     server {
+>         ...
+>         location /md {
+>             ...
+>             add_header Access-Control-Allow-Origin $allow_origin;
+>             ...
+>         }
+>     }
+> }
+> ```
+>
+> 这个配置首先检查请求的`Origin`是否是你指定的三个之一，如果是，则将`Access-Control-Allow-Origin`设置为该`Origin`。这样，只有这三个指定的源可以接收来自`location /md`的跨域请求。
+> <kbd>2024.04.06</kbd> <kbd>通用助手4.0</kbd> 
 
 
 
 
 
 
-# ==Git问题==
+
+
+
+# ==Git==
 
 ## ==1.== git怎么对已管理的文件夹取消管理
 
@@ -3065,7 +2875,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 
 
-# ==docker问题==
+# ==Docker==
 
 ## ==1.== 理解docker
 
@@ -3165,7 +2975,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 
 
-# ==py问题==
+# ==Python==
 
 ## ==1.==TOML在py中怎么用
 
@@ -3359,4 +3169,4 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > IP地址以172开头的不一定都是内网或外网，具体要看后面的数值。
 > 具体的说，私有IP地址范围（通常被用于内网）中包括了从172.16.0.0到172.31.255.255的地址。所以，如果172开头的IP地址落在这个范围内，那么它就是内网IP。
 > 如果不在这个范围内，比如172.15.0.0或172.32.0.0，那它可能就是公网IP了。
-> 但是，需要注意的是，这只是一个通用的规则。在实际网络配置中，网络管理员有可能对这些规则进行自定义设置，使某些IP地址在特定的网络环境中表现得像内网或外网地址。s
+> 但是，需要注意的是，这只是一个通用的规则。在实际网络配置中，网络管理员有可能对这些规则进行自定义设置，使某些IP地址在特定的网络环境中表现得像内网或外网地址。
