@@ -18,7 +18,8 @@
     "4.  https克隆转换为ssh.md",
     "5.  git clone指定分支.md",
     "6.  生成ssh公钥.md",
-    "7.  怎么取消git add.md"
+    "7.  怎么取消git add.md",
+    "8.  Git常用命令.md"
   ],
   [
     "Java",
@@ -43,6 +44,7 @@
     "10.  ` etc profile`  和` .bashrc`的区别.md",
     "11.  配置二级域名.md",
     "12.  Nginx怎么运行多个域名跨域.md",
+    "13.  shell 脚本怎么接收参数.md",
     "2. win10子系统（WLS）.md",
     "3. 关于开启ssh.md",
     "4. 关于系统环境改为中文.md",
