@@ -685,6 +685,61 @@
 
 
 
+## ==11.== 环境变量导出和导入
+
+<kbd>2024.04.20</kbd>[参考来源](https://codeleading.com/article/84535128739/)
+
+> ### 导出
+>
+> 在cmd命令下输入
+>
+> ```bash
+> set >> D:/evn.reg
+> ```
+>
+> 就会在D盘生成一个evn.reg文件，用记事本打开 可能是这样的（win10）
+>
+> ```sh
+> Windows Registry Editor Version 5.00
+>  
+> [HKEY_CURRENT_USER\Environment]
+>  
+> "APPLICATION_DB_HOST"="localhost"
+> "APPLICATION_DB_NAME"="staging"
+> "APPLICATION_DB_PORT"="3306"
+> "APPLICATION_DB_USER"="root"
+> "APPLICATION_MESSAGE_HOST"="127.0.0.1"
+> "APPLICATION_MESSAGE_PORT"="6379"
+> "APPLICATION_REDIS_HOST"="127.0.0.1"
+> "APPLICATION_REDIS_PORT"="6379"
+> ```
+>
+> 双击运行就好了。。。
+>
+> 但我的（win11）是这样的（运行不了）
+>
+> ```sh
+> ALLUSERSPROFILE=C:\ProgramData
+> APPCODE_VM_OPTIONS=D:\green\ideaIU-2022.3.3.win
+> APPDATA=C:\Users\AppData\Roaming
+> CLASSPATH=.;JAVA_HOME%\lib;D:\green\jdk1.8.0_131\lib\tools.jar
+> ```
+>
+> >==系统变量在注册表的位置==
+> >
+> >系统变量路径：
+> >[HKLM\SYSTEM\ControlSet001\Control\Session Manager\Environment]
+> >[HKLM\SYSTEM\ControlSet002\Control\Session Manager\Environment]
+> >[HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment]
+> >用户变量路径：
+> >[HKCU\Environment]
+> >
+> >其中：
+> >HKLM = HKEY_LOCAL_MACHINE
+> >HKCU = HKEY_CURRENT_USER
+
+
+
 
 
 # ==CSS==
