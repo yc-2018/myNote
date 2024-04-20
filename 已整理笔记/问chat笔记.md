@@ -687,7 +687,7 @@
 
 ## ==11.== 环境变量导出和导入
 
-<kbd>2024.04.20</kbd>[参考来源](https://codeleading.com/article/84535128739/)
+<kbd>2024.04.20</kbd>[参考来源](https://codeleading.com/article/84535128739/) & <kbd>MindGen 4.0</kbd> 
 
 > ### 导出
 >
@@ -701,9 +701,9 @@
 >
 > ```sh
 > Windows Registry Editor Version 5.00
->  
+> 
 > [HKEY_CURRENT_USER\Environment]
->  
+> 
 > "APPLICATION_DB_HOST"="localhost"
 > "APPLICATION_DB_NAME"="staging"
 > "APPLICATION_DB_PORT"="3306"
@@ -724,6 +724,32 @@
 > APPDATA=C:\Users\AppData\Roaming
 > CLASSPATH=.;JAVA_HOME%\lib;D:\green\jdk1.8.0_131\lib\tools.jar
 > ```
+>
+> 所以怎么办啊
+>
+> >### cmd设置环境变量
+> >
+> >要导入环境变量，你需要编辑之前导出的文本文件，然后使用命令提示符或脚本来设置变量。
+> >
+> >1. 首先，打开你之前导出的环境变量文件（如`env_variables.txt`）。
+> >
+> >2. 编辑文件，确保其格式正确。每行应该是一个`KEY=VALUE`的形式。
+> >
+> >3. 使用命令提示符或脚本来设置环境变量。例如，如果你想设置名为`MY_VAR`的环境变量，其值为`123`，可以在命令提示符中输入：
+> >
+> >   ```cmd
+> >   SETX MY_VAR 123
+> >   ```
+> >
+> >   要从文件批量导入环境变量，你可能需要编写一个简单的批处理脚本来逐行读取文件并使用`SETX`命令。
+> >
+> >### 注意事项
+> >
+> >- `SETX`命令用于永久设置环境变量。如果只想临时设置变量，使用`SET`命令即可。
+> >- 修改环境变量后，可能需要重启命令提示符或PowerShell窗口，有时甚至需要重启计算机，以使更改生效。
+> >- 在批量导入环境变量时要小心，因为不正确的值可能会导致系统问题。
+>
+> ---
 >
 > >==系统变量在注册表的位置==
 > >
