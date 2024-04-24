@@ -3284,6 +3284,176 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 
 
+# ==SQL==
+
+## ==1.== MySQL常用命令
+
+> <kbd>2024.04.24</kbd> <kbd>Ptg</kbd> 
+>
+> ---
+>
+> **DML**
+>
+> 插入数据：`INSERT INTO 表名 VALUES (值1, 值2, 值3, ...);`
+>
+> 更新数据：`UPDATE 表名 SET 字段名=新值 WHERE 条件;`
+>
+> 删除数据：`UPDATE 表名 SET 字段名=新值 WHERE 条件;`
+>
+> ---
+>
+> **DQL**
+>
+> 简单查询：`SELECT 字段名1, 字段名2 FROM 表名;`
+>
+> 条件查询：`SELECT * FROM 表名 WHERE 条件;`
+>
+> 模糊查询：`SELECT * FROM 表名 WHERE 字段名 LIKE '%_';`
+>
+> 查询排序：`SELECT * FROM 表名 WHERE 条件 ORDER BY 字段名 ASC|DESC;`
+>
+> 查询分组：`SELECT * FROM 表名 WHERE 条件 GROUP BY 字段;`
+>
+> 聚合函数：`SELECT COUNT(*), SUM(*), MAX(*), MIN(*), AVG(*) FROM 表名 WHERE 条件;`
+>
+> limit语句：`SELECT * FROM 表名 WHERE 条件 LIMIT offset, length;`
+>
+> ---
+>
+> **DDL**
+>
+> 创建数据库：` CREATE DATABASE 数据库名;`
+>
+> 修改数据库：` ALTER DATABASE 数据库名 DEFAULT CHARACTER SET 字符集;`
+>
+> 查看所有数据库：` SHOW DATABASES;`
+>
+> 删除数据库：` DROP DATABASE 数据库名;`
+>
+> 查看某个数据库中的所有表：` SHOW TABLES;`
+>
+> 创建表：` CREATE TABLE 表名(字段名1 字段类型1,字段名2 字段类型2);`
+>
+> 主键自增：` 字段名 字段类型 PRIMARY KEY AUTOINCREMENT`
+>
+> 删除表：` DROP TABLE 表名;`
+>
+> 修改表结构添加一列：` ALTER TABLE 表名 ADD 字段名 字段类型;`
+>
+> 修改表结构修改列类型：` ALTER TABLE 表名 MODIFY 字段名 新类型;`
+>
+> 修改表结构修改列名：` ALTER TABLE 表名 CHANGE 老字段名 新字段名 类型;`
+>
+> 修改表结构删除列：` ALTER TABLE 表名 DROP 字段名`
+>
+> 修改表结构修改表名：` RENAME TABLE 表名 TO 新表名`
+>
+> 修改表的字符集：` ALTER TABLE 表名 DEFAULT CHARACTER SET 新字符集;`
+>
+> 查看表结构：`DESC 表名; `
+>
+> 删除主键：` ALTER TABLE 表名 DROP PRIMARY KEY;`
+>
+> 蠕虫复制：` INSERT INTO 表名1 SELECT*FROM 表名2;`
+
+
+
+## ==2.== MySQL复杂查询
+
+> <kbd>2024.04.24</kbd> <kbd>MindGen 4.0</kbd> 
+>
+> ### 连接查询（JOIN）
+> 连接查询用于从两个或多个表中根据相关联的字段获取数据。
+> ```sql
+> -- 内连接（INNER JOIN）
+> SELECT A.字段名1, B.字段名2
+> FROM 表名1 A
+> INNER JOIN 表名2 B ON A.关联字段 = B.关联字段
+> WHERE A.条件;
+> 
+> 
+> -- 左外连接（LEFT JOIN）
+> SELECT A.字段名1, B.字段名2
+> FROM 表名1 A
+> LEFT JOIN 表名2 B ON A.关联字段 = B.关联字段
+> WHERE A.条件;
+> 
+> 
+> -- 右外连接（RIGHT JOIN）
+> SELECT A.字段名1, B.字段名2
+> FROM 表名1 A
+> RIGHT JOIN 表名2 B ON A.关联字段 = B.关联字段
+> WHERE A.条件;
+> ```
+> 
+>
+> ### 子查询
+>
+> 子查询是在一个查询内部嵌入的另一个查询。
+> ```sql
+> -- 子查询作为WHERE子句的一部分
+> SELECT 字段名1, 字段名2
+> FROM 表名1
+> WHERE 字段名 IN (SELECT 字段名 FROM 表名2 WHERE 条件);
+> 
+> 
+> -- 子查询作为FROM子句的一部分
+> SELECT A.字段名1, B.字段名2
+> FROM (SELECT 字段名 FROM 表名 WHERE 条件) AS A
+> JOIN 表名2 B ON A.关联字段 = B.关联字段;
+> ```
+> 
+>
+> ### 联合查询（UNION）
+>
+> 联合查询用于合并两个或多个SELECT语句的结果集。
+> ```sql
+> SELECT 字段名1, 字段名2 FROM 表名1
+> WHERE 条件1
+> UNION
+> SELECT 字段名1, 字段名2 FROM 表名2
+> WHERE 条件2;
+> ```
+> 如果需要包含所有结果，可以使用 `UNION ALL`。
+>
+> 
+>
+> ### 复杂聚合函数
+>
+> 在分组查询中使用多个聚合函数。
+> ```sql
+> SELECT 字段名, COUNT(*) AS 计数, SUM(字段名2) AS 求和, AVG(字段名2) AS 平均值
+> FROM 表名
+> WHERE 条件
+> GROUP BY 字段名;
+> ```
+> 
+>
+> ### 分页查询（LIMIT）
+>
+> 通常与ORDER BY结合使用，实现分页效果。
+> ```sql
+> SELECT *
+> FROM 表名
+> WHERE 条件
+> ORDER BY 字段名 ASC|DESC
+> LIMIT offset, length;
+> ```
+> 
+>
+> ### 复杂条件查询
+>
+> 使用逻辑操作符AND, OR来组合多个条件。
+> ```sql
+> SELECT *
+> FROM 表名
+> WHERE (条件1 AND 条件2) OR (条件3 AND 条件4);
+> ```
+
+
+
+
+
 # ==其他问题==
 
 ## ==1.==临时邮箱
