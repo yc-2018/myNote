@@ -3296,9 +3296,9 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 >
 > 插入数据：`INSERT INTO 表名 VALUES (值1, 值2, 值3, ...);`
 >
-> 更新数据：`UPDATE 表名 SET 字段名=新值 WHERE 条件;`
+> 更新数据：`UPDATE 表名 SET 字段名=新值,字段名='新值' WHERE 条件;` 
 >
-> 删除数据：`UPDATE 表名 SET 字段名=新值 WHERE 条件;`
+> 删除数据：`DELETE FROM 表名 WHERE 条件;`
 >
 > ---
 >
