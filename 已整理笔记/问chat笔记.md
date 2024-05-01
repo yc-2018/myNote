@@ -1600,6 +1600,237 @@
 
 
 
+## ==8.== 字符串常用的方法和demo
+
+> <kbd>2024.05.01</kbd> <kbd>MindGen 4.0</kbd> 
+>
+> 1. **`charAt(index)`**：返回在指定位置的字符。
+>    
+>    ```javascript
+>    let str = "Hello, world!";
+>    console.log(str.charAt(7)); // "w"
+>    ```
+> 2. **`concat(string2, string3, ..., stringN)`**：连接两个或多个字符串，并返回新的字符串。
+>    
+>    ```javascript
+>    let str1 = "Hello";
+>    let str2 = " World";
+>    console.log(str1.concat(str2)); // "Hello World"
+>    ```
+> 3. **`includes(searchString, position)`**：判断字符串是否包含指定的子字符串，并根据情况返回true或false。
+>    
+>    ```javascript
+>    let str = "Hello, world!";
+>    console.log(str.includes("world")); // true
+>    ```
+> 4. **`indexOf(searchString, position)`**：返回指定文本在字符串中首次出现的索引，如果未找到，则返回-1。
+>    
+>    ```javascript
+>    let str = "Hello, world!";
+>    console.log(str.indexOf("world")); // 7
+>    ```
+> 5. **`toLowerCase()`**：将字符串中的所有字符转换为小写。
+>    
+>    ```javascript
+>    let str = "HELLO WORLD!";
+>    console.log(str.toLowerCase()); // "hello world!"
+>    ```
+> 6. **`toUpperCase()`**：将字符串中的所有字符转换为大写。
+>    
+>    ```javascript
+>    let str = "hello world!";
+>    console.log(str.toUpperCase()); // "HELLO WORLD!"
+>    ```
+> 7. **`slice(startIndex, endIndex)`**：提取字符串的一部分，并返回新的字符串。
+>    
+>    ```javascript
+>    let str = "Hello, world!";
+>    console.log(str.slice(7, 12)); // "world"
+>    ```
+> 8. **`split(separator, limit)`**：根据指定的分隔符将字符串分割成数组。
+>    
+>    ```javascript
+>    let str = "Hello world!";
+>    console.log(str.split(" ")); // ["Hello", "world!"]
+>    ```
+> 9. **`substring(startIndex, endIndex)`**
+>    提取字符串中两个指定索引之间的字符。
+>    ```javascript
+>    let str = "Hello, world!";
+>    console.log(str.substring(7, 12)); // "world"
+>    ```
+> 10. **`trim()`**：去除字符串两端的空白字符。
+>     
+>     ```javascript
+>     let str = "   Hello, world!   ";
+>     console.log(str.trim()); // "Hello, world!"
+>     ```
+> 11. **`replace(searchFor, replaceWith)`**：替换字符串中的某些字符或子字符串。
+>     
+>     ```javascript
+>     let str = "Hello, world!";
+>     console.log(str.replace("world", "there")); // "Hello, there!"
+>     ```
+
+
+
+## ==9.== 阻止url带有ikun的xhr请求
+
+> <kbd>2024.05.01</kbd> <kbd>MindGen 4.0</kbd> 
+>
+> 可以通过重写 JavaScript 中的 `XMLHttpRequest` 或者 `fetch` API 来拦截所有网络请求。以下是如何重写 `XMLHttpRequest` 的方法：
+>
+> ```javascript
+> // 保留原始的 XMLHttpRequest 构造函数
+> var originalXhr = window.XMLHttpRequest;
+> 
+> // 创建自定义的 XMLHttpRequest 构造函数
+> function CustomXMLHttpRequest() {
+>     var xhr = new originalXhr();
+> 
+>     // 重写 open 方法
+>     var originalOpen = xhr.open;
+>     xhr.open = function(method, url, async) {
+>         // 检查 URL 是否包含 "ikun"
+>         if (url.includes('ikun')) {
+>             console.log('阻止请求:', url);
+>             return; // 直接返回以阻止请求
+>         }
+>         // 否则调用原始 open 方法
+>         originalOpen.apply(xhr, arguments);
+>     };
+> 
+>     return xhr;
+> }
+> 
+> // 将 window.XMLHttpRequest 替换为自定义构造函数
+> window.XMLHttpRequest = CustomXMLHttpRequest;
+> ```
+> 在这个例子中，我们保留了原始的 `XMLHttpRequest` 构造函数，并创建了一个自定义版本。自定义版本通过检查 URL 是否包含特定字符串来决定是否阻止请求。
+>
+> ---
+>
+> >**另外一方法，代码有一点差别，但是效果是一样的，有空就看看，没空就算了吧**
+> >
+> >```js	
+> >// 保存原始的 XMLHttpRequest 构造函数
+> >var RealXMLHttpRequest = window.XMLHttpRequest;
+> >
+> >// 定义一个新的构造函数，扩展原有功能
+> >function EnhancedXMLHttpRequest() {
+> >    var xhr = new RealXMLHttpRequest();
+> >
+> >    // 重写 open 方法
+> >    xhr.open = function(method, url, async, user, password) {
+> >        // 添加自定义逻辑，比如检查 URL
+> >        if (url.includes('ikun')) {
+> >            console.log('拦截到特定请求:', url);
+> >            // 可以选择不调用真正的 open 方法来阻止请求
+> >            return;
+> >        }
+> >        // 调用原始的 open 方法
+> >        RealXMLHttpRequest.prototype.open.call(this, method, url, async, user, password);
+> >    };
+> >
+> >    return xhr;
+> >}
+> >
+> >// 替换全局的 XMLHttpRequest
+> >window.XMLHttpRequest = EnhancedXMLHttpRequest;
+> >```
+> >
+> >>**上面2个调用原始api方法的区别是什么**
+> >>
+> >>在 JavaScript 中，调用函数有几种不同的方式，特别是当涉及到继承和方法重写时。你提到的 `RealXMLHttpRequest.prototype.open.call(this, method, url, async, user, password)` 和 `originalOpen.apply(this, arguments)` 都是用于在修改或拦截函数时调用原始函数的技术，但它们在如何传递参数和使用上略有差异。下面我来详细解释一下这两种方法的区别：
+> >>### `.call()` 方法
+> >>`.call()` 方法在 JavaScript 中用于调用一个函数，其中第一个参数将被用作该函数运行时的 `this` 值，后续的参数将直接作为函数参数按顺序传递。
+> >>例如：
+> >>```javascript
+> >>RealXMLHttpRequest.prototype.open.call(this, method, url, async, user, password);
+> >>```
+> >>这里，`.call()` 方法用于调用 `open` 函数，`this` 关键字被显式设置为当前的 `XMLHttpRequest` 实例，`method`, `url`, `async`, `user`, `password` 依次作为参数传递给 `open` 方法。
+> >>### `.apply()` 方法
+> >>`.apply()` 方法与 `.call()` 非常相似，用于调用函数，但它只接受两个参数：第一个是 `this` 的值，第二个是一个数组，其中数组中的元素将作为函数的参数。
+> >>例如：
+> >>```javascript
+> >>originalOpen.apply(this, arguments);
+> >>```
+> >>这里，`.apply()` 方法同样是用来调用 `open` 函数，`this` 被设置为当前的 `XMLHttpRequest` 实例。不同的是，`arguments` 是一个包含所有传递给当前函数的参数的数组。这意味着，不需要显式列出所有参数，而是直接使用 `arguments` 对象，这在处理不确定参数数量时非常有用。
+> >>### 主要区别
+> >>- **参数传递**：`.call()` 需要将所有参数明确列出来传递，而 `.apply()` 可以接受一个数组作为参数，这在动态参数的场景下非常方便。
+> >>- **使用场景**：当你知道所需参数的具体数量时，使用 `.call()` 是合适的；当参数数量不固定，或者你想直接传递一个现有的参数数组时，使用 `.apply()` 更为方便。
+> >>在实际开发中，选择 `.call()` 还是 `.apply()` 取决于具体的使用场景和参数处理的需求。
+
+
+
+## ==10.== 拦截XMLHttpRequest并修改返回的responseText值
+
+> <kbd>2024.05.01</kbd> 参考：[JavaScript - 拦截XMLHttpRequest - wstong - 博客园](https://www.cnblogs.com/wstong2052/p/17487141.html)
+>
+> ---
+>
+> 拦截`XMLHttpRequest`没法直接修改`responseText`，因为他是只读的,所以要用下面的办法来更改`responseText`的get方法
+>
+> **方法1**
+>
+> ```js
+> var accessor = Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype, 'responseText');
+> Object.defineProperty(XMLHttpRequest.prototype, 'responseText', {
+>     get: function() {
+>         let res = accessor.get.call(this);
+>         // 在这里对res值进行修改
+>         console.log(res);
+>         return res;
+>     },
+>     set: function(str) {
+>         console.log('set responseText: %s', str);
+>         // return accessor.set.call(this, str);
+>     },
+>     configurable: true
+> });
+> ```
+>
+> ---
+>
+> **方法2**
+>
+> ```js
+> function setupHook(xhr) {
+>     function getter() {
+>         console.log('get responseText');
+>         delete xhr.responseText;  // 不delete将造成递归
+>         var res = xhr.responseText;
+>         // 在这改 res
+>         setup(); // 重新安装 getter 和 setter
+>         return res;
+>     }
+>     function setter(str) {
+>         console.log('set response: %s', str);
+>     }
+>     function setup() {
+>         Object.defineProperty(xhr, 'responseText', {
+>             get: getter,
+>             set: setter,
+>             configurable: true
+>         });
+>     }
+>     setup();
+> }
+> 
+> var oldOpen = XMLHttpRequest.prototype.open;
+> XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+>     if (!this._hooked) {
+>         this._hooked = true;
+>         setupHook(this);
+>     }
+>     oldOpen.apply(this, arguments);
+> }
+> ```
+
+
+
+
+
 # ==Linux==
 
 ## ==1.==shell的常用命令
