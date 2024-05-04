@@ -152,6 +152,84 @@
 
 
 
+## ==5.== 字符串常用方法
+
+> Java中的字符串是不可变的，这意味着一旦创建了一个字符串对象，就不能更改其内容。以下是一些常用的字符串方法：
+> 1. **length()：** 返回字符串的长度。
+>    ```java
+>    String str = "Hello, world!";
+>    int length = str.length(); // length = 13
+>    ```
+> 2. **charAt(int index)：** 返回指定索引处的字符。
+>    ```java
+>    char ch = str.charAt(7); // ch = 'w'
+>    ```
+> 3. **substring(int beginIndex)和substring(int beginIndex, int endIndex)：** 返回从指定索引开始到指定索引结束的子字符串。
+>    ```java
+>    String sub1 = str.substring(7); // sub1 = "world!"
+>    String sub2 = str.substring(7, 9); // sub2 = "wo"
+>    ```
+> 4. **toLowerCase()和toUpperCase()：** 将字符串转换为小写或大写。
+>    ```java
+>    String lower = str.toLowerCase(); // lower = "hello, world!"
+>    String upper = str.toUpperCase(); // upper = "HELLO, WORLD!"
+>    ```
+> 5. **equals(Object obj)和equalsIgnoreCase(String anotherString)：** 比较字符串内容是否相等（忽略大小写）。
+>    ```java
+>    boolean isEqual = str.equals("hello, world!"); // isEqual = true
+>    boolean isEqualIgnoreCase = str.equalsIgnoreCase("HELLO, WORLD!"); // isEqualIgnoreCase = true
+>    ```
+> 6. **indexOf(String str)和lastIndexOf(String str)：** 返回指定子字符串在字符串中第一次出现的索引和最后一次出现的索引。
+>    ```java
+>    int firstIndex = str.indexOf("l"); // firstIndex = 2
+>    int lastIndex = str.lastIndexOf("l"); // lastIndex = 10
+>    ```
+> 7. **startsWith(String prefix)和endsWith(String suffix)：** 检查字符串是否以指定的前缀或后缀开始或结束。
+>    
+>    ```java
+>    boolean startsWith = str.startsWith("Hello"); // startsWith = true
+>    boolean endsWith = str.endsWith("!"); // endsWith = true
+>    ```
+> 8. **isEmpty()：** 检查字符串是否为空。
+>    ```java
+>    boolean isEmpty = str.isEmpty(); // isEmpty = false
+>    ```
+> 9. **replace(char oldChar, char newChar)和replace(CharSequence target, CharSequence replacement)：** 将字符串中的字符或子字符串替换为新字符或新字符串。
+>    ```java
+>    String replaced1 = str.replace('o', '0'); // replaced1 = "Hell0, w0rld!"
+>    String replaced2 = str.replace("world", "Java"); // replaced2 = "Hello, Java!"
+>    ```
+> 10. **trim()：** 去除字符串首尾的空白字符。
+>     ```java
+>     String strWithSpaces = "  Hello, world!  ";
+>     String trimmed = strWithSpaces.trim(); // trimmed = "Hello, world!"
+>     ```
+> 11. **concat(String str)：** 将指定字符串连接到原字符串的末尾。
+>     ```java
+>     String concatenated = str.concat(" Welcome"); // concatenated = "Hello, world! Welcome"
+>     ```
+> 12. **split(String regex)：** 使用正则表达式将字符串拆分为子字符串数组。
+>     ```java
+>     String[] parts = str.split(", "); // parts = ["Hello", "world!"]
+>     ```
+> 13. **startsWith(String prefix, int toffset)和endsWith(String suffix, int toffset)：** 在指定索引处检查字符串是否以指定的前缀或后缀开始或结束。
+>     ```java
+>     boolean startsWithOffset = str.startsWith("world", 7); // startsWithOffset = true
+>     boolean endsWithOffset = str.endsWith("Hello", 5); // endsWithOffset = true
+>     ```
+> 14. **compareTo(String anotherString)：** 按字典顺序比较两个字符串。
+>     ```java
+>     int compareResult = str.compareTo("Hello"); // compareResult > 0
+>     ```
+> 15. **matches(String regex)：** 检查字符串是否匹配指定的正则表达式。
+>     ```java
+>     boolean matchesRegex = str.matches("[A-Za-z, !]+"); // matchesRegex = true
+>     ```
+
+
+
+
+
 
 
 # ==SpringBoot==
@@ -1169,7 +1247,7 @@
 
 ## ==4.== 异步问题
 
-> - ~~**我要在https://www.jianfast.com/网站上用js拿到下面网页内容打印在控制台: https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637 请求方法: GET 返回 第一个`<p class="iQKjW6dr">`到页面**~~
+> - ~~**我要在 https://www.jianfast.com/ 网站上用js拿到下面网页内容打印在控制台:  https://www.douyin.com/user/MS4wLjABAAAAcOogp8WSlLvXNTPUg9b9brwWXQj76F9qeckY4T4w3kOzyuAMP-BFj2SbGqwIYwSZ?vid=7219194157544377637  请求方法: GET 返回 第一个`<p class="iQKjW6dr">`到页面**~~
 >
 >   你可以使用以下代码来获取页面内容并打印在控制台中:
 >
@@ -1218,7 +1296,7 @@
 >
 >   ---
 >
->   >**用js爬https://www.jianfast.com/ 来个简单的demo**
+>   >**用js爬 https://www.jianfast.com/  来个简单的demo**
 >   >
 >   >下面是一个简单的JavaScript爬虫示例，它使用`fetch()`函数从`https://www.jianfast.com/`获取页面内容，并使用`DOMParser`来解析HTML并提取页面标题:
 >   >
@@ -1251,7 +1329,7 @@
 >
 >   ---
 >
->   **那可以用`<iframe>`嵌入https://www.jianfast.com/ 再在`<iframe>`里面请求。可以应对跨域请求吗**
+>   **那可以用`<iframe>`嵌入 https://www.jianfast.com/  再在`<iframe>`里面请求。可以应对跨域请求吗**
 >
 >   > 不行，使用`<iframe>`嵌入其他网站的内容并不能解决跨域请求的问题。即使你在`<iframe>`中嵌入了其他网站的内容，你仍然无法从父页面中访问`<iframe>`中的内容，除非两个页面都同意通过`postMessage` API进行通信。
 >   >
@@ -1507,9 +1585,9 @@
 
 ## ==7.== 油猴来获取跨域请求html/text类型
 
->  正在为您搜索：页面https://www.jianfast.com/通过油猴来获取跨域请求html/text类型可以吗、帮我写一个demo
+>  正在为您搜索：页面 https://www.jianfast.com/ 通过油猴来获取跨域请求html/text类型可以吗、帮我写一个demo
 >
-> 根据知识来源[1]中描述，"简法主页"是一个可以自定义搜索引擎的网站，并且没有提到它允许跨域请求，因此无法确切判断它是否可以通过油猴来获取跨域请求html/text类型。如果您要获取百度主页（https://www.baidu.com/）的html/text类型响应，可以使用以下代码作为参考：
+> 根据知识来源[1]中描述，"简法主页"是一个可以自定义搜索引擎的网站，并且没有提到它允许跨域请求，因此无法确切判断它是否可以通过油猴来获取跨域请求html/text类型。如果您要获取[百度主页](https://www.baidu.com/)的html/text类型响应，可以使用以下代码作为参考：
 >
 > ```javascript
 > // ==UserScript==
@@ -1765,7 +1843,7 @@
 
 ## ==10.== 拦截XMLHttpRequest并修改返回的responseText值
 
-> <kbd>2024.05.01</kbd> 参考：[JavaScript - 拦截XMLHttpRequest - wstong - 博客园](https://www.cnblogs.com/wstong2052/p/17487141.html)
+> 参考：[JavaScript - 拦截XMLHttpRequest - wstong - 博客园](https://www.cnblogs.com/wstong2052/p/17487141.html)<kbd>2024.05.01</kbd> 
 >
 > ---
 >
