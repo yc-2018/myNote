@@ -57,7 +57,8 @@
     "11.  配置二级域名.md",
     "12.  Nginx怎么运行多个域名跨域.md",
     "13.  shell 脚本怎么接收参数.md",
-    "14.  修改centos7的hosts.md"
+    "14.  修改centos7的hosts.md",
+    "15.  Nginx 想要删一个配置文件.md"
   ],
   [
     "Python",
