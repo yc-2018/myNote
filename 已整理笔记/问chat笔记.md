@@ -3108,6 +3108,88 @@ add_header Access-Control-Allow-Origin 'http://localhost:3000';
 
 
 
+## ==14.== 修改centos7的hosts
+
+> ```sh
+> sudo vim /etc/hosts
+> ```
+
+
+
+## ==15.== Nginx 想要删一个配置文件
+
+> <kbd>2024.6.1</kbd> <kbd>MindGen 4.0</kbd> 
+>
+> 在Linux系统中，Nginx 的配置通常涉及两个目录：`/etc/nginx/sites-available/` 和 `/etc/nginx/sites-enabled/`。
+>
+> - `/etc/nginx/sites-available/` 目录用于存放所有可用的 Nginx 虚拟主机配置文件。
+> - `/etc/nginx/sites-enabled/` 目录用于存放已启用的 Nginx 虚拟主机配置文件，通常是 `/etc/nginx/sites-available/` 中的配置文件的符号链接。
+> 如果你想要删除一个配置文件，以下是应该遵循的步骤：
+> 1. 确认该配置文件没有被其他文件链接到。你可以使用以下命令来检查是否有链接文件：
+>    ```bash
+>    ls -l /etc/nginx/sites-enabled/
+>    ```
+>    如果在 `/etc/nginx/sites-enabled/` 目录下有一个指向你想要删除的配置文件的符号链接，你需要先删除它：
+>    ```bash
+>    sudo rm /etc/nginx/sites-enabled/链接文件名
+>    ```
+> 2. 删除 `/etc/nginx/sites-available/` 中的配置文件本身：
+>    ```bash
+>    sudo rm /etc/nginx/sites-available/配置文件名
+>    ```
+> 3. 在删除配置文件和符号链接之后，为了确保修改生效，需要重启 Nginx 服务：
+>    ```bash
+>    sudo service nginx restart
+>    ```
+>    或者使用以下命令：
+>    ```bash
+>    sudo systemctl restart nginx
+>    ```
+>    请确保在执行这些操作之前，你已经对配置文件进行了必要的备份，以防万一需要恢复配置。同时，删除配置文件之前，确保这样做不会影响到其他正在使用的网站或服务。
+
+
+
+## ==16.== CentOS7定时任务
+
+> <kbd>2024.6.4</kbd> <kbd>百度搜索AI</kbd> 
+>
+> 在CentOS 7中，可以使用cron来设置定时任务。以下是一些基本步骤和示例：
+>
+> 编辑当前用户的crontab文件：
+>
+> ```bash
+> crontab -e
+> ```
+>
+> 在打开的编辑器中，添加定时任务。定时任务的格式如下：
+>
+> `分 时 日 月 周 命令`
+>
+> 例如，如果你想要每天早上5点重新启动nginx服务，你可以添加如下定时任务：
+>
+> ```bash
+> 0 5 * * * systemctl restart nginx
+> ```
+>
+> 保存并退出编辑器。Cron将自动安装新的定时任务。
+>
+> 如果你想查看当前用户的所有定时任务，可以使用：
+>
+> ```bash
+> crontab -l
+> ```
+>
+> 要删除定时任务，可以使用crontab -r删除当前用户的crontab文件。
+>
+> 确保cron服务正在运行：
+>
+> ```bash
+> systemctl enable crond.service
+> systemctl start crond.service
+> ```
+>
+> 这些步骤和示例将帮助你在CentOS 7上设置定时任务。
+
 
 
 # ==Git==
@@ -3766,6 +3848,55 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > FROM 表名
 > WHERE (条件1 AND 条件2) OR (条件3 AND 条件4);
 > ```
+
+
+
+
+
+# 牛马生活
+
+## ==1.== 租房细节
+
+> <kbd>2024.05.19</kbd> <kbd>MindGen 4.0</kbd> 
+>
+> 一、开局要问的
+>
+> - 有哪些设备（热水器、洗衣机、空调、WiFi等）
+> -  水电价格
+> - 租金
+> - 最短租几个月
+> - 压几付一
+> - 是在指定位置吗
+> - 几楼，是否有电梯
+> - 是否有阳台
+>
+> 
+>
+> 二、观察环境
+>
+> - 顶楼不隔热
+> - 确认房间中设备都能正常运行
+> - 是否能加锁
+> - 有没有窗户
+> - 墙上又没有什么地方发霉
+> - 感受外面声音
+> - 邻居会不会很吵
+> - 看看水质会不会太离谱、水压情况
+> - 看看附近快递点和垃圾点
+> - 够不够地方放东西
+> - 有没有阳光
+>
+> 
+>
+> 三、确认好哦
+>
+> - 怎么续约
+> - 到期解除合同 还要提前说吗
+> - 交租日期
+>
+> 
+
+
 
 
 
