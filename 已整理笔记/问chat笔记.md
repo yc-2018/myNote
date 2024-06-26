@@ -1054,7 +1054,11 @@
 >      margin: 0 auto;
 >    }
 >    ```
+>
+> 
+>
 > ## 垂直居中
+>
 > 1. **使用Flexbox**：通过设置父元素为Flex容器并使用 `align-items: center;` 实现垂直居中。
 >    ```css
 >    .parent {
@@ -1071,7 +1075,11 @@
 >      height: 100px;
 >    }
 >    ```
+>
+> 
+>
 > ## 水平和垂直居中
+>
 > 1. **Flexbox**：在Flex容器中同时使用 `justify-content: center;` 和 `align-items: center;`。
 >    ```css
 >    .parent {
