@@ -1,0 +1,24 @@
+name: 构建博客
+
+# 当代码被推送到 main 分支时触发此工作流程
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest        # 虚拟机环境:最新版ubuntu
+
+    steps:
+    - uses: actions/checkout@v4  # 使运行环境能够访问到最新的仓库代码
+
+    - name: 》》》安装py指定版本
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+
+    - name: 》》》显示Python版本
+      run: python -c "import sys; print(sys.version)"
+
+    - name: 看ls
+      run: ls
