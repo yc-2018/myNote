@@ -20,5 +20,20 @@ jobs:
     - name: 》》》这些生成博客py
       run: python 重新生成博客文件夹.py
 
+    - name: 》》》记录当前时间(东八区)
+      run: echo "BEIJING_TIME=$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+    # 注意:要授予 GitHub Actions 推送权限.进入你的 GitHub 仓库的「Settings」-「Actions」页面,在「Workflow permissions」下，勾选「Allow write access to repository」选项,然后点保存
+    - name: 》》》推送构建结果到 博客分支
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Yc Action"
+        git checkout --orphan temp-build  # 切换到临时分支
+        mv 已整理笔记/博客md .               # 移动md到git根目录
+        git rm -rf .                      # 删除全部git已经管理的文件
+        git add -f *                      # 强行添加全部文件
+        git commit -m "自动生成博客 - ${{ env.BEIJING_TIME }}"
+        git push origin HEAD:blog -f     # 强制推送到 blog 分支
+
     - name: 看ls
       run: ls
