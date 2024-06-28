@@ -17,8 +17,8 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: 》》》显示Python版本
-      run: python -c "import sys; print(sys.version)"
+    - name: 》》》这些生成博客py
+      run: python 重新生成博客文件夹.py
 
     - name: 看ls
       run: ls
