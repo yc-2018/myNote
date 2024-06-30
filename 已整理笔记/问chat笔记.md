@@ -3763,8 +3763,9 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 >
 > ### 连接查询（JOIN）
 > 连接查询用于从两个或多个表中根据相关联的字段获取数据。
+>
 > ```sql
-> -- 内连接（INNER JOIN）
+>  -- 内连接（INNER JOIN）
 > SELECT A.字段名1, B.字段名2
 > FROM 表名1 A
 > INNER JOIN 表名2 B ON A.关联字段 = B.关联字段
@@ -3784,13 +3785,13 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > RIGHT JOIN 表名2 B ON A.关联字段 = B.关联字段
 > WHERE A.条件;
 > ```
-> 
+>
 >
 > ### 子查询
 >
 > 子查询是在一个查询内部嵌入的另一个查询。
 > ```sql
-> -- 子查询作为WHERE子句的一部分
+>  -- 子查询作为WHERE子句的一部分
 > SELECT 字段名1, 字段名2
 > FROM 表名1
 > WHERE 字段名 IN (SELECT 字段名 FROM 表名2 WHERE 条件);
@@ -3801,7 +3802,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > FROM (SELECT 字段名 FROM 表名 WHERE 条件) AS A
 > JOIN 表名2 B ON A.关联字段 = B.关联字段;
 > ```
-> 
+>
 >
 > ### 联合查询（UNION）
 >
@@ -3826,7 +3827,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > WHERE 条件
 > GROUP BY 字段名;
 > ```
-> 
+>
 >
 > ### 分页查询（LIMIT）
 >
@@ -3838,7 +3839,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > ORDER BY 字段名 ASC|DESC
 > LIMIT offset, length;
 > ```
-> 
+>
 >
 > ### 复杂条件查询
 >
