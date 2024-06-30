@@ -29,7 +29,9 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "Yc Action"
         git checkout --orphan temp-build  # 切换到临时分支
-        mv 已整理笔记/博客md .               # 移动md到git根目录
+        mv 已整理笔记/博客md/* .             # 移动md里面的全部内容到git根目录
+        mv 已整理笔记/index.html .          # 移动主页到git根目录
+        mv 已整理笔记/icon .                # 移动全部图标到git根目录
         git rm -rf .                      # 删除全部git已经管理的文件
         git add -f *                      # 强行添加全部文件
         git commit -m "自动生成博客 - ${{ env.BEIJING_TIME }}"

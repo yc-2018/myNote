@@ -1,0 +1,14 @@
+{
+  "牛马生活": "",
+  "Docker": "docker.svg",
+  "SQL": "sql.svg",
+  "Python": "py.svg",
+  "其他问题": "other.svg",
+  "JavaScript": "js.svg",
+  "CSS": "css.svg",
+  "Java": "java.svg",
+  "Windows": "win.svg",
+  "Linux": "linux.svg",
+  "Git": "git.svg",
+  "SpringBoot": "springBoot.svg"
+}
