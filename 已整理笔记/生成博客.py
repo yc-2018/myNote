@@ -3,10 +3,6 @@ import shutil  		# 删除非空文件夹
 import subprocess	# 执行其他py
 
 
-# 进去
-os.chdir('./已整理笔记')
-print(os.getcwd())
-
 # 先尝试删除“博客md”文件夹 
 try:
 	shutil.rmtree('./博客md')
@@ -17,9 +13,9 @@ except FileNotFoundError:
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # 执行 getBlogMd.py
-subprocess.run(["python", os.path.join(current_directory, "已整理笔记/getBlogMd.py")], check=True)
+subprocess.run(["python", os.path.join(current_directory, "getBlogMd.py")], check=True)
 
 # 执行 getMdList.py
-subprocess.run(["python", os.path.join(current_directory, "已整理笔记/getMdList.py")], check=True)
+subprocess.run(["python", os.path.join(current_directory, "getMdList.py")], check=True)
 
 print("=====完成重新生成博客=====")

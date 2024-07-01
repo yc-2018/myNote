@@ -18,7 +18,7 @@ jobs:
         python-version: '3.9'
 
     - name: 》》》这些生成博客py
-      run: python 重新生成博客文件夹.py
+      run: python ./已整理笔记/生成博客.py
 
     - name: 》》》记录当前时间(东八区)
       run: echo "BEIJING_TIME=$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
@@ -37,5 +37,5 @@ jobs:
         git commit -m "自动生成博客 - ${{ env.BEIJING_TIME }}"
         git push origin HEAD:blog -f     # 强制推送到 blog 分支
 
-    - name: 看ls
+    - name: 》》》————结束》 看ls  》》》
       run: ls
