@@ -8,6 +8,14 @@ try:
 except FileNotFoundError:
 	print("博客md 不存在  不用删除了")
 
+# 兼容不同执行方式, 双击肯定是不用的,但是在GitHub Actions上在主目录执行,相对位置就错了
+try:
+    print(f'当前所在文件夹:{os.getcwd()}')
+    os.chdir('./已整理笔记')
+except:
+    pass
+
+
 # 执行py
 os.system('python getBlogMd.py')
 os.system('python getMdList.py')
