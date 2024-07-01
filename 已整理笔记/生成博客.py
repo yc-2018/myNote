@@ -9,13 +9,11 @@ try:
 except FileNotFoundError:
 	print("博客md 不存在  不用删除了")
 		
-# 获取当前目录
-current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # 执行 getBlogMd.py
-subprocess.run(["python", os.path.join(current_directory, "getBlogMd.py")], check=True)
+subprocess.run(["python", "getBlogMd.py"], check=True)
 
 # 执行 getMdList.py
-subprocess.run(["python", os.path.join(current_directory, "getMdList.py")], check=True)
+subprocess.run(["python","getMdList.py"], check=True)
 
 print("=====完成重新生成博客=====")
