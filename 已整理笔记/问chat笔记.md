@@ -1113,7 +1113,23 @@
 
 
 
+## ==5.== css属性选择器之模糊选择
 
+> <kbd>2024.07.17</kbd> [参考来源](https://codeleading.com/article/84535128739/) 
+>
+> 这是css属性选择器的一种：[attribute^=value] ，用来匹配属性值以指定值开头的每个元素。
+> 例如：[class^=”test”] { background:#ffff00; }
+> 表示设置 class 属性值以 “test” 开头的所有元素的背景色，也就是说对 class=”test”；class=”test1″ ；class=”test-001″ 的元素都是有效的。
+> 除此之外，还有一些常用的css属性选择器如下：
+>
+> ```css
+> [attribute~=value] {/*选取属性值中包含指定词汇的元素。*/}
+> [attribute|=value] {/*选取带有以指定值开头的属性值的元素，该值必须是整个单词。*/}
+> [attribute$=value] {/*匹配属性值以指定值结尾的每个元素。*/}
+> [attribute*=value] {/*匹配属性值中包含指定值的每个元素。*/}
+> ```
+>
+> 
 
 
 
@@ -3930,7 +3946,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 
 
-## ==2.== v2rayN绕过大陆还是有跑到代理去的
+## ==2.== v2rayN设置某些地址不用魔法
 
 >  版本有点旧，新版界面变化有点大但核心点还是没有变的
 >
@@ -3956,9 +3972,9 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 >
 > 
 >
-> ![img](https://img-blog.csdnimg.cn/dd5bdc0640ad4140a4ef8e8940ddbefa.jpeg)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+> ![img](https://ycimg.pages.dev/file/0bafb660e0b0f512418c8.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 >
->  ![img](https://img-blog.csdnimg.cn/f8edf2dca5bf481f9afeb0731f7906d6.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+>  ![img](https://ycimg.pages.dev/file/818a9a3d2b545ec886a61.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 
 
