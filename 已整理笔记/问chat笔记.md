@@ -3773,7 +3773,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 # ==Python==
 
-## ==1.==TOML在py中怎么用
+## ==1.== TOML在py中怎么用
 
 > 在 Python 中使用 TOML（Tom's Obvious, Minimal Language），您需要安装一个 TOML 库，例如 `toml` 或 `tomli`。这些库允许您解析 TOML 文件并将其内容转换为 Python 数据结构，例如字典。相反，您还可以将 Python 数据结构转换为 TOML 格式的字符串。
 >
@@ -3840,6 +3840,30 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > ```
 >
 > 这将创建一个名为 `config_new.toml` 的文件，其中包含字典的 TOML 表示。
+
+
+
+## ==2.== 打包成exe程序
+
+> <kbd>2024.07.29</kbd>    [参考来源↗](https://blog.csdn.net/pythonitstream/article/details/123981418)  
+>
+> 安装库 `pip install pyinstaller`
+>
+> 直接执行 `pyinstaller -F 文件名.py`  不在统一路径下就记得用绝对路径
+>
+> 然后等上一会 看到Successfully 就是打包完成了， 倒数第四行就能看到打包输出的路径
+>
+> > **参数说明**
+> >
+> > | 参数 | 说明                           |
+> > | ---- | ------------------------------ |
+> > | -F   | 打包到一个.exe文件里面         |
+> > | -w   | 窗口程序打包（tkinter,PyQt等） |
+> > | -c   | 控制台程序打包（输入输出）     |
+> >
+> > 比如能-F和-w叠加了，表示打包到一个.exe文件里面，打包的是窗口文件。
+
+
 
 
 
