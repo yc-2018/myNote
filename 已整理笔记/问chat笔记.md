@@ -3873,9 +3873,11 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 > <kbd>2024.04.24</kbd> <kbd>Ptg</kbd> 
 >
+> ==注意: [...] 内为可选参数，实际写法不带[]==
+>
 > ---
 >
-> **DML**
+> **DML（数据操作语言）**
 >
 > 插入数据：`INSERT INTO 表名 VALUES (值1, 值2, 值3, ...);`
 >
@@ -3885,7 +3887,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 >
 > ---
 >
-> **DQL**
+> **DQL（数据查询语言）**
 >
 > 简单查询：`SELECT 字段名1, 字段名2 FROM 表名;`
 >
@@ -3903,39 +3905,53 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 >
 > ---
 >
-> **DDL**
+> **DDL（数据定义语言）**
 >
-> 创建数据库：` CREATE DATABASE 数据库名;`
+> > **数据库操作**：
+> >
+> > 查看所有数据库：` SHOW DATABASES;` 
+> >
+> > 创建数据库：` CREATE DATABASE 数据库名;`
+> >
+> > 切换到指定数据库：`USE 数据库名;`
+> >
+> > 查看当前在哪个数据库：`SELECT DATABASE();`    -- 注意括号
+> >
+> > 删除数据库：` DROP DATABASE 数据库名;` 
+> >
+> > 修改数据库：` ALTER DATABASE 数据库名 DEFAULT CHARACTER SET 字符集;`
 >
-> 修改数据库：` ALTER DATABASE 数据库名 DEFAULT CHARACTER SET 字符集;`
+> 
 >
-> 查看所有数据库：` SHOW DATABASES;`
->
-> 删除数据库：` DROP DATABASE 数据库名;`
->
-> 查看某个数据库中的所有表：` SHOW TABLES;`
->
-> 创建表：` CREATE TABLE 表名(字段名1 字段类型1,字段名2 字段类型2);`
->
-> 主键自增：` 字段名 字段类型 PRIMARY KEY AUTOINCREMENT`
->
-> 删除表：` DROP TABLE 表名;`
->
-> 修改表结构添加一列：` ALTER TABLE 表名 ADD 字段名 字段类型;`
->
-> 修改表结构修改列类型：` ALTER TABLE 表名 MODIFY 字段名 新类型;`
->
-> 修改表结构修改列名：` ALTER TABLE 表名 CHANGE 老字段名 新字段名 类型;`
->
-> 修改表结构删除列：` ALTER TABLE 表名 DROP 字段名`
->
-> 修改表结构修改表名：` RENAME TABLE 表名 TO 新表名`
->
-> 修改表的字符集：` ALTER TABLE 表名 DEFAULT CHARACTER SET 新字符集;`
->
-> 查看表结构：`DESC 表名; `
->
-> 删除主键：` ALTER TABLE 表名 DROP PRIMARY KEY;`
+> >**表操作：**
+> >
+> >查看某个数据库中的所有表：` SHOW TABLES;` 
+> >
+> >创建表：` CREATE TABLE 表名(字段名1 字段类型1 [COMMENT '字段1注释'],字段名2 字段类型2) [COMMENT 表注释];` 
+> >
+> >查看表结构：`DESC 表名; `
+> >
+> >查看建表语句：`SHOW CREATE TABLE 表名;`
+> >
+> >删除表：` DROP TABLE 表名;`
+> >
+> >主键自增：` 字段名 字段类型 PRIMARY KEY AUTOINCREMENT;`
+> >
+> >修改表：`ALTER TABLE 表名 ADD/MODIFY/CHANGE/DROP/RENAME TO/...`
+> >
+> >> 修改表结构添加一列：` ALTER TABLE 表名 ADD 字段名 字段类型;`
+> >>
+> >> 修改表结构修改列类型：` ALTER TABLE 表名 MODIFY 字段名 新类型;`
+> >>
+> >> 修改表结构修改列名：` ALTER TABLE 表名 CHANGE 老字段名 新字段名 类型;`
+> >>
+> >> 修改表结构删除列：` ALTER TABLE 表名 DROP 字段名`
+> >>
+> >> 删除主键：` ALTER TABLE 表名 DROP PRIMARY KEY;`
+> >>
+> >> 修改表结构修改表名：` RENAME TABLE 表名 TO 新表名`
+> >>
+> >> 修改表的字符集：` ALTER TABLE 表名 DEFAULT CHARACTER SET 新字符集;`
 >
 > 蠕虫复制：` INSERT INTO 表名1 SELECT*FROM 表名2;`
 
@@ -4035,6 +4051,55 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > ```
 
 
+
+==3.MySQL数据类型==
+
+> <kbd>2024.09.05</kbd> <kbd>MindGen 4.0</kbd> <kbd>黑马</kbd> 
+>
+> **1、数值类型**
+>
+> | 类型        | 大小                       | 有符号(SIGNED)范围                                    | 无符号(UNSIGNED)范围                                      | 描述               |
+> | ----------- | -------------------------- | ----------------------------------------------------- | --------------------------------------------------------- | ------------------ |
+> | TINYINT     | 1byte                      | (-128, 127)                                           | (0, 255)                                                  | 小整数值           |
+> | SMALLINT    | 2bytes                     | (-32768, 32767)                                       | (0, 65535)                                                | 大整数值           |
+> | MEDIUMINT   | 3bytes                     | (-8388608, 8388607)                                   | (0, 16777215)                                             | 大整数值           |
+> | INT/INTEGER | 4bytes                     | (-2147483648, 2147483647)                             | (0, 4294967295)                                           | 大整数值           |
+> | BIGINT      | 8bytes                     | (-2^63, 2^63-1)                                       | (0, 2^64-1)                                               | 极大整数值         |
+> | FLOAT       | 4bytes                     | (-3.402823466 E+38, 3.402823466351 E+38)              | 0 和 (1.175494351 E-38, 3.402823466 E+38)                 | 单精度浮点数值     |
+> | DOUBLE      | 8bytes                     | (-1.7976931348623157 E+308, 1.7976931348623157 E+308) | 0 和 (2.2250738585072014 E-308, 1.7976931348623157 E+308) | 双精度浮点数值     |
+> | DECIMAL     | 依赖于M(精度)和D(标度)的值 | 依赖于M(精度)和D(标度)的值                            | 依赖于M(精度)和D(标度)的值                                | 小数值(精确定点数) |
+>
+> 依赖于M(精度)和D(标度)的值：5.56 精度3，标度2
+>
+> 
+>
+> **2、字符串类型**
+>
+> | 类型       | 大小                  | 描述                         |
+> | ---------- | --------------------- | ---------------------------- |
+> | CHAR       | 0-255 bytes           | 定长字符串(需要指定长度)     |
+> | VARCHAR    | 0-65535 bytes         | 变长字符串(需要指定长度)     |
+> | TINYBLOB   | 0-255 bytes           | 不超过255个字符的二进制数据  |
+> | TINYTEXT   | 0-255 bytes           | 短文本字符串                 |
+> | BLOB       | 0-65,535 bytes        | 二进制形式的长文本数据       |
+> | TEXT       | 0-65,535 bytes        | 长文本数据                   |
+> | MEDIUMBLOB | 0-16,777,215 bytes    | 二进制形式的中等长度文本数据 |
+> | MEDIUMTEXT | 0-16,777,215 bytes    | 中等长度文本数据             |
+> | LONGBLOB   | 0-4,294,967,295 bytes | 二进制形式的极大文本数据     |
+>
+> CHAR性能会比VARCHAR性能高，CHAR如果填的值不满指定长度会用空格填充
+>
+> 
+>
+> **3、日期时间类型**
+>
+> | 类型      | 大小    | 描述                                         |
+> | --------- | ------- | -------------------------------------------- |
+> | DATE      | 3 bytes | YYYY-MM-DD 日期值                            |
+> | TIME      | 3 bytes | HH:MM:SS 时间值或持续时间                    |
+> | YEAR      | 1 byte  | YYYY 年份值                                  |
+> | DATETIME  | 8 bytes | YYYY-MM-DD HH:MM:SS 混合日期和时间值         |
+> | TIMESTAMP | 4 bytes | YYYY-MM-DD HH:MM:SS 混合日期和时间值，时间戳 |
 
 
 
