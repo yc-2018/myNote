@@ -654,6 +654,94 @@
 
 
 
+## ==6.==控制和前端交互字段
+
+> <kbd>2024.09.05</kbd> <kbd>MindGen 4.0</kbd> <kbd>未全部验证 </kbd>
+>
+> ```java
+> import com.fasterxml.jackson.annotation.JsonIgnore;
+> 
+> public class MyClass {
+>     private String name;
+> 
+>     @JsonIgnore
+>     private String sensitiveData;  // 该字段既不序列化（返回），也不反序列化（接收）。
+>     
+>     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+>     private String password;  // 该字段只能用于接收前端数据，不能返回给前端
+>     
+>     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+>     private String userId;    // 仅返回给前端，不接收前端传入的数据
+>     
+>     @JsonInclude(JsonInclude.Include.NON_NULL)
+>     private String optionalField;  // 如果为 null，这个字段不会返回给前端
+>     
+>     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+>     private String optionalField;  // 如果为空字符串或 null，这个字段不会返回给前端
+> 
+>     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+>     private List<String> items;  // 如果列表为空或 null，这个字段不会返回给前端
+>     
+>     @JsonSerialize(using = CustomSerializer.class)
+>     private String customField; // 自定义处理序列化和是否序列化（只会影响序列化）
+> 
+>     @JsonDeserialize(using = CustomDeserializer.class)
+>     private String customDeserializerField;  // 影响反序列化过程
+>     
+>     @JsonSerialize(using = CustomSerializer.class)
+>     @JsonDeserialize(using = CustomDeserializer.class)
+>     private String customField;  // 同时控制序列化和反序列化
+>     
+>     // getter 和 setter
+> }
+> 
+> // ______________自定义序列化逻辑类_____________________
+> import com.fasterxml.jackson.core.JsonGenerator;
+> import com.fasterxml.jackson.databind.JsonSerializer;
+> import com.fasterxml.jackson.databind.SerializerProvider;
+> 
+> import java.io.IOException;
+> 
+> public class CustomSerializer extends JsonSerializer<String> {
+> 
+>     @Override
+>     public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+>         // 你可以在这里自定义逻辑，例如根据某些条件决定是否输出字段
+>         if (value != null && !value.isEmpty()) {
+>             gen.writeString(value + "还能在本身的基础上修整内容");
+>         }
+>     }
+> }
+> 
+> // ______________自定义反序列化逻辑类_____________________
+> public class CustomDeserializer extends JsonDeserializer<String> {
+>     @Override
+>     public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+>         String value = p.getText();
+>         return "deserialized value: " + value;  // 自定义反序列化逻辑
+>     }
+> }
+> 
+> ```
+>
+> ##### 可选的 `JsonInclude.Include` 选项
+>
+> - `NON_NULL`：忽略 `null` 值的字段。
+> - `NON_EMPTY`：忽略空值的字段（包括 `null`、空字符串、空集合等）。
+> - `NON_DEFAULT`：只序列化与类的默认值不同的字段。
+>
+> ##### 全局设置
+>
+> 如果你想全局忽略所有类中为 `null` 或空的字段，可以在 `ObjectMapper` 中配置：
+>
+> ```java
+> ObjectMapper mapper = new ObjectMapper();
+> mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);  // 忽略所有 null 字段
+> mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY); // 忽略所有空字段
+> ```
+>
+> 
+
 
 
 # ==Windows==
@@ -4052,7 +4140,7 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 
 
-==3.MySQL数据类型==
+## ==3.MySQL数据类型==
 
 > <kbd>2024.09.05</kbd> <kbd>MindGen 4.0</kbd> <kbd>黑马</kbd> 
 >
