@@ -1,0 +1,111 @@
+[
+  [
+    "SQL",
+    "1.  MySQL常用命令.md",
+    "2.  MySQL复杂查询.md",
+    "3.MySQL数据类型.md"
+  ],
+  [
+    "Linux",
+    "1. shell的常用命令.md",
+    "2. win10子系统（WLS）.md",
+    "3. 关于开启ssh.md",
+    "4. 关于系统环境改为中文.md",
+    "5. 改变提示符颜色.md",
+    "6.  （多个）选择默认py.md",
+    "7. 查看进程命令.md",
+    "8. 安装ssh.md",
+    "9.  设置命令的简写或别名.md",
+    "10.  ` etc profile`  和` .bashrc`的区别.md",
+    "11.  配置二级域名.md",
+    "12.  Nginx怎么运行多个域名跨域.md",
+    "13.  shell 脚本怎么接收参数.md",
+    "14.  修改centos7的hosts.md",
+    "15.  Nginx 想要删一个配置文件.md",
+    "16.  CentOS7定时任务.md"
+  ],
+  [
+    "牛马生活",
+    "1.  租房细节.md"
+  ],
+  [
+    "Java",
+    "1.  Java类名命名规范.md",
+    "2. Java中不常见的关键字.md",
+    "3.  Stream的collect(参数巧妙的用法).md",
+    "4.  函数式接口的泛型是什么意思.md",
+    "5.  字符串常用方法.md",
+    "6.  cron表达式.md"
+  ],
+  [
+    "其他问题",
+    "1. 临时邮箱.md",
+    "2.  v2rayN设置某些地址不用魔法.md",
+    "3.  开源许可证.md",
+    "4.  172开头的ip地址是内网还是外网.md"
+  ],
+  [
+    "Git",
+    "1.  git怎么对已管理的文件夹取消管理.md",
+    "2.  Git 使用代理.md",
+    "3.  git怎么把整个仓库复制下来(全部分支).md",
+    "4.  https克隆转换为ssh.md",
+    "5.  git clone指定分支.md",
+    "6.  生成ssh公钥.md",
+    "7.  怎么取消git add.md",
+    "8.  Git常用命令.md"
+  ],
+  [
+    "Docker",
+    "1.  理解docker.md",
+    "2.  在 Ubuntu 20.04 上安装 Docker.md"
+  ],
+  [
+    "CSS",
+    "2.  复合属性的例子.md",
+    "3.  伪类选择器 active对div不起作用.md",
+    "4.  各种居中.md",
+    "5.  css属性选择器之模糊选择.md"
+  ],
+  [
+    "Python",
+    "1.  TOML在py中怎么用.md",
+    "2.  打包成exe程序.md"
+  ],
+  [
+    "Windows",
+    "1.  设置应用开机自启.md",
+    "2.  我还有一个应用d.exe 每次要双击才能运行，我想有一个快捷键也能运行 win10能做到吗.md",
+    "3. win10 系统的win键 另外一个按键的快捷键全部列出来.md",
+    "4.  免安装软件 删除时怎么清理数据.md",
+    "5.  用cmd查看Wi-Fi密码.md",
+    "6.  非应用放win10磁贴.md",
+    "7.  端口转发（wsl地址转发到本地端口）.md",
+    "8.  win打开指定端口给局域网访问（命令）.md",
+    "9.  CMD改颜色.md",
+    "10.  把C盘文件夹映射到其他盘指定目录.md",
+    "11.  环境变量导出和导入.md"
+  ],
+  [
+    "JavaScript",
+    "1. js判断中 哪些非布尔类的值会是false.md",
+    "2.  document.querySelectorAll()和document.getElementsByClassName();的区别是什么.md",
+    "3.  给谷歌浏览器导出来的书签.html 添加样式和脚本 让它和导航栏的书签有一样的效果 写一个完整的demo.md",
+    "4.  异步问题.md",
+    "5.  现在好多要页面都不用通过事件绑定元素了，那是怎么知道点击了那个元素的并做出不同的反应的.md",
+    "6.  JSONP夸域调用.md",
+    "7.  油猴来获取跨域请求html text类型.md",
+    "8.  字符串常用的方法和demo.md",
+    "9.  阻止url带有ikun的xhr请求.md",
+    "10.  拦截XMLHttpRequest并修改返回的responseText值.md"
+  ],
+  [
+    "SpringBoot",
+    "1. spring boot 项目一般分为几层.md",
+    "2. 在springboot项目中 一般都有什么文件夹.md",
+    "3. 如果用springboot写一个博客 一般都包涵哪些注解.md",
+    "4. 能用表格表示springboot的注解关系吗.md",
+    "5. Swagger常用注解和说明.md",
+    "6. 控制和前端交互字段.md"
+  ]
+]
