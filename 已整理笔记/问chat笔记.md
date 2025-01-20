@@ -988,6 +988,100 @@
 
 
 
+# ==前端项目==
+
+## ==1、==使用nvm安装和切换node
+
+NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn）](https://blog.csdn.net/ppz8823/article/details/130862191)
+
+> ==1、==看看可以安装的版本有哪些
+>
+> ```bash
+> nvm ls-remote
+> ```
+>
+> 不行就用这条
+>
+> ```bash
+> nvm list available
+> ```
+>
+> ==2、==安装一个版本
+>
+> ```bash
+> nvm install 18
+> ```
+>
+> ==3、==切换版本
+>
+> ```bash
+> nvm use 18
+> ```
+>
+> 4、查看版本
+>
+> ```bash
+> node -v
+> ```
+>
+> ```bash
+> nvm -v
+> ```
+>
+> 5、设置默认版本
+>
+> ```bash
+> nvm alias default 18.20.4
+> ```
+>
+> 6、查看已安装的 Node 版本
+>
+> ```bash
+> nvm ls
+> ```
+>
+> 
+>
+> ---
+>
+> 
+>
+> ```bash
+> # 如果切换node了 显示没有了yarn 还是可以重新安装一下
+> npm install -g yarn
+> yarn --version
+> ```
+
+
+
+
+
+## ==2、==用yarn安装vite项目时报错
+
+> 参考： [解决yarn安装包后，文件名、目录名或卷标语法不正确问题](https://www.cnblogs.com/5idabaicai/p/16550196.html)
+>
+> 查明原因: yarn 的全局安装位置与 bin 的位置并不一致导致的 (一般就是默认存放位置在C盘，但是yarn安装在D盘)
+>
+> ```bash
+> # 检查yarn的bin安装位置
+> yarn global bin
+> # 检查yarn的全局安装位置
+> yarn global dir
+> ```
+>
+> 对比这两个位置一样不？不一样的话需要调整一下，至少是在同一个硬盘里
+>
+> ==修改 yarn的全局安装位置==（顺便把缓存位置也改了）
+>
+> ```bash
+> yarn config set global-folder "D:\APP\code\yarn\cache"
+> yarn config set cache-folder "D:\APP\code\yarn\global"
+> ```
+>
+> ps:文件夹自己建的
+
+
+
 
 
 # ==CSS==

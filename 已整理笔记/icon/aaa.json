@@ -11,5 +11,6 @@
   "Windows": "win.svg",
   "Linux": "linux.svg",
   "Git": "git.svg",
-  "SpringBoot": "springBoot.svg"
+  "SpringBoot": "springBoot.svg", 
+  "前端项目":"WEB前端.svg"
 }
