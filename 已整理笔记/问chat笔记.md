@@ -1078,7 +1078,7 @@
 
 # ==前端项目==
 
-## ==1、==使用nvm安装和切换node
+## ==1.==使用nvm安装和切换node
 
 NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn）](https://blog.csdn.net/ppz8823/article/details/130862191)
 

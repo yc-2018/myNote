@@ -2,9 +2,11 @@ import os
 import json
 
 def sort_key(filename):
-    # 提取文件名开头的数字，用于排序
-    num = int(filename.split('.')[0].strip())
-    return num
+    # 使用正则表达式提取文件名开头的数字
+    match = re.match(r'(\d+)', filename)
+    if match:
+        return int(match.group(1))
+    return 999  # 如果没有找到数字，返回一个默认值（如999）
 
 def scan_md_folder(path):
     """
