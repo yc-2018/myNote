@@ -1144,7 +1144,7 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 
 
 
-## ==2、==用yarn安装vite项目时报错
+## ==2.==用yarn安装vite项目时报错
 
 > 参考： [解决yarn安装包后，文件名、目录名或卷标语法不正确问题](https://www.cnblogs.com/5idabaicai/p/16550196.html)
 >
