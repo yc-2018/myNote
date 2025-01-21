@@ -58,4 +58,5 @@ def main():
     create_folders_and_files(sections)
 
 if __name__ == '__main__':
+    print("执行生成博客文件py")
     main()
