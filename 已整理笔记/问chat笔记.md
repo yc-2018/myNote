@@ -1170,6 +1170,30 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 
 
 
+## ==3.== yarn和npm常见命令
+
+> 1
+>
+> | npm 命令                           | yarn 命令                          | 说明             |
+> | :--------------------------------- | :--------------------------------- | :--------------- |
+> | `npm install`                      | `yarn install`                     | 安装所有依赖     |
+> | `npm install <package>`            | `yarn add <package>`               | 安装生产依赖     |
+> | `npm install <package> --save-dev` | `yarn add <package> --dev`         | 安装开发依赖     |
+> | `npm install -g <package>`         | `yarn global add <package>`        | 全局安装包       |
+> | `npm uninstall <package>`          | `yarn remove <package>`            | 卸载包           |
+> | `npm run <script>`                 | `yarn run <script>`                | 运行脚本         |
+> | `npm update`                       | `yarn upgrade`                     | 更新所有依赖     |
+> | `npm update <package>`             | `yarn upgrade <package>`           | 更新指定的依赖   |
+> | `npm update <package>@<version>`   | `yarn upgrade <package>@<version>` | 更新到指定版本   |
+> | `npm outdated`                     | `yarn outdated`                    | 检查可更新的依赖 |
+> | `npm list`                         | `yarn list`                        | 查看已安装的包   |
+> | `npm list -g`                      | `yarn global list`                 | 查看全局安装的包 |
+> | `npm cache clean --force`          | `yarn cache clean`                 | 清理缓存         |
+>
+> 如果你的项目没有特殊需求，**Yarn** 通常是更好的选择，尤其是在大型项目中。如果只是小型项目或初学者，**npm** 也完全够用。
+
+
+
 # ==HTML==
 
 ## ==1.== a标签页面内跳转
