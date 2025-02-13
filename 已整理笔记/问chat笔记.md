@@ -1523,6 +1523,79 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > [attribute*=value] {/*匹配属性值中包含指定值的每个元素。*/}
 > ```
 >
+
+
+
+## ==6.== 动态底部+滚动内容区的视口填充方案
+
+> <kbd>2025.02.13</kbd> <kbd>天工(R1)</kbd> 
+>
+> ```html
+> <!DOCTYPE html>
+> <html>
+> <head>
+> <style>
+>   * { /*防止页面自带样式影响*/
+>     box-sizing: border-box;
+>     margin: 0;
+>     padding: 0;
+>   }
+>   
+>   .container { /*父元素，要空边不要margin，用padding*/
+>     height: 100vh; /* 关键：锁定视口高度 */
+>     display: flex;
+>     flex-direction: column;/* 垂直排列 */
+>     overflow: hidden; /*不给滚*/
+> 	padding: 12px;
+>   }
+> 
+>   .dynamic-area {	   /*上面元素，跟随下面元素高度变化而变化*/
+>     flex: 1 1 auto;    /* 关键：占满剩余空间 */
+>     overflow-y: auto;  /*给滚，不然真超了，下面就看不到了*/
+>     padding: 20px;
+>     background: #f8f9fa;
+>   }
+> 
+>   .variable-footer {
+>     flex-shrink: 0;    /* 关键：禁止高度压缩 */
+>     min-height: 60px;  /* 最小高度保障 */
+>     padding: 15px;
+>     background: #e9ecef;
+>     border-top: 1px solid #ddd;
+>   }
+> </style>
+> </head>
+> <body>
+>   <!---------------------父元素----------------------->
+>   <div class="container">
+> 	<!---------------------元素1----------------------->
+>     <div class="dynamic-area">
+>       <h2>弹性内容区</h2>
+>       <!-- 测试长内容 去掉height就是自动占满剩余区域了 -->
+>       <div style="height: 2000px; border: 1px dashed #ccc"></div>
+>     </div>
+>     <!---------------------元素2----------------------->
+>     <div class="variable-footer">
+>       <div class="dynamic-content"></div>
+>       <div>时间：<span id="time"></span></div>
+>     </div>
+>   </div>
+> 
+> <script>
+> let count = 0;
+> const footerContent = document.querySelector('.dynamic-content');
+> const timeSpan = document.getElementById('time');
+> 
+> setInterval(() => {
+>   timeSpan.textContent = new Date().toLocaleTimeString();
+>   footerContent.innerHTML = 
+>     `动态高度示例 ${++count % 3 === 0 ? '多行<br>内容' : '单行'}`;
+> }, 1000);
+> </script>
+> </body>
+> </html>
+> ```
+>
 > 
 
 
