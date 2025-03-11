@@ -658,41 +658,53 @@
 
 > <kbd>2024.09.05</kbd> <kbd>MindGen 4.0</kbd> <kbd>未全部验证 </kbd>
 >
+>  **序列化（Java 对象 → JSON）和反序列化（JSON → Java 对象）**
+>
 > ```java
 > import com.fasterxml.jackson.annotation.JsonIgnore;
 > 
 > public class MyClass {
->     private String name;
+>  private String name;
 > 
->     @JsonIgnore
->     private String sensitiveData;  // 该字段既不序列化（返回），也不反序列化（接收）。
->     
->     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
->     private String password;  // 该字段只能用于接收前端数据，不能返回给前端
->     
->     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
->     private String userId;    // 仅返回给前端，不接收前端传入的数据
->     
->     @JsonInclude(JsonInclude.Include.NON_NULL)
->     private String optionalField;  // 如果为 null，这个字段不会返回给前端
->     
->     @JsonInclude(JsonInclude.Include.NON_EMPTY)
->     private String optionalField;  // 如果为空字符串或 null，这个字段不会返回给前端
+>  @JsonIgnore
+>  private String sensitiveData;  // 该字段既不序列化（返回），也不反序列化（接收）。
 > 
->     @JsonInclude(JsonInclude.Include.NON_EMPTY)
->     private List<String> items;  // 如果列表为空或 null，这个字段不会返回给前端
->     
->     @JsonSerialize(using = CustomSerializer.class)
->     private String customField; // 自定义处理序列化和是否序列化（只会影响序列化）
+>  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+>  private String password;  // 该字段只能用于接收前端数据，不能返回给前端
 > 
->     @JsonDeserialize(using = CustomDeserializer.class)
->     private String customDeserializerField;  // 影响反序列化过程
+>  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+>  private String userId;    // 仅返回给前端，不接收前端传入的数据
+> 
+>  @JsonInclude(JsonInclude.Include.NON_NULL)
+>  private String optionalField;  // 如果为 null，这个字段不会返回给前端
+> 
+>  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+>  private String optionalField;  // 如果为空字符串或 null，这个字段不会返回给前端
+> 
+>  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+>  private List<String> items;  // 如果列表为空或 null，这个字段不会返回给前端
+> 
+>  @JsonSerialize(using = CustomSerializer.class)
+>  private String customField; // 自定义处理序列化和是否序列化（只会影响序列化）
+> 
+>  @JsonDeserialize(using = CustomDeserializer.class)
+>  private String customDeserializerField;  // 影响反序列化过程
+> 
+>  @JsonSerialize(using = CustomSerializer.class)
+>  @JsonDeserialize(using = CustomDeserializer.class)
+>  private String customField;  // 同时控制序列化和反序列化
 >     
->     @JsonSerialize(using = CustomSerializer.class)
->     @JsonDeserialize(using = CustomDeserializer.class)
->     private String customField;  // 同时控制序列化和反序列化
->     
->     // getter 和 setter
+>  /*
+>  # 如果要全局时间格式 application.properties
+>  spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+>  # 设置为 false：表示禁用将日期类型转换为时间戳。若希望某些字段返回时间戳，其他字段返回格式化字符串 可不设置 或true
+>  spring.jackson.serialization.write-dates-as-timestamps=false 
+>  */
+>  // 反序列化（输入）：要求 JSON 中的时间字符串必须严格匹配 pattern 格式，否则会抛出异常
+>  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 注解会同时影响序列化和反序列化（JSON → Java 对象）
+>  private LocalDateTime checkinTime; 
+> 
+>  // getter 和 setter
 > }
 > 
 > // ______________自定义序列化逻辑类_____________________
@@ -704,22 +716,22 @@
 > 
 > public class CustomSerializer extends JsonSerializer<String> {
 > 
->     @Override
->     public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
->         // 你可以在这里自定义逻辑，例如根据某些条件决定是否输出字段
->         if (value != null && !value.isEmpty()) {
->             gen.writeString(value + "还能在本身的基础上修整内容");
->         }
->     }
+>  @Override
+>  public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+>      // 你可以在这里自定义逻辑，例如根据某些条件决定是否输出字段
+>      if (value != null && !value.isEmpty()) {
+>          gen.writeString(value + "还能在本身的基础上修整内容");
+>      }
+>  }
 > }
 > 
 > // ______________自定义反序列化逻辑类_____________________
 > public class CustomDeserializer extends JsonDeserializer<String> {
->     @Override
->     public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
->         String value = p.getText();
->         return "deserialized value: " + value;  // 自定义反序列化逻辑
->     }
+>  @Override
+>  public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+>      String value = p.getText();
+>      return "deserialized value: " + value;  // 自定义反序列化逻辑
+>  }
 > }
 > 
 > ```
