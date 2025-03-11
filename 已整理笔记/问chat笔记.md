@@ -756,6 +756,200 @@
 
 
 
+## ==7.==接收前端字段验证注解
+
+> <kbd>2025.03.11</kbd> <kbd>deepseek</kbd> <kbd>未全部验证 </kbd>
+>
+> **用于 Controller 层参数验证（需配合 `@Valid` 或 `@Validated` 使用）**
+>
+> ```java
+> @PostMapping("/checkin")
+>     public R<?> checkin(@RequestBody @Valid CheckinRecords checkinRecord) {}
+> ```
+>
+> ```java
+> import javax.validation.constraints.*;
+> 
+> public class UserDTO {
+> 
+>     @NotNull(message = "用户名不能为空")
+>     private String username;
+> 
+>     @NotBlank(message = "密码必须为非空字符串")  // 验证非空且长度 > 0（去空格后）
+>     private String password;
+> 
+>     // @Size(min = 6, max = 20, message = "密码长度需为6-20位")
+>     // 自定义错误消息（支持占位符）
+> 	@Size(min = 6, max = 20, message = "密码长度需在 {min}-{max} 之间")
+>     private String password;
+> 
+>     @Email(message = "邮箱格式不合法")
+>     private String email;
+> 
+>     @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式错误")
+>     private String phone;
+> 
+>     @Min(value = 18, message = "年龄最小18岁")
+>     @Max(value = 100, message = "年龄最大100岁")
+>     private Integer age;
+> 
+>     @Positive(message = "金额必须为正数")
+>     private BigDecimal amount;
+> 
+>     @Future(message = "开始时间必须为未来时间")
+>     private LocalDateTime startTime;
+> 
+>     @AssertTrue(message = "必须同意协议")
+>     private Boolean agree;
+> 
+>     // 集合验证
+>     @NotEmpty(message = "角色列表不能为空")
+>     private List<String> roles;
+> 
+>     // 嵌套对象验证
+>     @Valid
+>     private Address address;
+> }
+> ```
+>
+> ```xml
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-validation</artifactId>
+> </dependency>
+> ```
+>
+> 
+>
+> ##### 常用注解说明
+>
+> | 注解                        | 适用类型    | 说明                                                     |
+> | :-------------------------- | :---------- | :------------------------------------------------------- |
+> | `@NotNull`                  | 任意类型    | 字段不能为 `null`（但可以是空字符串/集合）               |
+> | `@NotBlank`                 | `String`    | 非空且至少包含一个非空白字符（自动去除前后空格）         |
+> | `@NotEmpty`                 | 集合/字符串 | 集合不能为空或 `null`；字符串长度 > 0                    |
+> | `@Size`                     | 集合/字符串 | 限制长度：`min` 和 `max`                                 |
+> | `@Email`                    | `String`    | 邮箱格式验证（默认宽松模式，可通过 `regexp` 自定义正则） |
+> | `@Pattern`                  | `String`    | 正则表达式匹配                                           |
+> | `@Min`/`@Max`               | 数值类型    | 最小/最大值                                              |
+> | `@DecimalMin`/`@DecimalMax` | 数值类型    | 支持字符串形式的数值边界（如 `"0.01"`）                  |
+> | `@Positive`                 | 数值类型    | 必须为正数                                               |
+> | `@Negative`                 | 数值类型    | 必须为负数                                               |
+> | `@Future`                   | 日期类型    | 日期必须在未来                                           |
+> | `@Past`                     | 日期类型    | 日期必须在过去                                           |
+> | `@AssertTrue`               | `Boolean`   | 必须为 `true`                                            |
+> | `@AssertFalse`              | `Boolean`   | 必须为 `false`                                           |
+>
+> 
+>
+> ## `@Valid` vs `@Validated` 区别
+>
+> #### 1. 来源与标准性
+>
+> | 注解         | 所属规范/框架                   | 包路径                                      |
+> | :----------- | :------------------------------ | :------------------------------------------ |
+> | `@Valid`     | **Java 标准** (JSR-303/JSR-380) | `javax.validation`                          |
+> | `@Validated` | **Spring 框架扩展**             | `org.springframework.validation.annotation` |
+>
+> ------
+>
+> #### 2. 核心功能差异
+>
+> | 功能点         | `@Valid`                         | `@Validated`                       |
+> | :------------- | :------------------------------- | :--------------------------------- |
+> | **分组校验**   | 不支持直接分组                   | 支持 `groups` 参数指定分组         |
+> | **嵌套校验**   | 需配合 `@Valid` 触发嵌套对象校验 | 需配合 `@Valid` 才能触发嵌套校验   |
+> | **作用范围**   | 可标注字段、方法参数、返回值等   | **只能标注类、方法、参数**         |
+> | **方法级校验** | 不支持                           | 支持（需配合 `@Validated` 标注类） |
+>
+> **总结选择策略**
+>
+> | 场景                         | 推荐注解     |
+> | :--------------------------- | :----------- |
+> | 普通参数校验                 | `@Valid`     |
+> | 需要分组校验                 | `@Validated` |
+> | 非 Controller 层方法参数校验 | `@Validated` |
+>
+> 更复杂的场景可以两者嵌套使用
+>
+> ### **使用示例**
+>
+> #### **(1) 分组校验（`@Validated` 核心优势）**
+>
+> ```java
+> // 定义分组接口
+> public interface CreateGroup {}  // 创建场景校验组
+> public interface UpdateGroup {}  // 更新场景校验组
+> 
+> // 实体类
+> public class User {
+>     @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
+>     private Long id;
+> 
+>     @NotBlank(groups = CreateGroup.class)  // 仅创建时校验
+>     private String name;
+> }
+> 
+> // Controller 使用分组
+> @PostMapping("/create")
+> public ResponseEntity<?> createUser(
+>     @Validated(CreateGroup.class) @RequestBody User user) {  // 仅校验 CreateGroup 分组规则
+>     // ...
+> }
+> 
+> @PostMapping("/update")
+> public ResponseEntity<?> updateUser(
+>     @Validated(UpdateGroup.class) @RequestBody User user) {  // 仅校验 UpdateGroup 分组规则
+>     // ...
+> }
+> ```
+>
+> #### **(2) 嵌套校验（需 `@Valid`）**
+>
+> ```java
+> public class Order {
+>     @Valid  // 必须加 @Valid 才能触发嵌套校验
+>     private User user;
+> }
+> 
+> @PostMapping("/order")
+> public ResponseEntity<?> createOrder(@Valid @RequestBody Order order) {
+>     // ...
+> }
+> ```
+>
+> ### **常见问题与最佳实践**
+>
+> #### **(1) 为什么有时需要同时使用 `@Valid` 和 `@Validated`？**
+>
+> - **嵌套校验**：在 Spring 中，即使类级别有 `@Validated`，嵌套对象的校验仍需在字段上显式添加 `@Valid`。
+> - **方法参数校验**：在 Service 层方法参数上使用 `@Validated` 需要配置 `MethodValidationPostProcessor`。
+>
+> #### **(2) 如何启用方法参数校验？**
+>
+> 在 Spring Boot 中自动配置，或手动添加：
+>
+> ```java
+> @Configuration
+> public class AppConfig {
+>     @Bean
+>     public MethodValidationPostProcessor methodValidationPostProcessor() {
+>         return new MethodValidationPostProcessor();
+>     }
+> }
+> 
+> // Service 层使用
+> @Service
+> @Validated  // 类级别激活方法参数校验
+> public class UserService {
+>     public void createUser(@Valid User user) {  // 校验 User 对象
+>         // ...
+>     }
+> }
+> ```
+
+
+
 # ==Windows==
 
 ## ==1.== 设置应用开机自启
