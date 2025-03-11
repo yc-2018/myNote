@@ -523,31 +523,97 @@
 
 
 
-## ==3.==如果用springboot写一个博客 一般都包涵哪些注解
+## ==3.==StringUtils常用方法
 
-> 使用SpringBoot编写博客应用程序时，一些常见的注解包括：
+> <kbd>2025.03.11</kbd> <kbd>公众号</kbd> 
 >
-> 1. `@SpringBootApplication` - 这是一个复合注解，包含了`@Configuration`、`@EnableAutoConfiguration`和`@ComponentScan`等注解。它表示这是一个Spring Boot应用程序。
+> ==**org.apache.commons.lang3.StringUtils;**==
 >
-> 2. `@RestController` - 这个注解表明该控制器类处理HTTP请求，并且每个方法返回的数据都会通过`@ResponseBody`自动序列化到响应体中。
->
-> 3. `@RequestMapping` - 这个注解用来映射URL和HTTP方法到控制器方法上。
->
-> 4. `@RequestParam` - 用于将HTTP请求参数绑定到控制器方法的参数上。
->
-> 5. `@PathVariable` - 用于将URL路径变量绑定到控制器方法的参数上。
->
-> 6. `@Autowired` - 自动装配依赖项，使得代码更简洁。
->
-> 7. `@Entity` - 表示该类是一个实体类。
->
-> 8. `@Repository` - 标记数据访问组件，通常与`@Autowired`一起使用。
->
-> 9. `@Service` - 在服务层中使用，标记业务逻辑组件。
->
-> 10. `@ControllerAdvice` - 全局异常处理器，用于捕获控制器中抛出的异常并进行相应处理。
->
-> 当然还有很多其他注解可以用于SpringBoot应用程序，具体使用哪些注解取决于应用程序需求和开发人员的喜好。
+> >==isEmpty系列==
+> >
+> >`StringUtils.isEmpty()`：null或空字符串才是true
+> >
+> >```java
+> >StringUtils.isEmpty(null) = true
+> >StringUtils.isEmpty("") = true
+> >StringUtils.isEmpty(" ") = false
+> >StringUtils.isEmpty("ikun") = false
+> >StringUtils.isEmpty(" ikun ") = false
+> >```
+> >
+> >`StringUtils.isNotEmpty()`：相当于不为空 ,=` !isEmpty()`
+> >
+> >`StringUtils.isAnyEmpty()`：有空就返回`true`
+> >
+> >```java
+> >StringUtils.isAnyEmpty(null)             = true
+> >StringUtils.isAnyEmpty(null, "foo")      = true
+> >StringUtils.isAnyEmpty("", "bar")        = true
+> >StringUtils.isAnyEmpty("bob", "")        = true
+> >StringUtils.isAnyEmpty("  bob  ", null)  = true
+> >StringUtils.isAnyEmpty(" ", "bar")       = false
+> >StringUtils.isAnyEmpty("foo", "bar")     = false
+> >StringUtils.isAnyEmpty(new String[]{})   = false
+> >StringUtils.isAnyEmpty(new String[]{""}) = true
+> >```
+> >
+> >`StringUtils.isNoneEmpty()`：相当于`!isAnyEmpty(css)` , 必须所有的值都不为空才返回true
+> >
+> >```java
+> >StringUtils.isNoneEmpty(null)             = false
+> >StringUtils.isNoneEmpty(null, "foo")      = false
+> >StringUtils.isNoneEmpty("", "bar")        = false
+> >StringUtils.isNoneEmpty("bob", "")        = false
+> >StringUtils.isNoneEmpty("  bob  ", null)  = false
+> >StringUtils.isNoneEmpty(new String[] {})  = true
+> >StringUtils.isNoneEmpty(new String[]{""}) = false
+> >StringUtils.isNoneEmpty(" ", "bar")       = true
+> >StringUtils.isNoneEmpty("foo", "bar")     = true
+> >```
+> >
+> >==isBank系列==
+> >
+> >`StringUtils.isBlank()`：是否为真空值(空格或者空值)
+> >
+> >```java
+> >StringUtils.isBlank(null)      = true
+> >StringUtils.isBlank("")        = true
+> >StringUtils.isBlank(" ")       = true
+> >StringUtils.isBlank("bob")     = false
+> >StringUtils.isBlank("  bob  ") = false
+> >```
+> >
+> >`StringUtils.isNotBlank()`：是否真的不为空,不是空格或者空值 ,相当于`!isBlank();`
+> >
+> >`StringUtils.isAnyBlank()`：是否包含任何真空值(包含空格或空值)
+> >
+> >```java
+> >StringUtils.isAnyBlank(null)             = true
+> >StringUtils.isAnyBlank(null, "foo")      = true
+> >StringUtils.isAnyBlank(null, null)       = true
+> >StringUtils.isAnyBlank("", "bar")        = true
+> >StringUtils.isAnyBlank("bob", "")        = true
+> >StringUtils.isAnyBlank("  bob  ", null)  = true
+> >StringUtils.isAnyBlank(" ", "bar")       = true
+> >StringUtils.isAnyBlank(new String[] {})  = false
+> >StringUtils.isAnyBlank(new String[]{""}) = true
+> >StringUtils.isAnyBlank("foo", "bar")     = false
+> >```
+> >
+> >`StringUtils.isNoneBlank()`：是否全部都不包含空值或空格
+> >
+> >```java
+> >StringUtils.isNoneBlank(null)             = false
+> >StringUtils.isNoneBlank(null, "foo")      = false
+> >StringUtils.isNoneBlank(null, null)       = false
+> >StringUtils.isNoneBlank("", "bar")        = false
+> >StringUtils.isNoneBlank("bob", "")        = false
+> >StringUtils.isNoneBlank("  bob  ", null)  = false
+> >StringUtils.isNoneBlank(" ", "bar")       = false
+> >StringUtils.isNoneBlank(new String[] {})  = true
+> >StringUtils.isNoneBlank(new String[]{""}) = false
+> >StringUtils.isNoneBlank("foo", "bar")     = true
+> >```
 >
 > 
 
