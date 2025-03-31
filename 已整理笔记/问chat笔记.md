@@ -1557,6 +1557,70 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 
 
 
+## ==4.==Vite项目中@别名配置方法
+
+> <kbd>2025.03.31</kbd> <kbd>DeepSeep</kbd> 
+>
+> **1、安装@types/node**
+>
+> ```bash
+> yarn add -D @types/node
+> # 或
+> npm install --save-dev
+> ```
+>
+> 安装完成后，检查 `package.json` 的 `devDependencies` 字段中是否包含 `@types/node`：
+>
+> ```json
+> {
+>   "devDependencies": {
+>     "@types/node": "^x.x.x"
+>   }
+> }
+> ```
+>
+> **2、配置 Vite 别名**
+>
+> **修改根目录 `vite.config.ts`（或 `.js`）：**
+>
+> ```ts
+> import { defineConfig } from 'vite'
+> import path from 'path' // 安装 @types/node 才会有这个模块
+> 
+> export default defineConfig({
+>   resolve: {
+>     alias: {
+>       '@': path.resolve(__dirname, './src'),
+>     },
+>   },
+> })
+> ```
+>
+> **3、配置 TypeScript**
+>
+> **修改 `tsconfig.json`：**
+>
+> ```json
+> {
+>   "compilerOptions": {
+>     "baseUrl": ".",
+>     "paths": {
+>       "@/*": ["src/*"]
+>     }
+>   }
+> }
+> ```
+>
+> **4、使用示例**
+>
+> ```js
+> import MyComponent from '@/components/MyComponent.tsx'
+> ```
+
+
+
+
+
 # ==HTML==
 
 ## ==1.== a标签页面内跳转
