@@ -813,7 +813,7 @@
 
 ## ==6.==控制和前端交互字段
 
-> <kbd>2024.09.05</kbd> <kbd>MindGen 4.0</kbd> <kbd>未全部验证 </kbd>
+> <kbd>2024.09.05</kbd> <kbd>MindGen 4.0</kbd>
 >
 >  **序列化（Java 对象 → JSON）和反序列化（JSON → Java 对象）**
 >
@@ -823,29 +823,29 @@
 > public class MyClass {
 >  private String name;
 > 
->  @JsonIgnore
->  private String sensitiveData;  // 该字段既不序列化（返回），也不反序列化（接收）。
+>  @JsonIgnore  // 该字段既不序列化（返回），也不反序列化（接收）。
+>  private String sensitiveData;
 > 
->  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
->  private String password;  // 该字段只能用于接收前端数据，不能返回给前端
+>  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)	  // 该字段只能用于接收前端数据，不能返回给前端
+>  private String password;
 > 
->  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
->  private String userId;    // 仅返回给前端，不接收前端传入的数据
+>  @JsonProperty(access = JsonProperty.Access.READ_ONLY)    // 仅返回给前端，不接收前端传入的数据
+>  private String userId;
 > 
->  @JsonInclude(JsonInclude.Include.NON_NULL)
->  private String optionalField;  // 如果为 null，这个字段不会返回给前端
+>  @JsonInclude(JsonInclude.Include.NON_NULL)  			 // 如果为 null，这个字段不会返回给前端
+>  private String optionalField;
 > 
->  @JsonInclude(JsonInclude.Include.NON_EMPTY)
->  private String optionalField;  // 如果为空字符串或 null，这个字段不会返回给前端
+>  @JsonInclude(JsonInclude.Include.NON_EMPTY)  			// 如果为空字符串或 null，这个字段不会返回给前端
+>  private String optionalField;
 > 
->  @JsonInclude(JsonInclude.Include.NON_EMPTY)
->  private List<String> items;  // 如果列表为空或 null，这个字段不会返回给前端
+>  @JsonInclude(JsonInclude.Include.NON_EMPTY)  			// 如果列表为空或 null，这个字段不会返回给前端
+>  private List<String> items;
 > 
->  @JsonSerialize(using = CustomSerializer.class)
->  private String customField; // 自定义处理序列化和是否序列化（只会影响序列化）
+>  @JsonSerialize(using = CustomSerializer.class) 			// 自定义处理序列化和是否序列化（只会影响序列化）
+>  private String customField;
 > 
->  @JsonDeserialize(using = CustomDeserializer.class)
->  private String customDeserializerField;  // 影响反序列化过程
+>  @JsonDeserialize(using = CustomDeserializer.class)	    // 影响反序列化过程
+>  private String customDeserializerField;
 > 
 >  @JsonSerialize(using = CustomSerializer.class)
 >  @JsonDeserialize(using = CustomDeserializer.class)

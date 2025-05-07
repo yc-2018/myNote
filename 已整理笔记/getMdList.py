@@ -26,6 +26,8 @@ def scan_md_folder(path):
         md_files.sort(key=sort_key)
         # 将文件夹名和对应的 .md 文件列表作为一个子列表添加到结果列表中
         result.append([folder] + md_files)
+        # 按文件夹名的首字母（不区分大小写）排序
+        result.sort(key=lambda x: x[0].lower())
     return result
 
 def save_to_json(data, output_file):
