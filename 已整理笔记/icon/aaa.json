@@ -13,5 +13,6 @@
   "Linux": "linux.svg",
   "Git": "git.svg",
   "SpringBoot": "springBoot.svg", 
-  "前端项目":"WEB前端.svg"
+  "前端项目":"WEB前端.svg",
+  "医":"医.svg"
 }
