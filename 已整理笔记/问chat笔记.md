@@ -1619,6 +1619,18 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 
 
 
+## ==5.== 前端重新部署
+
+<kbd>2025.06.25</kbd> [参考来源：前端重新部署如何通知用户刷新网页？](https://juejin.cn/post/7185451392994115645) 
+
+> 场景：看板等，前端项目一直开着不动（纯前端方案）
+>
+> 方案1：按页面来 在public文件夹写 页面名字 在项目入口去轮询 检查文件内容是否改变（可能可以控制哪些，页面自动刷新，哪些不受影响）
+>
+> 方案2：在项目打包时自动生成一个文件，也在项目入口轮询 判断是否项目已更新
+>
+> 方案3：打完包之后生成的`script src 的hash值去判断`，每次打包都会生成唯一的hash值，只要轮询去判断不一样了，那一定是重新部署了`await fetch('/').then(res => res.text());//读取index html,然后正则表达式匹配script标签来判断`
+
 
 
 # ==HTML==
@@ -2824,6 +2836,168 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > ```
 
 
+
+## ==11.==console的详细用法
+
+<kbd>2025.06.25</kbd> [参考来源：专业前端怎么使用console?](https://juejin.cn/post/7065856171436933156) 
+
+> 常见的console（不同浏览器样式有所不同，可以复制到你的浏览器试试）
+>
+> ```js
+> console.log('打印内容的通用方法。')
+> console.info('打印资讯类说明信息。')
+> console.debug('在控制台打印一条 "debug" 级别的消息。')
+> console.warn('打印一个警告信息。')
+> console.error('打印一条错误信息。')
+> ```
+>
+> ---
+>
+> `console.log()`写`css`
+>
+> ```js
+> console.log('%c ikun 008','color:red;font-size: 52px;')
+> ```
+>
+> ---
+>
+> `console.log()`使用参数
+>
+> ```js
+> const str = "ikun"
+> const style = 'color:red;font-size: 52px;'
+> const int = 123
+> const floats = 123.34
+> const obj = {a:1,b:["i",'k']}
+> console.log('字符串：%s,样式：%c,整数%d，浮点数:%f，对象：%o',str,style,int,floats,obj)
+> ```
+>
+> ---
+>
+> `console.clear()`: 用于清除控制台信息。
+>
+> ---
+>
+> `console.count(label)`:输出`count()`被调用的次数，可以使用一个参数`label`。演示如下：
+>
+> ```js
+> var user = "";
+> 
+> function greet() {console.count(user)}
+> 
+> user = "bob";
+> greet();
+> user = "alice";
+> greet();
+> greet();
+> console.count("alice");
+> console.count("aaa");
+> console.count("alice");
+> ```
+>
+> 结果：
+>
+> ```txt
+> bob: 1
+> alice: 1
+> alice: 2
+> alice: 3
+> aaa: 1
+> alice: 4
+> ```
+>
+> ---
+>
+> `console.dir()`可以打印对象的属性，在控制台中逐级查看对象的详细信息。
+>
+> ```js
+> console.dir(document.body)
+> ```
+>
+> ---
+>
+> `console.memory`是一个属性，而不是方法，使用memory属性用来检查内存信息。
+>
+> ```js
+> console.memory // 下面是结果
+> MemoryInfo {
+>     totalJSHeapSize: 89767807, 
+>     usedJSHeapSize: 86058895, 
+>     jsHeapSizeLimit: 4294705152
+> }
+> ```
+>
+> | 属性名称          | 含义                                                   | 数值示例解释（以你的输出为例）                     |
+> | ----------------- | ------------------------------------------------------ | -------------------------------------------------- |
+> | `totalJSHeapSize` | JavaScript 引擎分配的总堆内存大小（单位：字节）        | 分配了约 **89.77 MB**（89,767,807 字节）的内存空间 |
+> | `usedJSHeapSize`  | 当前已被 JavaScript 对象占用的堆内存大小（单位：字节） | 已使用约 **86.06 MB**（86,058,895 字节）           |
+> | `jsHeapSizeLimit` | 浏览器对 JavaScript 堆内存的最大限制（单位：字节）     | 最大限制约 **4.29 GB**（4,294,705,152 字节）       |
+>
+> `console.memory` 是前端性能优化的重要工具，通过它可以直观了解 JavaScript 内存使用情况，帮助定位内存泄漏、优化对象创建策略，尤其是在复杂单页应用（SPA）或高交互性页面中具有重要作用。如果发现内存持续高占用，建议结合浏览器开发者工具的 **Memory 面板** 进行堆快照分析，定位具体泄漏源。
+>
+> ---
+>
+> `console.time()` 和 `console.timeEnd()`
+>
+> - `console.time('ikun')`– 使用输入参数的名称启动计时器。在给定页面上最多可以同时运行 10,000 个计时器。
+> - `console.timeEnd('ikun')`– 停止指定的计时器并记录自启动以来经过的时间（以毫秒为单位）。
+>
+> ```js
+> console.time()	// 没参数好像也可以
+> undefined
+> console.timeEnd()
+> default: 17806.971923828125 ms
+> ```
+>
+> ---
+>
+> `console.assert()`:断言为假，将错误信息写入控制台，如果为真，无显示
+>
+> ```js
+> console.assert(1===1)
+> undefined
+> console.assert(1===2)
+> 断言失败： console.assert
+> undefined
+> ```
+>
+> ---
+>
+> `console.trace()`方法将堆栈跟踪输出到控制台。
+>
+> ```js
+> function test() {console.trace()}
+> //undefined
+> test()
+> //console.trace
+> //test @ VM10349:1
+> //（匿名） @ VM10359:1
+> //显示另外 1 个框架
+> //收起
+> //undefined
+> ```
+>
+> ---
+>
+> `console.table()`在`控制台`中还可以打印表格
+>
+> ```js
+> console.table(['ikun','哎呦','你干嘛']);
+> console.table({a:1,b:'什么','油饼':'食不食'});
+> ```
+>
+> ---
+>
+> `console.group()` 和 `console.groupEnd()`:在控制台上创建一个新的分组，随后输出到控制台上的内容都会被添加到一个锁进，表示该内容属于当前分组，知道调用`console.groupEnd()`之后，当前分组结束。
+>
+> ```js
+> console.log(111)
+> console.group(222) // 不给参数默认组名为 console.group
+> console.log(11121)
+> console.log("确定")
+> console.groupEnd()
+> console.log("确定")
+> ```
 
 
 
