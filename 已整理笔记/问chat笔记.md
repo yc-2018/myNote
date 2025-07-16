@@ -2048,25 +2048,25 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > ```css
 > /* 纯色背景 */
 > .element {
->   background-color: #f0f0f0; 
+> background-color: #f0f0f0; 
 > }
 > 
 > /* 渐变背景 */
 > .element {
->   background: linear-gradient(to right, #ff9a9e, #fad0c4);
+> background: linear-gradient(to right, #ff9a9e, #fad0c4);
 > }
 > 
 > /* 图片背景 */
 > .element {
->   background-image: url("image.jpg");
->   background-size: cover;       /* 填充容器 */
->   background-position: center;  /* 居中显示 */
->   background-repeat: no-repeat; /* 禁止重复 */
+> background-image: url("image.jpg");
+> background-size: cover;       /* 填充容器 */
+> background-position: center;  /* 居中显示 */
+> background-repeat: no-repeat; /* 禁止重复 */
 > }
 > 
 > /* 复合写法 */
 > .element {
->   background: #333 url("bg.png") center/cover no-repeat;
+> background: #333 url("bg.png") center/cover no-repeat;
 > }
 > ```
 >
@@ -2077,20 +2077,20 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > ```css
 > /* 基础阴影 */
 > .element {
->   box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
->   /* 参数：X偏移 | Y偏移 | 模糊半径 | 颜色 */
+> box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+> /* 参数：X偏移 | Y偏移 | 模糊半径 | 颜色 */
 > }
 > 
 > /* 内阴影 */
 > .element {
->   box-shadow: inset 0 0 10px #000;
+> box-shadow: inset 0 0 10px #000;
 > }
 > 
 > /* 多重阴影 */
 > .element {
->   box-shadow: 
->     0 2px 4px rgba(0,0,0,0.1),
->     0 8px 16px rgba(0,0,0,0.1);
+> box-shadow: 
+>  0 2px 4px rgba(0,0,0,0.1),
+>  0 8px 16px rgba(0,0,0,0.1);
 > }
 > ```
 >
@@ -2101,33 +2101,33 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > ```css
 > /* 基础文字阴影 */
 > .text {
->   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
->   /* 参数：X偏移 | Y偏移 | 模糊半径 | 颜色 */
+> text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+> /* 参数：X偏移 | Y偏移 | 模糊半径 | 颜色 */
 > }
 > 
 > /* 多重文字阴影 */
 > .title {
->   text-shadow: 
->     0 0 5px #fff,
->     0 0 10px #ff00de,
->     0 0 15px #ff00de;
+> text-shadow: 
+>  0 0 5px #fff,
+>  0 0 10px #ff00de,
+>  0 0 15px #ff00de;
 > }
 > 
 > /* 浮雕效果 */
 > .emboss {
->   color: #ccc;
->   text-shadow: 
->     -1px -1px 0 #fff, 
->     1px 1px 0 #333;
+> color: #ccc;
+> text-shadow: 
+>  -1px -1px 0 #fff, 
+>  1px 1px 0 #333;
 > }
 > 
 > /* 描边效果 */
 > .stroke {
->   text-shadow:
->     -1px -1px 0 #000,
->     1px -1px 0 #000,
->     -1px 1px 0 #000,
->     1px 1px 0 #000;
+> text-shadow:
+>  -1px -1px 0 #000,
+>  1px -1px 0 #000,
+>  -1px 1px 0 #000,
+>  1px 1px 0 #000;
 > }
 > ```
 >
@@ -2138,27 +2138,27 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > ```css
 > /* 基础边框 */
 > .element {
->   border: 1px solid #ccc;  /* 宽度 | 样式 | 颜色 */
+> border: 1px solid #ccc;  /* 宽度 | 样式 | 颜色 */
 > }
 > 
 > /* 圆角 */
 > .element {
->   border-radius: 8px;       			/* 统一圆角 */
->   border-radius: 10px 5px;  			/* 左上/右下 | 右上/左下 */
->   border-radius: 10px 5px 15px;   		/* 左上 | 右上/左下 | 右下 */
->   border-radius: 10px 5px 15px 20px;    /* 左上 | 右上 | 右下 | 左下 */
+> border-radius: 8px;       			/* 统一圆角 */
+> border-radius: 10px 5px;  			/* 左上/右下 | 右上/左下 */
+> border-radius: 10px 5px 15px;   		/* 左上 | 右上/左下 | 右下 */
+> border-radius: 10px 5px 15px 20px;    /* 左上 | 右上 | 右下 | 左下 */
 > }
 > 
 > /* 单独设置 */
 > .element {
->   border-top: 2px dashed red;
->   border-right: 3px dotted blue;
+> border-top: 2px dashed red;
+> border-right: 3px dotted blue;
 > }
 > 
 > /* 边框阴影 */
 > .element {
->   border: 1px solid;
->   border-image: linear-gradient(45deg, red, blue) 1;
+> border: 1px solid;
+> border-image: linear-gradient(45deg, red, blue) 1;
 > }
 > /* padding:
 >    - 1个值：四边相同
@@ -2187,6 +2187,15 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 >     grid-template-rows: 80px auto; /* 调整行高 */
 >   }
 > }
+> 
+> 
+> /* ——————————————进阶技巧—————————— */
+> /* 混合单位 */
+> grid-template-columns: 200px 1fr 2fr; /* 固定+比例列 */
+> /* 重复函数 */
+> grid-template-columns: repeat(3, 1fr); /* 等同于1fr 1fr 1fr */
+> /* 最小最大限制 */
+> grid-template-rows: 100px minmax(200px, auto);
 > ```
 >
 > ---
