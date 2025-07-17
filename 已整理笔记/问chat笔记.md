@@ -1598,7 +1598,7 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 >
 > **3、配置 TypeScript**
 >
-> **修改 `tsconfig.json`：**
+> **修改 `tsconfig.json`：** (如果有tsconfig.app.json也要加上)
 >
 > ```json
 > {
