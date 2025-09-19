@@ -2276,7 +2276,11 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 > - `scale3d(x, y, z)`
 > - `rotate3d(x, y, z, angle)`
 >
-> 这些3D变换需要配合 `perspective` 属性来实现透视效果 参考： https://cloud.tencent.com/developer/article/2140480
+> 这些3D变换需要配合 `perspective` 属性来实现透视效果 参考： 
+>
+> https://cloud.tencent.com/developer/article/2140480
+>
+> https://www.cainiaoplus.com/css3/css3-3d-transforms.html
 
 # ==JavaScript==
 
