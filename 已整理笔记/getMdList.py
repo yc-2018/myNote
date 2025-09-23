@@ -21,7 +21,7 @@ def scan_md_folder(path):
     for folder in folders:
         folder_path = os.path.join(path, folder)
         # 获取文件夹下的 .md 文件列表，排除以点开头的文件
-        md_files = [f for f in os.listdir(folder_path) if f.endswith('.md.json') and not f.startswith('.')]
+        md_files = [f for f in os.listdir(folder_path) if f.endswith('.md') and not f.startswith('.')]
         # 对获取到的.md文件按数字进行排序
         md_files.sort(key=sort_key)
         # 将文件夹名和对应的 .md 文件列表作为一个子列表添加到结果列表中
