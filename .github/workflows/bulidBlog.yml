@@ -43,8 +43,10 @@ jobs:
                 ]
               }
             ],
-            "buildCommand": "echo 'No build needed for static site'",
-            "installCommand": "echo 'No install needed for static site'"
+            "buildCommand": "",
+            "installCommand": "",
+            "outputDirectory": ".",
+            "nodeVersion": "22.11.0"
           }
         EOF
         mv 已整理笔记/博客md/* .             # 移动md里面的全部内容到git根目录
