@@ -26,7 +26,7 @@ def parse_markdown_file(file_path):
         elif line.startswith('## '):  # 标题2，用作md文件名和内容的开始
             if current_section is not None and current_file is not None:
                 sections[current_section][current_file] = '\n'.join(content_accumulator)
-            current_file = sanitize_name(line.strip().lstrip('## ')) + '.md'
+            current_file = sanitize_name(line.strip().lstrip('## ')) + '.md.json'
             content_accumulator = [line.strip()]
         elif current_file is not None:
             content_accumulator.append(line.rstrip())
