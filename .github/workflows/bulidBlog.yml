@@ -29,7 +29,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "Yc Action"
         git checkout --orphan temp-build  # 切换到临时分支
-        echo -e "下面是腾讯跨越可配置的edgeone.json配置" > a.txt
+        echo -e "下面是腾讯跨越可配置的edgeone.json配置." > a.txt
         cat > edgeone.json << EOF
           {
             "headers": [
