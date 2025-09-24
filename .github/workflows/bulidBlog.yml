@@ -38,11 +38,7 @@ jobs:
                 "headers": [
                   {
                     "key": "Access-Control-Allow-Origin",
-                    "value": "https://v.556.cn, https://245556.xyz, http://localhost, http://127.0.0.1"
-                  },
-                  {
-                    "key": "Vary",
-                    "value": "Origin"
+                    "value": "*"
                   }
                 ]
               }
