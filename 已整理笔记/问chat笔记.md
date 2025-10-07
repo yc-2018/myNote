@@ -2938,7 +2938,7 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 >
 > 首先，让我们分析这个URL：
 >
-> ```
+> ```http
 > https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?jsoncallback=jQuery18002568176207224737_1681129677419&wd=%E4%BD%A0%E5%B9%B2%E5%98%9B&cb=keydata&_=1681129959331
 > ```
 >
