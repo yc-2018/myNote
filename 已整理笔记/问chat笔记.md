@@ -913,75 +913,149 @@
 
 
 
-## ==7.==接收前端字段验证注解
+## ==7.== 接收接收和返回动态字段
 
-> <kbd>2025.03.11</kbd> <kbd>deepseek</kbd> <kbd>未全部验证 </kbd>
+<kbd>2026.02.12</kbd>   [参考来源↗](https://juejin.cn/post/7496341504849641510)  
+
+> 在实体类里面添加一个map如：
 >
+> ` private Map<String, Object> additionalProperties = new HashMap<>();`
+>
+> 
+>
+> **`@JsonAnySetter`** ： 手写setter方法并在方法上写上`@JsonAnySetter`就好了，后端在用这个类接收的属性在类里面没有对应的情况下，会字段放进这个map里面
+>
+> **`@JsonAnyGetter`**：手写getter方法并在方法上写上`@JsonAnyGetter`就好了，在序列化（转json）时 生效，map里面的值会放在最上层JSON一起返回前端
+>
+> 例子：
+>
+> ```java
+> import com.fasterxml.jackson.annotation.JsonAnySetter;
+> import com.fasterxml.jackson.databind.ObjectMapper;
+> 
+> import java.util.HashMap;
+> import java.util.Map;
+> 
+> public class Person {
+>     private String name;
+>     private int age;
+> 
+>     // 存储额外的动态属性
+>     private Map<String, Object> additionalProperties = new HashMap<>();
+> 
+>     // 添加动态属性
+>     @JsonAnySetter
+>     public void addAdditionalProperty(String key, Object value) {
+>         this.additionalProperties.put(key, value);
+>     }
+> 
+>     // 省略 getter 和 setter 方法
+> 
+>     public Map<String, Object> getAdditionalProperties() {
+>         return additionalProperties;
+>     }
+> 
+>     // ——————————————————JSON转java——————————————————————————
+>     public static void main(String[] args) throws Exception {
+>         String json = "{"name":"John","age":30,"address":"123 Street","nickname":"Johnny"}";
+> 
+>         ObjectMapper mapper = new ObjectMapper();
+>         Person person = mapper.readValue(json, Person.class);
+> 
+>         System.out.println("Name: " + person.name);  // 输出：Name: John
+>         System.out.println("Age: " + person.age);    // 输出：Age: 30
+>         System.out.println("Additional Properties: " + person.getAdditionalProperties());
+>         // 输出：Additional Properties: {address=123 Street, nickname=Johnny}
+>     }
+>     
+>     // ——————————————Java换JSON————————————————————
+>     public class Main {
+>     public static void main(String[] args) throws Exception {
+>         Person person = new Person("John", 30);
+>         person.addAdditionalProperty("address", "123 Street");
+>         person.addAdditionalProperty("nickname", "Johnny");
+> 
+>         ObjectMapper mapper = new ObjectMapper();
+>         String json = mapper.writeValueAsString(person);
+>         System.out.println(json);  // 输出：{"name":"John","age":30,"address":"123 Street","nickname":"Johnny"}
+>     }
+> }
+> 
+> ```
+
+
+
+
+
+## ==8.== 接收前端字段验证注解
+
+<kbd>2025.03.11</kbd> <kbd>deepseek</kbd> <kbd>未全部验证 </kbd>
+
 > **用于 Controller 层参数验证（需配合 `@Valid` 或 `@Validated` 使用）**
 >
 > ```java
-> @PostMapping("/checkin")
->     public R<?> checkin(@RequestBody @Valid CheckinRecords checkinRecord) {}
+>@PostMapping("/checkin")
+>  public R<?> checkin(@RequestBody @Valid CheckinRecords checkinRecord) {}
 > ```
->
+>    
 > ```java
-> import javax.validation.constraints.*;
+>import javax.validation.constraints.*;
 > 
 > public class UserDTO {
 > 
->     @NotNull(message = "用户名不能为空")
->     private String username;
-> 
+>  @NotNull(message = "用户名不能为空")
+>  private String username;
+>    
 >     @NotBlank(message = "密码必须为非空字符串")  // 验证非空且长度 > 0（去空格后）
->     private String password;
-> 
+>  private String password;
+>    
 >     // @Size(min = 6, max = 20, message = "密码长度需为6-20位")
->     // 自定义错误消息（支持占位符）
-> 	@Size(min = 6, max = 20, message = "密码长度需在 {min}-{max} 之间")
+>  // 自定义错误消息（支持占位符）
+>    	@Size(min = 6, max = 20, message = "密码长度需在 {min}-{max} 之间")
 >     private String password;
 > 
 >     @Email(message = "邮箱格式不合法")
->     private String email;
-> 
+>  private String email;
+>    
 >     @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式错误")
->     private String phone;
-> 
+>  private String phone;
+>    
 >     @Min(value = 18, message = "年龄最小18岁")
->     @Max(value = 100, message = "年龄最大100岁")
+>  @Max(value = 100, message = "年龄最大100岁")
 >     private Integer age;
-> 
+>    
 >     @Positive(message = "金额必须为正数")
->     private BigDecimal amount;
-> 
+>  private BigDecimal amount;
+>    
 >     @Future(message = "开始时间必须为未来时间")
->     private LocalDateTime startTime;
-> 
+>  private LocalDateTime startTime;
+>    
 >     @AssertTrue(message = "必须同意协议")
->     private Boolean agree;
-> 
+>  private Boolean agree;
+>    
 >     // 集合验证
->     @NotEmpty(message = "角色列表不能为空")
+>  @NotEmpty(message = "角色列表不能为空")
 >     private List<String> roles;
-> 
+>    
 >     // 嵌套对象验证
->     @Valid
+>  @Valid
 >     private Address address;
-> }
-> ```
->
+>    }
+>    ```
+> 
 > ```xml
-> <dependency>
->     <groupId>org.springframework.boot</groupId>
->     <artifactId>spring-boot-starter-validation</artifactId>
-> </dependency>
-> ```
->
+><dependency>
+>  <groupId>org.springframework.boot</groupId>
+>  <artifactId>spring-boot-starter-validation</artifactId>
+>    </dependency>
+>    ```
+> 
 > 
 >
 > ##### 常用注解说明
 >
 > | 注解                        | 适用类型    | 说明                                                     |
-> | :-------------------------- | :---------- | :------------------------------------------------------- |
+>| :-------------------------- | :---------- | :------------------------------------------------------- |
 > | `@NotNull`                  | 任意类型    | 字段不能为 `null`（但可以是空字符串/集合）               |
 > | `@NotBlank`                 | `String`    | 非空且至少包含一个非空白字符（自动去除前后空格）         |
 > | `@NotEmpty`                 | 集合/字符串 | 集合不能为空或 `null`；字符串长度 > 0                    |
@@ -996,7 +1070,7 @@
 > | `@Past`                     | 日期类型    | 日期必须在过去                                           |
 > | `@AssertTrue`               | `Boolean`   | 必须为 `true`                                            |
 > | `@AssertFalse`              | `Boolean`   | 必须为 `false`                                           |
->
+> 
 > 
 >
 > ## `@Valid` vs `@Validated` 区别
@@ -1004,29 +1078,29 @@
 > #### 1. 来源与标准性
 >
 > | 注解         | 所属规范/框架                   | 包路径                                      |
-> | :----------- | :------------------------------ | :------------------------------------------ |
+>| :----------- | :------------------------------ | :------------------------------------------ |
 > | `@Valid`     | **Java 标准** (JSR-303/JSR-380) | `javax.validation`                          |
 > | `@Validated` | **Spring 框架扩展**             | `org.springframework.validation.annotation` |
->
+> 
 > ------
 >
 > #### 2. 核心功能差异
 >
 > | 功能点         | `@Valid`                         | `@Validated`                       |
-> | :------------- | :------------------------------- | :--------------------------------- |
+>| :------------- | :------------------------------- | :--------------------------------- |
 > | **分组校验**   | 不支持直接分组                   | 支持 `groups` 参数指定分组         |
 > | **嵌套校验**   | 需配合 `@Valid` 触发嵌套对象校验 | 需配合 `@Valid` 才能触发嵌套校验   |
 > | **作用范围**   | 可标注字段、方法参数、返回值等   | **只能标注类、方法、参数**         |
 > | **方法级校验** | 不支持                           | 支持（需配合 `@Validated` 标注类） |
->
+> 
 > **总结选择策略**
 >
 > | 场景                         | 推荐注解     |
-> | :--------------------------- | :----------- |
+>| :--------------------------- | :----------- |
 > | 普通参数校验                 | `@Valid`     |
 > | 需要分组校验                 | `@Validated` |
 > | 非 Controller 层方法参数校验 | `@Validated` |
->
+> 
 > 更复杂的场景可以两者嵌套使用
 >
 > ### **使用示例**
@@ -1034,60 +1108,60 @@
 > #### **(1) 分组校验（`@Validated` 核心优势）**
 >
 > ```java
-> // 定义分组接口
+>// 定义分组接口
 > public interface CreateGroup {}  // 创建场景校验组
 > public interface UpdateGroup {}  // 更新场景校验组
 > 
 > // 实体类
 > public class User {
->     @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
->     private Long id;
-> 
+>  @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
+>  private Long id;
+>    
 >     @NotBlank(groups = CreateGroup.class)  // 仅创建时校验
->     private String name;
-> }
-> 
+>  private String name;
+>    }
+>    
 > // Controller 使用分组
 > @PostMapping("/create")
 > public ResponseEntity<?> createUser(
->     @Validated(CreateGroup.class) @RequestBody User user) {  // 仅校验 CreateGroup 分组规则
->     // ...
-> }
-> 
+>  @Validated(CreateGroup.class) @RequestBody User user) {  // 仅校验 CreateGroup 分组规则
+>  // ...
+>    }
+>    
 > @PostMapping("/update")
 > public ResponseEntity<?> updateUser(
->     @Validated(UpdateGroup.class) @RequestBody User user) {  // 仅校验 UpdateGroup 分组规则
->     // ...
-> }
-> ```
->
+>  @Validated(UpdateGroup.class) @RequestBody User user) {  // 仅校验 UpdateGroup 分组规则
+>  // ...
+>    }
+>    ```
+> 
 > #### **(2) 嵌套校验（需 `@Valid`）**
 >
 > ```java
-> public class Order {
->     @Valid  // 必须加 @Valid 才能触发嵌套校验
->     private User user;
-> }
-> 
+>public class Order {
+>  @Valid  // 必须加 @Valid 才能触发嵌套校验
+>  private User user;
+>    }
+>    
 > @PostMapping("/order")
 > public ResponseEntity<?> createOrder(@Valid @RequestBody Order order) {
->     // ...
+>  // ...
 > }
-> ```
->
+>    ```
+> 
 > ### **常见问题与最佳实践**
 >
 > #### **(1) 为什么有时需要同时使用 `@Valid` 和 `@Validated`？**
 >
 > - **嵌套校验**：在 Spring 中，即使类级别有 `@Validated`，嵌套对象的校验仍需在字段上显式添加 `@Valid`。
-> - **方法参数校验**：在 Service 层方法参数上使用 `@Validated` 需要配置 `MethodValidationPostProcessor`。
->
+>- **方法参数校验**：在 Service 层方法参数上使用 `@Validated` 需要配置 `MethodValidationPostProcessor`。
+> 
 > #### **(2) 如何启用方法参数校验？**
 >
 > 在 Spring Boot 中自动配置，或手动添加：
 >
 > ```java
-> @Configuration
+>@Configuration
 > public class AppConfig {
 >     @Bean
 >     public MethodValidationPostProcessor methodValidationPostProcessor() {
@@ -1107,7 +1181,7 @@
 
 
 
-## ==8.==  @Bean和@Component区别
+## ==9.==  @Bean和@Component区别
 
 <kbd>2025.09.22</kbd> 
 
