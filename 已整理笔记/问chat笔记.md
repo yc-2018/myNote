@@ -913,7 +913,7 @@
 
 
 
-## ==7.== 接收接收和返回动态字段
+## ==7.== 接收和返回动态字段
 
 <kbd>2026.02.12</kbd>   [参考来源↗](https://juejin.cn/post/7496341504849641510)  
 
@@ -930,57 +930,58 @@
 > 例子：
 >
 > ```java
+> import com.fasterxml.jackson.annotation.JsonAnyGetter;
 > import com.fasterxml.jackson.annotation.JsonAnySetter;
 > import com.fasterxml.jackson.databind.ObjectMapper;
-> 
+> import lombok.Data;
 > import java.util.HashMap;
 > import java.util.Map;
 > 
+> @Data
 > public class Person {
->     private String name;
->     private int age;
+>   private String name;
+>   private int age;
+>   private Map<String, Object> otherParams = new HashMap<>();  // 存储额外的动态属性
 > 
->     // 存储额外的动态属性
->     private Map<String, Object> additionalProperties = new HashMap<>();
+>   public Person() {}
+>   public Person(String name, int i) {this.name = name;this.age = i;}
 > 
->     // 添加动态属性
->     @JsonAnySetter
->     public void addAdditionalProperty(String key, Object value) {
->         this.additionalProperties.put(key, value);
->     }
+>   // 添加动态属性
+>   @JsonAnySetter
+>   public void addOtherProp(String key, Object value) {
+>     this.otherParams.put(key, value);
+>   }
 > 
->     // 省略 getter 和 setter 方法
+>   @JsonAnyGetter
+>   public Map<String, Object> getOtherParams() {
+>     return otherParams;
+>   }
 > 
->     public Map<String, Object> getAdditionalProperties() {
->         return additionalProperties;
->     }
+>   // ——————————————————JSON转java——————————————————————————
+>   public static void main(String[] args) throws Exception {
+>     String json = "{\"name\":\"小黑子\",\"age\":30,\"address\":\"蔡徐村66号\",\"nickname\":\"IKUN\",\"aa\":[2,4]}";
 > 
->     // ——————————————————JSON转java——————————————————————————
+>     ObjectMapper mapper = new ObjectMapper();
+>     Person person = mapper.readValue(json, Person.class);
+> 
+>     System.out.println("Name: " + person.name);                 // 输出：Name: 小黑子
+>     System.out.println("Age: " + person.age);                   // 输出：Age: 30
+>     System.out.println("其他参数: " + person.getOtherParams());  // 输出：其他参数: {aa=[2, 4], address=蔡徐村66号, nickname=IKUN}
+>   }
+> 
+>   // ——————————————Java换JSON————————————————————
+>   public static class Main {
 >     public static void main(String[] args) throws Exception {
->         String json = "{"name":"John","age":30,"address":"123 Street","nickname":"Johnny"}";
+>       Person person = new Person("IKUN", 30);
+>       person.addOtherProp("address", "123 Street");
+>       person.addOtherProp("nickname", "小黑子");
 > 
->         ObjectMapper mapper = new ObjectMapper();
->         Person person = mapper.readValue(json, Person.class);
-> 
->         System.out.println("Name: " + person.name);  // 输出：Name: John
->         System.out.println("Age: " + person.age);    // 输出：Age: 30
->         System.out.println("Additional Properties: " + person.getAdditionalProperties());
->         // 输出：Additional Properties: {address=123 Street, nickname=Johnny}
+>       ObjectMapper mapper = new ObjectMapper();
+>       String json = mapper.writeValueAsString(person);
+>       System.out.println(json);  // 输出：{"name":"IKUN","age":30,"address":"123 Street","nickname":"小黑子"}
 >     }
->     
->     // ——————————————Java换JSON————————————————————
->     public class Main {
->     public static void main(String[] args) throws Exception {
->         Person person = new Person("John", 30);
->         person.addAdditionalProperty("address", "123 Street");
->         person.addAdditionalProperty("nickname", "Johnny");
-> 
->         ObjectMapper mapper = new ObjectMapper();
->         String json = mapper.writeValueAsString(person);
->         System.out.println(json);  // 输出：{"name":"John","age":30,"address":"123 Street","nickname":"Johnny"}
->     }
+>   }
 > }
-> 
 > ```
 
 
