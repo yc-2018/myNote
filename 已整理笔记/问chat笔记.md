@@ -5634,6 +5634,410 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 
 
 
+## ==4.== oracle分组拼接
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> 在 Oracle 11g 中，可以使用 `LISTAGG`函数对分组后的字段进行拼接。基本语法如下：
+>
+> ```
+> SELECT 
+>     分组字段,
+>     LISTAGG(拼接字段, '分隔符') WITHIN GROUP (ORDER BY 排序字段) AS 拼接结果
+> FROM 表名
+> GROUP BY 分组字段;
+> ```
+>
+> **示例**：
+>
+> 假设表名为 `employees`，按部门分组拼接员工姓名：
+>
+> ```
+> SELECT 
+>     department_id,
+>     LISTAGG(employee_name, ', ') WITHIN GROUP (ORDER BY employee_name) AS employees_list
+> FROM employees
+> GROUP BY department_id;
+> ```
+>
+> **注意**：
+>
+> - `LISTAGG`是 Oracle 11g R2 及以上版本支持的标准函数。
+> - 如果拼接结果超过 4000 字符（VARCHAR2 最大长度），会抛出 `ORA-01489`错误，可考虑用 `XMLAGG`替代。
+> - 如果字段包含 NULL 值，`LISTAGG`会自动忽略。
+
+
+
+## ==5.== oracle WITH 子句
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> **一、WITH 是什么？**
+>
+> **WITH 子句**（也称为公用表表达式，Common Table Expression，简称 CTE）是 Oracle 中的一个强大特性，用于定义临时命名的结果集，这个结果集可以在后续的查询中被多次引用。类似于在查询中创建了一个"临时视图"。
+>
+> **二、基本语法结构**
+>
+> **1. 最简单的 WITH 用法：**
+>
+> ```sql
+> WITH 临时表名 AS (
+>     SELECT 语句
+> )
+> SELECT * FROM 临时表名;
+> ```
+>
+> ```sql
+> WITH 临时表名 (列1, 列2, 列3) AS (
+>     SELECT 值1, 值2, 值3 FROM 表
+> )
+> SELECT * FROM 临时表名;
+> ```
+>
+> 
+>
+> **2. 带多个 CTE 的完整语法：**
+>
+> ```sql
+> WITH
+> 临时表名1 AS (
+>     SELECT ...  -- 第一个临时表
+> ),
+> 临时表名2 AS (
+>     SELECT ...  -- 可以引用临时表名1
+> ),
+> 临时表名3 AS (
+>     SELECT ...  -- 可以引用前面定义的临时表
+> )
+> SELECT ... FROM 临时表名3;
+> ```
+>
+> **3.示例**
+>
+> ```sql
+> -- 链接表分组，不想影响主表
+> with dtl_line as (
+>     select BILLUUID,LISTAGG(ARCHLINECODE, ',') WITHIN GROUP (ORDER BY ARCHLINECODE) AS line_codes
+>     from SJ_ITMS_SCHEDULE_ORDER
+>     group by BILLUUID)
+> select s.uuid, s.CLASSES, s.VEHICLETYPEUUID, s.AREANAME, l.line_codes
+> from SJ_ITMS_SCHEDULE s left join dtl_line l on l.BILLUUID = s.uuid;
+> 
+> 
+> -- 写法1：需要在每个子查询中都写别名
+> WITH complex_calc AS (
+>     SELECT 
+>         SUM(weight * distance) as 运输吨公里,
+>         COUNT(DISTINCT driver_id) as 司机数,
+>         AVG(delivery_time) as 平均送达时间
+>     FROM shipments
+> )
+> SELECT 运输吨公里, 司机数, 平均送达时间 FROM complex_calc;
+> 
+> -- 写法2：统一在外部定义别名
+> WITH complex_calc (运输吨公里, 司机数, 平均送达时间) AS (
+>     SELECT 
+>         SUM(weight * distance),  -- 不写别名
+>         COUNT(DISTINCT driver_id),  -- 不写别名
+>         AVG(delivery_time)  -- 不写别名
+>     FROM shipments
+> )
+> SELECT 运输吨公里, 司机数, 平均送达时间 FROM complex_calc;
+> ```
+>
+> 
+>
+> **WITH 与临时表的区别**
+>
+> | 特性       | WITH 子句 (CTE)    | 全局临时表 (GTT) |
+> | ---------- | ------------------ | ---------------- |
+> | 生命周期   | 当前查询执行期间   | 事务或会话期间   |
+> | 存储       | 内存/临时表空间    | 磁盘/临时表空间  |
+> | 可重复使用 | 当前查询中多次使用 | 跨多个查询使用   |
+> | 性能       | 适合中小数据集     | 适合大数据集     |
+> | 索引       | 不能创建索引       | 可以创建索引     |
+>
+> **选择建议**：
+>
+> - 使用 **WITH**：一次性复杂查询、递归查询、逻辑拆分
+> - 使用 **临时表**：需要跨多个查询使用、需要索引优化、处理超大结果集
+
+
+
+## ==5.== oracle UNION 和 UNION ALL
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> **UNION 是什么？**
+>
+> > **UNION** 是 Oracle 中用于**合并两个或多个 SELECT 查询结果**的 SQL 操作符。它类似于数学中的"并集"操作，将多个查询的结果合并成一个结果集返回。
+>
+> **基本语法**
+>
+> **1. UNION 语法（去重）**
+>
+> ```sql
+> SELECT 列1, 列2, ..., 列n FROM 表1
+> [WHERE 条件]
+> UNION
+> SELECT 列1, 列2, ..., 列n FROM 表2
+> [WHERE 条件]
+> [ORDER BY 列 [ASC|DESC]];
+> ```
+>
+> **2. UNION ALL 语法（不去重）**
+>
+> ```sql
+> SELECT 列1, 列2, ..., 列n FROM 表1
+> [WHERE 条件]
+> UNION ALL
+> SELECT 列1, 列2, ..., 列n FROM 表2
+> [WHERE 条件]
+> [ORDER BY 列 [ASC|DESC]];
+> ```
+>
+> ---
+>
+> **UNION核心特性：**
+>
+> >1. **合并多个查询结果**成一个结果集
+> >2. **自动去重**（删除重复行）
+> >3. 每个 SELECT 语句必须有**相同数量的列**
+> >4. 对应列的**数据类型必须兼容**
+> >5. 列名以**第一个 SELECT 语句的列名为准**
+>
+> **核心区别表格**
+>
+> | 特性         | UNION                        | UNION ALL                   |
+> | ------------ | ---------------------------- | --------------------------- |
+> | **去重功能** | ✅ 自动去除重复行             | ❌ 保留所有行，包括重复行    |
+> | **性能**     | 较慢（需要排序和去重）       | 较快（直接合并，不排序）    |
+> | **结果排序** | 结果无序                     | 结果无序                    |
+> | **使用场景** | 需要去重时                   | 不需要去重，或确定无重复    |
+> | **内存使用** | 较多（需要存储中间结果去重） | 较少（直接流式合并）        |
+> | **返回顺序** | 不保证顺序，除非用 ORDER BY  | 不保证顺序，除非用 ORDER BY |
+>
+> ---
+>
+> ---
+>
+> **示例用法详解**
+>
+> **场景1：简单的数据合并**
+>
+> ```sql
+> -- 示例：合并两个部门的员工名单
+> -- 表结构相同：员工表1 (emp_hr)，员工表2 (emp_it)
+> 
+> -- 使用 UNION（去重）
+> SELECT employee_id, employee_name, department 
+> FROM emp_hr
+> UNION
+> SELECT employee_id, employee_name, department 
+> FROM emp_it;
+> -- 结果：如果同一员工在两个部门都有，只出现一次
+> 
+> -- 使用 UNION ALL（不去重）
+> SELECT employee_id, employee_name, department 
+> FROM emp_hr
+> UNION ALL
+> SELECT employee_id, employee_name, department 
+> FROM emp_it;
+> -- 结果：如果同一员工在两个部门都有，出现两次
+> ```
+>
+> **场景2：多表数据汇总**
+>
+> ```sql
+> -- 合并三个季度的销售数据
+> SELECT 
+>     'Q1' as quarter,
+>     product_id,
+>     sales_amount
+> FROM sales_q1
+> WHERE sales_date BETWEEN DATE '2026-01-01' AND DATE '2026-03-31'
+> 
+> UNION ALL  -- 用UNION ALL，因为季度不同，不会有重复
+> 
+> SELECT 
+>     'Q2',
+>     product_id,
+>     sales_amount
+> FROM sales_q2
+> WHERE sales_date BETWEEN DATE '2026-04-01' AND DATE '2026-06-30'
+> 
+> UNION ALL
+> 
+> SELECT 
+>     'Q3',
+>     product_id,
+>     sales_amount
+> FROM sales_q3
+> WHERE sales_date BETWEEN DATE '2026-07-01' AND DATE '2026-09-30'
+> 
+> ORDER BY quarter, product_id;
+> ```
+>
+> ---
+>
+> ---
+>
+> ==**关键注意事项**==
+>
+> 1.==**列数和类型必须匹配**==
+>
+> ```sql
+> -- ✅ 正确：列数、类型、顺序都匹配
+> SELECT 
+>     employee_id,    -- NUMBER
+>     employee_name,  -- VARCHAR2
+>     hire_date       -- DATE
+> FROM employees
+> 
+> UNION
+> 
+> SELECT 
+>     contractor_id,  -- NUMBER（类型兼容）
+>     contractor_name,-- VARCHAR2
+>     start_date      -- DATE
+> FROM contractors;
+> 
+> -- ❌ 错误1：列数不匹配
+> SELECT id, name FROM table1
+> UNION
+> SELECT id FROM table2;  -- 错误：列数不同
+> 
+> -- ❌ 错误2：类型不兼容
+> SELECT id, name FROM table1
+> UNION
+> SELECT name, id FROM table2;  -- 错误：类型不匹配
+> ```
+>
+> 2. ==**列名以第一个SELECT为准**==
+>
+> ```sql
+> SELECT 
+>     emp_id as 员工编号,
+>     emp_name as 员工姓名
+> FROM employees
+> 
+> UNION
+> 
+> SELECT 
+>     contractor_id,    -- 不需要别名，用第一个SELECT的别名
+>     contractor_name
+> FROM contractors;
+> 
+> -- 最终列名：员工编号, 员工姓名
+> ```
+>
+> 3. ==**ORDER BY 只能放在最后**==
+>
+> ```sql
+> -- ✅ 正确：ORDER BY 放在最后
+> SELECT * FROM table1
+> UNION
+> SELECT * FROM table2
+> ORDER BY column1;  -- 对整个结果排序
+> 
+> -- ❌ 错误：不能放在中间
+> SELECT * FROM table1 ORDER BY column1
+> UNION  -- 错误！
+> SELECT * FROM table2;
+> ```
+>
+> 
+>
+> ==**性能优化建议**==
+>
+> ```sql
+> -- ❌ 不好：在UNION前过滤
+> SELECT * FROM large_table1
+> UNION
+> SELECT * FROM large_table2
+> WHERE condition = 'X';  -- 只过滤第二个表
+> 
+> -- ✅ 好：在每个SELECT中都过滤
+> SELECT * FROM large_table1 WHERE condition = 'X'
+> UNION
+> SELECT * FROM large_table2 WHERE condition = 'X';
+> 
+> -- ❌ 不好：SELECT 所有列
+> SELECT * FROM table1
+> UNION
+> SELECT * FROM table2;
+> 
+> -- ✅ 好：只选择需要的列
+> SELECT col1, col2 FROM table1
+> UNION
+> SELECT col1, col2 FROM table2;
+> ```
+>
+> **常见问题与解决方案**
+>
+> **==问题1：如何基于单列去重？==**
+>
+> ```sql
+> -- 场景：只需要基于员工号去重，但返回多列
+> -- ❌ 错误：这会基于所有列去重
+> SELECT emp_id, emp_name, dept FROM current_emps
+> UNION
+> SELECT emp_id, emp_name, dept FROM former_emps;
+> 
+> -- ✅ 正确：使用ROW_NUMBER()窗口函数
+> SELECT emp_id, emp_name, dept
+> FROM (
+>     SELECT 
+>         emp_id, 
+>         emp_name, 
+>         dept,
+>         ROW_NUMBER() OVER (PARTITION BY emp_id ORDER BY hire_date DESC) as rn
+>     FROM (
+>         SELECT emp_id, emp_name, dept, hire_date FROM current_emps
+>         UNION ALL
+>         SELECT emp_id, emp_name, dept, hire_date FROM former_emps
+>     )
+> )
+> WHERE rn = 1;
+> ```
+>
+> **问题2：如何处理NULL值？**
+>
+> ```sql
+> -- 示例：合并客户联系信息
+> SELECT 
+>     customer_id,
+>     phone_number as 联系电话,
+>     '主要电话' as 电话类型
+> FROM customer_phones
+> WHERE phone_number IS NOT NULL
+> 
+> UNION ALL
+> 
+> SELECT 
+>     customer_id,
+>     mobile_number as 联系电话,
+>     '手机号码' as 电话类型
+> FROM customer_mobiles
+> WHERE mobile_number IS NOT NULL
+> 
+> UNION ALL
+> 
+> SELECT 
+>     customer_id,
+>     NULL as 联系电话,  -- 用NULL补齐
+>     '无联系电话' as 电话类型
+> FROM customers
+> WHERE customer_id NOT IN (
+>     SELECT customer_id FROM customer_phones WHERE phone_number IS NOT NULL
+>     UNION
+>     SELECT customer_id FROM customer_mobiles WHERE mobile_number IS NOT NULL
+> )
+> ORDER BY customer_id;
+> ```
+
+
+
 # ==牛马生活==
 
 ## ==1.== 租房细节
