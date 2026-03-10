@@ -2646,6 +2646,164 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 >
 > https://www.cainiaoplus.com/css3/css3-3d-transforms.html
 
+
+
+## ==9.== 让padding包含在width内
+
+<kbd>2026.03.10</kbd> <kbd>deepseek&</kbd>
+
+> 默认`box-sizing: content-box`
+>
+> 在此模式下：
+>
+> - 当你设置 `width: 200px`，该值**仅作用于 content 区域**；
+> - **padding 和 border 会额外增加元素的总宽度**；
+> - margin 不计入元素尺寸，但影响布局位置。
+>
+> 
+>
+> ==**盒模型的计算方式**==
+>
+> ```css
+> box-sizing: border-box;
+> ```
+
+
+
+
+
+## ==10.== 明确的子类指定父类样式
+
+<kbd>2026.03.10</kbd> <kbd>豆包</kbd>
+
+> > `css` 知道子类 `id=“ikun” `怎么设置父类样式
+>
+> 在 CSS 中，**没有直接通过子类 ID 选择父类**的原生选择器（CSS 选择器是单向的，只能从父到子，不能反向）
+>
+> 这个方案要求父元素和子元素的 DOM 结构是确定的，且父元素没有其他复杂的嵌套干扰。核心思路是利用 CSS 的 `:has()` 伪类（CSS3 新增，现代浏览器均支持），==它可以检测父元素是否包含指定子元素==。
+>
+> ==兼容性==：Chrome 105+、Firefox 121+、Safari 15.4+ 均支持，基本覆盖现代浏览器；太旧就要用`js`实现了
+>
+> `:has(#ikun)`：表示 “包含 id 为 `ikun` 的子元素的元素”，是实现 “子找父” 的核心。
+>
+> 可以把 `*` 替换为父元素的具体标签（如 `div:has(#ikun)`），精准定位父元素，避免全局匹配。
+>
+> 示例：
+>
+> ```html
+> <!DOCTYPE html>
+> <html lang="zh-CN">
+> <head>
+>   <meta charset="UTF-8">
+>   <title>通过子类ID设置父类样式</title>
+>   <style>
+>     /* 核心：选择包含 id="ikun" 子元素的父元素 */
+>     /* 这里的 * 表示任意父元素，也可以指定具体的父元素标签（如 div、section 等） */
+>     *:has(#ikun) {
+>       background-color: #f0f8ff; /* 父元素背景色 */
+>       border: 2px solid #e63946;  /* 父元素边框 */
+>       padding: 20px;              /* 父元素内边距 */
+>       margin: 10px 0;             /* 父元素外边距 */
+>     }
+> 
+>     /* 子元素样式（仅作演示） */
+>     #ikun {
+>       color: #1d3557;
+>       font-size: 16px;
+>     }
+>   </style>
+> </head>
+> <body>
+>   <!-- 示例1：div 是 #ikun 的父元素 -->
+>   <div>
+>     <p id="ikun">我是子类 ikun</p>
+>   </div>
+> 
+>   <!-- 示例2：section 是 #ikun2 的父元素（不会被选中，因为ID不匹配） -->
+>   <section>
+>     <p id="ikun2">我不是目标子类</p>
+>   </section>
+> </body>
+> </html>
+> ```
+>
+> ---
+>
+> ---
+>
+> ==**缺点**==：
+>
+> >`*:has(#ikun)` 确实会让**所有包含 `#ikun` 的祖先元素**（包括父级、祖父级、曾祖父级，直到根元素）都应用样式，而不是只针对**直接父级**—— 这是因为 `*` 匹配了任意元素，且 `:has()` 只要检测到后代中存在 `#ikun` 就会生效，不管层级。
+> >
+> >比如 DOM 结构是：`<body> → <div> → <p id="ikun">`，那么：
+> >
+> >- `<div>` 包含 `#ikun` → 生效
+> >- `<body>` 包含 `#ikun` → 生效
+> >- `<html>` 包含 `#ikun` → 生效
+>
+> **精准只选直接父级的 2 种方案**
+>
+> 方案 1：指定直接父级的标签（最推荐）
+>
+> 如果知道 `#ikun` 的直接父级是某个固定标签（比如 div、section、article），直接写这个标签，而非通配符 `*`：
+>
+> ```html
+> <!DOCTYPE html>
+> <html lang="zh-CN">
+> <head>
+>   <meta charset="UTF-8">
+>   <title>只给直接父级加样式</title>
+>   <style>
+>     /* 仅匹配 直接包含 #ikun 的 div（直接父级） */
+>     div:has(> #ikun) {
+>       background-color: #f0f8ff;
+>       border: 2px solid #e63946;
+>       padding: 20px;
+>       margin: 10px 0;
+>     }
+> 
+>     #ikun {
+>       color: #1d3557;
+>     }
+>   </style>
+> </head>
+> <body>
+>   <!-- 多层嵌套测试 -->
+>   <div class="grandpa"> <!-- 祖父级，不会生效 -->
+>     <div> <!-- 直接父级，仅这个 div 生效 -->
+>       <p id="ikun">我是 ikun，只有直接父级 div 有样式</p>
+>     </div>
+>   </div>
+> </body>
+> </html>
+> ```
+>
+> **关键语法**：`> #ikun` 中的 `>` 是**子选择器**，表示 “直接子元素”，只有当 #ikun 是该 div 的直接子元素时，才会匹配这个 div。
+>
+> 
+>
+> **方案 2：通用写法（不知道父级标签）**
+>
+> 如果不确定直接父级的标签，用 `:has(> #ikun)` 配合 `*`，但限定 “直接子元素”：
+>
+> ```css
+> /* 仅匹配 任意直接包含 #ikun 的元素（直接父级） */
+> *:has(> #ikun) {
+>   background-color: #f0f8ff;
+>   border: 2px solid #e63946;
+>   padding: 20px;
+>   margin: 10px 0;
+> }
+> ```
+>
+> 这个写法的核心是 `> #ikun`，强制要求 `#ikun` 是当前元素的**直接子元素**，而非后代元素，因此只会选中直接父级。
+
+
+
+
+
+
+
 # ==JavaScript==
 
 ## ==1.==js判断中 哪些非布尔类的值会是false
