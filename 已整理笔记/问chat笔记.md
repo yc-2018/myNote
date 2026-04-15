@@ -5234,7 +5234,7 @@ add_header Access-Control-Allow-Origin 'http://localhost:3000';
 >
 > 假设你已经把私钥保存到本地，可以这样测试：
 >
-> ```
+> ```sh
 > ssh -i id_ed25519 root@your-server-ip 
 > ```
 >
