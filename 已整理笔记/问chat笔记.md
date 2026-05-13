@@ -913,75 +913,150 @@
 
 
 
-## ==7.==接收前端字段验证注解
+## ==7.== 接收和返回动态字段
 
-> <kbd>2025.03.11</kbd> <kbd>deepseek</kbd> <kbd>未全部验证 </kbd>
+<kbd>2026.02.12</kbd>   [参考来源↗](https://juejin.cn/post/7496341504849641510)  
+
+> 在实体类里面添加一个map如：
 >
+> ` private Map<String, Object> additionalProperties = new HashMap<>();`
+>
+> 
+>
+> **`@JsonAnySetter`** ： 手写setter方法并在方法上写上`@JsonAnySetter`就好了，后端在用这个类接收的属性在类里面没有对应的情况下，会字段放进这个map里面
+>
+> **`@JsonAnyGetter`**：手写getter方法并在方法上写上`@JsonAnyGetter`就好了，在序列化（转json）时 生效，map里面的值会放在最上层JSON一起返回前端
+>
+> 例子：
+>
+> ```java
+> import com.fasterxml.jackson.annotation.JsonAnyGetter;
+> import com.fasterxml.jackson.annotation.JsonAnySetter;
+> import com.fasterxml.jackson.databind.ObjectMapper;
+> import lombok.Data;
+> import java.util.HashMap;
+> import java.util.Map;
+> 
+> @Data
+> public class Person {
+>   private String name;
+>   private int age;
+>   private Map<String, Object> otherParams = new HashMap<>();  // 存储额外的动态属性
+> 
+>   public Person() {}
+>   public Person(String name, int i) {this.name = name;this.age = i;}
+> 
+>   // 添加动态属性
+>   @JsonAnySetter
+>   public void addOtherProp(String key, Object value) {
+>     this.otherParams.put(key, value);
+>   }
+> 
+>   @JsonAnyGetter
+>   public Map<String, Object> getOtherParams() {
+>     return otherParams;
+>   }
+> 
+>   // ——————————————————JSON转java——————————————————————————
+>   public static void main(String[] args) throws Exception {
+>     String json = "{\"name\":\"小黑子\",\"age\":30,\"address\":\"蔡徐村66号\",\"nickname\":\"IKUN\",\"aa\":[2,4]}";
+> 
+>     ObjectMapper mapper = new ObjectMapper();
+>     Person person = mapper.readValue(json, Person.class);
+> 
+>     System.out.println("Name: " + person.name);                 // 输出：Name: 小黑子
+>     System.out.println("Age: " + person.age);                   // 输出：Age: 30
+>     System.out.println("其他参数: " + person.getOtherParams());  // 输出：其他参数: {aa=[2, 4], address=蔡徐村66号, nickname=IKUN}
+>   }
+> 
+>   // ——————————————Java换JSON————————————————————
+>   public static class Main {
+>     public static void main(String[] args) throws Exception {
+>       Person person = new Person("IKUN", 30);
+>       person.addOtherProp("address", "123 Street");
+>       person.addOtherProp("nickname", "小黑子");
+> 
+>       ObjectMapper mapper = new ObjectMapper();
+>       String json = mapper.writeValueAsString(person);
+>       System.out.println(json);  // 输出：{"name":"IKUN","age":30,"address":"123 Street","nickname":"小黑子"}
+>     }
+>   }
+> }
+> ```
+
+
+
+
+
+## ==8.== 接收前端字段验证注解
+
+<kbd>2025.03.11</kbd> <kbd>deepseek</kbd> <kbd>未全部验证 </kbd>
+
 > **用于 Controller 层参数验证（需配合 `@Valid` 或 `@Validated` 使用）**
 >
 > ```java
-> @PostMapping("/checkin")
->     public R<?> checkin(@RequestBody @Valid CheckinRecords checkinRecord) {}
+>@PostMapping("/checkin")
+>  public R<?> checkin(@RequestBody @Valid CheckinRecords checkinRecord) {}
 > ```
->
+>    
 > ```java
-> import javax.validation.constraints.*;
+>import javax.validation.constraints.*;
 > 
 > public class UserDTO {
 > 
->     @NotNull(message = "用户名不能为空")
->     private String username;
-> 
+>  @NotNull(message = "用户名不能为空")
+>  private String username;
+>    
 >     @NotBlank(message = "密码必须为非空字符串")  // 验证非空且长度 > 0（去空格后）
->     private String password;
-> 
+>  private String password;
+>    
 >     // @Size(min = 6, max = 20, message = "密码长度需为6-20位")
->     // 自定义错误消息（支持占位符）
-> 	@Size(min = 6, max = 20, message = "密码长度需在 {min}-{max} 之间")
+>  // 自定义错误消息（支持占位符）
+>    	@Size(min = 6, max = 20, message = "密码长度需在 {min}-{max} 之间")
 >     private String password;
 > 
 >     @Email(message = "邮箱格式不合法")
->     private String email;
-> 
+>  private String email;
+>    
 >     @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式错误")
->     private String phone;
-> 
+>  private String phone;
+>    
 >     @Min(value = 18, message = "年龄最小18岁")
->     @Max(value = 100, message = "年龄最大100岁")
+>  @Max(value = 100, message = "年龄最大100岁")
 >     private Integer age;
-> 
+>    
 >     @Positive(message = "金额必须为正数")
->     private BigDecimal amount;
-> 
+>  private BigDecimal amount;
+>    
 >     @Future(message = "开始时间必须为未来时间")
->     private LocalDateTime startTime;
-> 
+>  private LocalDateTime startTime;
+>    
 >     @AssertTrue(message = "必须同意协议")
->     private Boolean agree;
-> 
+>  private Boolean agree;
+>    
 >     // 集合验证
->     @NotEmpty(message = "角色列表不能为空")
+>  @NotEmpty(message = "角色列表不能为空")
 >     private List<String> roles;
-> 
+>    
 >     // 嵌套对象验证
->     @Valid
+>  @Valid
 >     private Address address;
-> }
-> ```
->
+>    }
+>    ```
+> 
 > ```xml
-> <dependency>
->     <groupId>org.springframework.boot</groupId>
->     <artifactId>spring-boot-starter-validation</artifactId>
-> </dependency>
-> ```
->
+><dependency>
+>  <groupId>org.springframework.boot</groupId>
+>  <artifactId>spring-boot-starter-validation</artifactId>
+>    </dependency>
+>    ```
+> 
 > 
 >
 > ##### 常用注解说明
 >
 > | 注解                        | 适用类型    | 说明                                                     |
-> | :-------------------------- | :---------- | :------------------------------------------------------- |
+>| :-------------------------- | :---------- | :------------------------------------------------------- |
 > | `@NotNull`                  | 任意类型    | 字段不能为 `null`（但可以是空字符串/集合）               |
 > | `@NotBlank`                 | `String`    | 非空且至少包含一个非空白字符（自动去除前后空格）         |
 > | `@NotEmpty`                 | 集合/字符串 | 集合不能为空或 `null`；字符串长度 > 0                    |
@@ -996,7 +1071,7 @@
 > | `@Past`                     | 日期类型    | 日期必须在过去                                           |
 > | `@AssertTrue`               | `Boolean`   | 必须为 `true`                                            |
 > | `@AssertFalse`              | `Boolean`   | 必须为 `false`                                           |
->
+> 
 > 
 >
 > ## `@Valid` vs `@Validated` 区别
@@ -1004,29 +1079,29 @@
 > #### 1. 来源与标准性
 >
 > | 注解         | 所属规范/框架                   | 包路径                                      |
-> | :----------- | :------------------------------ | :------------------------------------------ |
+>| :----------- | :------------------------------ | :------------------------------------------ |
 > | `@Valid`     | **Java 标准** (JSR-303/JSR-380) | `javax.validation`                          |
 > | `@Validated` | **Spring 框架扩展**             | `org.springframework.validation.annotation` |
->
+> 
 > ------
 >
 > #### 2. 核心功能差异
 >
 > | 功能点         | `@Valid`                         | `@Validated`                       |
-> | :------------- | :------------------------------- | :--------------------------------- |
+>| :------------- | :------------------------------- | :--------------------------------- |
 > | **分组校验**   | 不支持直接分组                   | 支持 `groups` 参数指定分组         |
 > | **嵌套校验**   | 需配合 `@Valid` 触发嵌套对象校验 | 需配合 `@Valid` 才能触发嵌套校验   |
 > | **作用范围**   | 可标注字段、方法参数、返回值等   | **只能标注类、方法、参数**         |
 > | **方法级校验** | 不支持                           | 支持（需配合 `@Validated` 标注类） |
->
+> 
 > **总结选择策略**
 >
 > | 场景                         | 推荐注解     |
-> | :--------------------------- | :----------- |
+>| :--------------------------- | :----------- |
 > | 普通参数校验                 | `@Valid`     |
 > | 需要分组校验                 | `@Validated` |
 > | 非 Controller 层方法参数校验 | `@Validated` |
->
+> 
 > 更复杂的场景可以两者嵌套使用
 >
 > ### **使用示例**
@@ -1034,60 +1109,60 @@
 > #### **(1) 分组校验（`@Validated` 核心优势）**
 >
 > ```java
-> // 定义分组接口
+>// 定义分组接口
 > public interface CreateGroup {}  // 创建场景校验组
 > public interface UpdateGroup {}  // 更新场景校验组
 > 
 > // 实体类
 > public class User {
->     @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
->     private Long id;
-> 
+>  @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
+>  private Long id;
+>    
 >     @NotBlank(groups = CreateGroup.class)  // 仅创建时校验
->     private String name;
-> }
-> 
+>  private String name;
+>    }
+>    
 > // Controller 使用分组
 > @PostMapping("/create")
 > public ResponseEntity<?> createUser(
->     @Validated(CreateGroup.class) @RequestBody User user) {  // 仅校验 CreateGroup 分组规则
->     // ...
-> }
-> 
+>  @Validated(CreateGroup.class) @RequestBody User user) {  // 仅校验 CreateGroup 分组规则
+>  // ...
+>    }
+>    
 > @PostMapping("/update")
 > public ResponseEntity<?> updateUser(
->     @Validated(UpdateGroup.class) @RequestBody User user) {  // 仅校验 UpdateGroup 分组规则
->     // ...
-> }
-> ```
->
+>  @Validated(UpdateGroup.class) @RequestBody User user) {  // 仅校验 UpdateGroup 分组规则
+>  // ...
+>    }
+>    ```
+> 
 > #### **(2) 嵌套校验（需 `@Valid`）**
 >
 > ```java
-> public class Order {
->     @Valid  // 必须加 @Valid 才能触发嵌套校验
->     private User user;
-> }
-> 
+>public class Order {
+>  @Valid  // 必须加 @Valid 才能触发嵌套校验
+>  private User user;
+>    }
+>    
 > @PostMapping("/order")
 > public ResponseEntity<?> createOrder(@Valid @RequestBody Order order) {
->     // ...
+>  // ...
 > }
-> ```
->
+>    ```
+> 
 > ### **常见问题与最佳实践**
 >
 > #### **(1) 为什么有时需要同时使用 `@Valid` 和 `@Validated`？**
 >
 > - **嵌套校验**：在 Spring 中，即使类级别有 `@Validated`，嵌套对象的校验仍需在字段上显式添加 `@Valid`。
-> - **方法参数校验**：在 Service 层方法参数上使用 `@Validated` 需要配置 `MethodValidationPostProcessor`。
->
+>- **方法参数校验**：在 Service 层方法参数上使用 `@Validated` 需要配置 `MethodValidationPostProcessor`。
+> 
 > #### **(2) 如何启用方法参数校验？**
 >
 > 在 Spring Boot 中自动配置，或手动添加：
 >
 > ```java
-> @Configuration
+>@Configuration
 > public class AppConfig {
 >     @Bean
 >     public MethodValidationPostProcessor methodValidationPostProcessor() {
@@ -1107,7 +1182,7 @@
 
 
 
-## ==8.==  @Bean和@Component区别
+## ==9.==  @Bean和@Component区别
 
 <kbd>2025.09.22</kbd> 
 
@@ -1306,7 +1381,7 @@
 >
 > 例如，如果你想查看名字为“test”的Wi-Fi密码，应输入以下命令：
 >
-> ```
+> ```cmd
 > netsh wlan show profile name=test key=clear
 > ```
 >
@@ -1539,6 +1614,40 @@
 > >其中：
 > >HKLM = HKEY_LOCAL_MACHINE
 > >HKCU = HKEY_CURRENT_USER
+
+
+
+## ==12.== win11创建本地用户
+
+<kbd>2026.03.14</kbd>[参考来源](https://zhuanlan.zhihu.com/p/438165562) 
+
+> **方法1**
+>
+> 使用`管理员权限`打开命令提示符 接着，在CMD中输入以下命令：
+>
+> ```cmd
+> net user 新用户名 新用户密码 /add
+> ```
+>
+> 默认是普通用户 在设置中，我们可以查看到这个本地账户，对其进行管理。比如改成管理员
+>
+> ---
+>
+> **方法2**
+>
+> 按win键后输入一下命令并打开，就可以看到用户账号管理
+>
+> ```cmd
+> netplwiz
+> ```
+>
+> 直接在本机用户下面找到添加按钮  点击后问你要邮箱，点下面不使用Microsoft账号登录，然后点击本地用户 然后就填 账号密码就完成了，默认是普通用户 选中刚刚的用户 点击属性 点击组成员  就可以改成管理员了。管理其他用户也可以在这命令界面下进行管理，比如删除用户、修改用户名、改用户属性
+>
+> ---
+>
+> **方法3**
+>
+> 按win键后  输入`其他用户`，点击进去，后点`添加用户`，弹窗要任何登录，点`我没有这个人的登录信息`,然后要同意一个许可，然后到了创建用户弹窗，点`添加一个没有Microsoft帐户的用户`(如果没有这个选项就用方法1、2吧) 然后就填写 账号密码 安全问题   就成功了
 
 
 
@@ -2571,6 +2680,164 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 >
 > https://www.cainiaoplus.com/css3/css3-3d-transforms.html
 
+
+
+## ==9.== 让padding包含在width内
+
+<kbd>2026.03.10</kbd> <kbd>deepseek&</kbd>
+
+> 默认`box-sizing: content-box`
+>
+> 在此模式下：
+>
+> - 当你设置 `width: 200px`，该值**仅作用于 content 区域**；
+> - **padding 和 border 会额外增加元素的总宽度**；
+> - margin 不计入元素尺寸，但影响布局位置。
+>
+> 
+>
+> ==**盒模型的计算方式**==
+>
+> ```css
+> box-sizing: border-box;
+> ```
+
+
+
+
+
+## ==10.== 明确的子类指定父类样式
+
+<kbd>2026.03.10</kbd> <kbd>豆包</kbd>
+
+> > `css` 知道子类 `id=“ikun” `怎么设置父类样式
+>
+> 在 CSS 中，**没有直接通过子类 ID 选择父类**的原生选择器（CSS 选择器是单向的，只能从父到子，不能反向）
+>
+> 这个方案要求父元素和子元素的 DOM 结构是确定的，且父元素没有其他复杂的嵌套干扰。核心思路是利用 CSS 的 `:has()` 伪类（CSS3 新增，现代浏览器均支持），==它可以检测父元素是否包含指定子元素==。
+>
+> ==兼容性==：Chrome 105+、Firefox 121+、Safari 15.4+ 均支持，基本覆盖现代浏览器；太旧就要用`js`实现了
+>
+> `:has(#ikun)`：表示 “包含 id 为 `ikun` 的子元素的元素”，是实现 “子找父” 的核心。
+>
+> 可以把 `*` 替换为父元素的具体标签（如 `div:has(#ikun)`），精准定位父元素，避免全局匹配。
+>
+> 示例：
+>
+> ```html
+> <!DOCTYPE html>
+> <html lang="zh-CN">
+> <head>
+>   <meta charset="UTF-8">
+>   <title>通过子类ID设置父类样式</title>
+>   <style>
+>     /* 核心：选择包含 id="ikun" 子元素的父元素 */
+>     /* 这里的 * 表示任意父元素，也可以指定具体的父元素标签（如 div、section 等） */
+>     *:has(#ikun) {
+>       background-color: #f0f8ff; /* 父元素背景色 */
+>       border: 2px solid #e63946;  /* 父元素边框 */
+>       padding: 20px;              /* 父元素内边距 */
+>       margin: 10px 0;             /* 父元素外边距 */
+>     }
+> 
+>     /* 子元素样式（仅作演示） */
+>     #ikun {
+>       color: #1d3557;
+>       font-size: 16px;
+>     }
+>   </style>
+> </head>
+> <body>
+>   <!-- 示例1：div 是 #ikun 的父元素 -->
+>   <div>
+>     <p id="ikun">我是子类 ikun</p>
+>   </div>
+> 
+>   <!-- 示例2：section 是 #ikun2 的父元素（不会被选中，因为ID不匹配） -->
+>   <section>
+>     <p id="ikun2">我不是目标子类</p>
+>   </section>
+> </body>
+> </html>
+> ```
+>
+> ---
+>
+> ---
+>
+> ==**缺点**==：
+>
+> >`*:has(#ikun)` 确实会让**所有包含 `#ikun` 的祖先元素**（包括父级、祖父级、曾祖父级，直到根元素）都应用样式，而不是只针对**直接父级**—— 这是因为 `*` 匹配了任意元素，且 `:has()` 只要检测到后代中存在 `#ikun` 就会生效，不管层级。
+> >
+> >比如 DOM 结构是：`<body> → <div> → <p id="ikun">`，那么：
+> >
+> >- `<div>` 包含 `#ikun` → 生效
+> >- `<body>` 包含 `#ikun` → 生效
+> >- `<html>` 包含 `#ikun` → 生效
+>
+> **精准只选直接父级的 2 种方案**
+>
+> 方案 1：指定直接父级的标签（最推荐）
+>
+> 如果知道 `#ikun` 的直接父级是某个固定标签（比如 div、section、article），直接写这个标签，而非通配符 `*`：
+>
+> ```html
+> <!DOCTYPE html>
+> <html lang="zh-CN">
+> <head>
+>   <meta charset="UTF-8">
+>   <title>只给直接父级加样式</title>
+>   <style>
+>     /* 仅匹配 直接包含 #ikun 的 div（直接父级） */
+>     div:has(> #ikun) {
+>       background-color: #f0f8ff;
+>       border: 2px solid #e63946;
+>       padding: 20px;
+>       margin: 10px 0;
+>     }
+> 
+>     #ikun {
+>       color: #1d3557;
+>     }
+>   </style>
+> </head>
+> <body>
+>   <!-- 多层嵌套测试 -->
+>   <div class="grandpa"> <!-- 祖父级，不会生效 -->
+>     <div> <!-- 直接父级，仅这个 div 生效 -->
+>       <p id="ikun">我是 ikun，只有直接父级 div 有样式</p>
+>     </div>
+>   </div>
+> </body>
+> </html>
+> ```
+>
+> **关键语法**：`> #ikun` 中的 `>` 是**子选择器**，表示 “直接子元素”，只有当 #ikun 是该 div 的直接子元素时，才会匹配这个 div。
+>
+> 
+>
+> **方案 2：通用写法（不知道父级标签）**
+>
+> 如果不确定直接父级的标签，用 `:has(> #ikun)` 配合 `*`，但限定 “直接子元素”：
+>
+> ```css
+> /* 仅匹配 任意直接包含 #ikun 的元素（直接父级） */
+> *:has(> #ikun) {
+>   background-color: #f0f8ff;
+>   border: 2px solid #e63946;
+>   padding: 20px;
+>   margin: 10px 0;
+> }
+> ```
+>
+> 这个写法的核心是 `> #ikun`，强制要求 `#ikun` 是当前元素的**直接子元素**，而非后代元素，因此只会选中直接父级。
+
+
+
+
+
+
+
 # ==JavaScript==
 
 ## ==1.==js判断中 哪些非布尔类的值会是false
@@ -2938,7 +3205,7 @@ NVM要是没安装可以参考：[NVM的安装使用与配置（node, npm, yarn�
 >
 > 首先，让我们分析这个URL：
 >
-> ```
+> ```http
 > https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?jsoncallback=jQuery18002568176207224737_1681129677419&wd=%E4%BD%A0%E5%B9%B2%E5%98%9B&cb=keydata&_=1681129959331
 > ```
 >
@@ -4808,6 +5075,173 @@ add_header Access-Control-Allow-Origin 'http://localhost:3000';
 
 
 
+## ==17.== SSH 密钥的生成与使用
+
+<kbd>2026.04.15</kbd> <kbd>codeX</kbd> [其他文章：Linux服务器之SSH 密钥创建及密钥登录设置](https://cloud.tencent.com/developer/article/1834207) 
+
+> > 在使用 GitHub Actions 自动部署项目到服务器时，最常见的做法不是“密码登录”，而是“SSH 密钥登录”。
+>
+> > 一、SSH 密钥是什么
+> >
+> > SSH 密钥是一对文件：
+> >
+> > - 私钥：自己保存，不能泄露
+> > - 公钥：放到目标服务器上
+> >
+> > 它们的关系可以理解成：
+> >
+> > - 私钥：钥匙本体
+> > - 公钥：锁芯中的授权记录
+> >
+> > 登录服务器时：
+> >
+> > - 本地或 GitHub Actions 持有私钥
+> > - 服务器上保存对应公钥
+> > - 两者匹配成功后就能登录
+>
+> 如果我要给 GitHub Actions 配一套专用密钥，可以直接在服务器上执行：
+>
+> ```bash
+> ssh-keygen -t ed25519 -C "github-actions-deploy"
+> ```
+>
+> 执行后会看到类似提示：
+>
+> ```tex
+> Generating public/private ed25519 key pair. 
+> Enter file in which to save the key (/root/.ssh/id_ed25519): Enter passphrase (empty for no passphrase): 
+> Enter same passphrase again: 
+> ```
+>
+> **推荐输入方式**
+>
+> - 保存路径：直接回车，使用默认路径
+> - `passphrase`：如果是给 GitHub Actions 自动部署用，通常直接回车留空
+>
+> 也就是三次都可以直接回车。
+>
+> 生成完成后会得到两个文件：
+>
+> ```tex
+> /root/.ssh/id_ed25519 
+> /root/.ssh/id_ed25519.pub 
+> ```
+>
+> 其中：
+>
+> - `id_ed25519`：私钥
+> - `id_ed25519.pub`：公钥
+>
+> 
+>
+> ==**公钥和私钥分别怎么用**==
+>
+> 1. ==**公钥放到服务器授权列表**==
+>
+> 如果是 root 用户登录服务器，就执行：
+>
+> ```bash
+> cat /root/.ssh/id_ed25519.pub >> /root/.ssh/authorized_keys 
+> chmod 600 /root/.ssh/authorized_keys 
+> chmod 700 /root/.ssh 
+> ```
+>
+> 作用是：
+>
+> - 把公钥加入允许登录的列表
+> - 修正 SSH 目录和文件权限
+>
+> 如果不是 `root`，而是其他用户，例如 `deploy`，就应该把公钥放到对应用户的：
+>
+> ```tex
+> /home/deploy/.ssh/authorized_keys
+> ```
+>
+> 
+>
+> ==**2. 私钥放到 GitHub Secrets**==
+>
+> 查看私钥内容：
+>
+> ```
+> cat /root/.ssh/id_ed25519 
+> ```
+>
+> 你会看到类似：
+>
+> ```
+> -----BEGIN OPENSSH PRIVATE KEY----- 
+> ...... ...... 
+> -----END OPENSSH PRIVATE KEY----- 
+> ```
+>
+> 这整段内容需要保存到 GitHub 仓库的 Secret 中，例如：
+>
+> - Secret 名称：`SERVER_SSH_KEY`
+>
+> **注意事项**
+>
+> - 必须是完整私钥内容
+> - 包括开头的 `-----BEGIN OPENSSH PRIVATE KEY-----`
+> - 包括结尾的 `-----END OPENSSH PRIVATE KEY-----`
+> - 要保留换行
+> - 不能只复制中间内容
+> - 不能把 `.pub` 文件内容误当成私钥
+>
+> ---
+>
+> ---
+>
+> **如何确认服务器允许使用密钥登录**
+>
+> 可以在服务器上检查 SSH 配置：
+>
+> ```bash
+> grep -E "PermitRootLogin|PubkeyAuthentication" /etc/ssh/sshd_config 
+> ```
+>
+> 重点看这两项：
+>
+> ```tex
+> PubkeyAuthentication yes 
+> PermitRootLogin yes 
+> ```
+>
+> 或者：
+>
+> ```tex
+> PermitRootLogin prohibit-password 
+> ```
+>
+> 其中：
+>
+> - `PubkeyAuthentication` yes 表示允许公钥认证
+> - `PermitRootLogin prohibit-password` 表示 `root` 禁止密码登录，但允许密钥登录
+>
+> 如果修改了 SSH 配置，记得重启服务：
+>
+> ```sh
+> systemctl restart sshd
+> ```
+>
+> ---
+>
+> ---
+>
+> **如何测试密钥是否可用**
+>
+> 在正式交给 GitHub Actions 之前，最好先手动测试一次。
+>
+> 假设你已经把私钥保存到本地，可以这样测试：
+>
+> ```sh
+> ssh -i id_ed25519 root@your-server-ip 
+> ```
+>
+> 如果能够正常登录，说明这套密钥大概率已经配置成功。
+
+
+
 # ==Git==
 
 ## ==1.== git怎么对已管理的文件夹取消管理
@@ -5556,6 +5990,825 @@ M       自己write/爬图片/多-线程池取农药图GPT4改写.py
 > | YEAR      | 1 byte  | YYYY 年份值                                  |
 > | DATETIME  | 8 bytes | YYYY-MM-DD HH:MM:SS 混合日期和时间值         |
 > | TIMESTAMP | 4 bytes | YYYY-MM-DD HH:MM:SS 混合日期和时间值，时间戳 |
+
+
+
+## ==4.== oracle分组拼接
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> 在 Oracle 11g 中，可以使用 `LISTAGG`函数对分组后的字段进行拼接。基本语法如下：
+>
+> ```
+> SELECT 
+>     分组字段,
+>     LISTAGG(拼接字段, '分隔符') WITHIN GROUP (ORDER BY 排序字段) AS 拼接结果
+> FROM 表名
+> GROUP BY 分组字段;
+> ```
+>
+> **示例**：
+>
+> 假设表名为 `employees`，按部门分组拼接员工姓名：
+>
+> ```
+> SELECT 
+>     department_id,
+>     LISTAGG(employee_name, ', ') WITHIN GROUP (ORDER BY employee_name) AS employees_list
+> FROM employees
+> GROUP BY department_id;
+> ```
+>
+> **注意**：
+>
+> - `LISTAGG`是 Oracle 11g R2 及以上版本支持的标准函数。
+> - 如果拼接结果超过 4000 字符（VARCHAR2 最大长度），会抛出 `ORA-01489`错误，可考虑用 `XMLAGG`替代。
+> - 如果字段包含 NULL 值，`LISTAGG`会自动忽略。
+
+
+
+## ==5.== oracle WITH 子句
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> **一、WITH 是什么？**
+>
+> **WITH 子句**（也称为公用表表达式，Common Table Expression，简称 CTE）是 Oracle 中的一个强大特性，用于定义临时命名的结果集，这个结果集可以在后续的查询中被多次引用。类似于在查询中创建了一个"临时视图"。
+>
+> **二、基本语法结构**
+>
+> **1. 最简单的 WITH 用法：**
+>
+> ```sql
+> WITH 临时表名 AS (
+>     SELECT 语句
+> )
+> SELECT * FROM 临时表名;
+> ```
+>
+> ```sql
+> WITH 临时表名 (列1, 列2, 列3) AS (
+>     SELECT 值1, 值2, 值3 FROM 表
+> )
+> SELECT * FROM 临时表名;
+> ```
+>
+> 
+>
+> **2. 带多个 CTE 的完整语法：**
+>
+> ```sql
+> WITH
+> 临时表名1 AS (
+>     SELECT ...  -- 第一个临时表
+> ),
+> 临时表名2 AS (
+>     SELECT ...  -- 可以引用临时表名1
+> ),
+> 临时表名3 AS (
+>     SELECT ...  -- 可以引用前面定义的临时表
+> )
+> SELECT ... FROM 临时表名3;
+> ```
+>
+> **3.示例**
+>
+> ```sql
+> -- 链接表分组，不想影响主表
+> with dtl_line as (
+>     select BILLUUID,LISTAGG(ARCHLINECODE, ',') WITHIN GROUP (ORDER BY ARCHLINECODE) AS line_codes
+>     from SJ_ITMS_SCHEDULE_ORDER
+>     group by BILLUUID)
+> select s.uuid, s.CLASSES, s.VEHICLETYPEUUID, s.AREANAME, l.line_codes
+> from SJ_ITMS_SCHEDULE s left join dtl_line l on l.BILLUUID = s.uuid;
+> 
+> 
+> -- 写法1：需要在每个子查询中都写别名
+> WITH complex_calc AS (
+>     SELECT 
+>         SUM(weight * distance) as 运输吨公里,
+>         COUNT(DISTINCT driver_id) as 司机数,
+>         AVG(delivery_time) as 平均送达时间
+>     FROM shipments
+> )
+> SELECT 运输吨公里, 司机数, 平均送达时间 FROM complex_calc;
+> 
+> -- 写法2：统一在外部定义别名
+> WITH complex_calc (运输吨公里, 司机数, 平均送达时间) AS (
+>     SELECT 
+>         SUM(weight * distance),  -- 不写别名
+>         COUNT(DISTINCT driver_id),  -- 不写别名
+>         AVG(delivery_time)  -- 不写别名
+>     FROM shipments
+> )
+> SELECT 运输吨公里, 司机数, 平均送达时间 FROM complex_calc;
+> ```
+>
+> 
+>
+> **WITH 与临时表的区别**
+>
+> | 特性       | WITH 子句 (CTE)    | 全局临时表 (GTT) |
+> | ---------- | ------------------ | ---------------- |
+> | 生命周期   | 当前查询执行期间   | 事务或会话期间   |
+> | 存储       | 内存/临时表空间    | 磁盘/临时表空间  |
+> | 可重复使用 | 当前查询中多次使用 | 跨多个查询使用   |
+> | 性能       | 适合中小数据集     | 适合大数据集     |
+> | 索引       | 不能创建索引       | 可以创建索引     |
+>
+> **选择建议**：
+>
+> - 使用 **WITH**：一次性复杂查询、递归查询、逻辑拆分
+> - 使用 **临时表**：需要跨多个查询使用、需要索引优化、处理超大结果集
+
+
+
+## ==5.== oracle UNION 和 UNION ALL
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> **UNION 是什么？**
+>
+> > **UNION** 是 Oracle 中用于**合并两个或多个 SELECT 查询结果**的 SQL 操作符。它类似于数学中的"并集"操作，将多个查询的结果合并成一个结果集返回。
+>
+> **基本语法**
+>
+> **1. UNION 语法（去重）**
+>
+> ```sql
+> SELECT 列1, 列2, ..., 列n FROM 表1
+> [WHERE 条件]
+> UNION
+> SELECT 列1, 列2, ..., 列n FROM 表2
+> [WHERE 条件]
+> [ORDER BY 列 [ASC|DESC]];
+> ```
+>
+> **2. UNION ALL 语法（不去重）**
+>
+> ```sql
+> SELECT 列1, 列2, ..., 列n FROM 表1
+> [WHERE 条件]
+> UNION ALL
+> SELECT 列1, 列2, ..., 列n FROM 表2
+> [WHERE 条件]
+> [ORDER BY 列 [ASC|DESC]];
+> ```
+>
+> ---
+>
+> **UNION核心特性：**
+>
+> >1. **合并多个查询结果**成一个结果集
+> >2. **自动去重**（删除重复行）
+> >3. 每个 SELECT 语句必须有**相同数量的列**
+> >4. 对应列的**数据类型必须兼容**
+> >5. 列名以**第一个 SELECT 语句的列名为准**
+>
+> **核心区别表格**
+>
+> | 特性         | UNION                        | UNION ALL                   |
+> | ------------ | ---------------------------- | --------------------------- |
+> | **去重功能** | ✅ 自动去除重复行             | ❌ 保留所有行，包括重复行    |
+> | **性能**     | 较慢（需要排序和去重）       | 较快（直接合并，不排序）    |
+> | **结果排序** | 结果无序                     | 结果无序                    |
+> | **使用场景** | 需要去重时                   | 不需要去重，或确定无重复    |
+> | **内存使用** | 较多（需要存储中间结果去重） | 较少（直接流式合并）        |
+> | **返回顺序** | 不保证顺序，除非用 ORDER BY  | 不保证顺序，除非用 ORDER BY |
+>
+> ---
+>
+> ---
+>
+> **示例用法详解**
+>
+> **场景1：简单的数据合并**
+>
+> ```sql
+> -- 示例：合并两个部门的员工名单
+> -- 表结构相同：员工表1 (emp_hr)，员工表2 (emp_it)
+> 
+> -- 使用 UNION（去重）
+> SELECT employee_id, employee_name, department 
+> FROM emp_hr
+> UNION
+> SELECT employee_id, employee_name, department 
+> FROM emp_it;
+> -- 结果：如果同一员工在两个部门都有，只出现一次
+> 
+> -- 使用 UNION ALL（不去重）
+> SELECT employee_id, employee_name, department 
+> FROM emp_hr
+> UNION ALL
+> SELECT employee_id, employee_name, department 
+> FROM emp_it;
+> -- 结果：如果同一员工在两个部门都有，出现两次
+> ```
+>
+> **场景2：多表数据汇总**
+>
+> ```sql
+> -- 合并三个季度的销售数据
+> SELECT 
+>     'Q1' as quarter,
+>     product_id,
+>     sales_amount
+> FROM sales_q1
+> WHERE sales_date BETWEEN DATE '2026-01-01' AND DATE '2026-03-31'
+> 
+> UNION ALL  -- 用UNION ALL，因为季度不同，不会有重复
+> 
+> SELECT 
+>     'Q2',
+>     product_id,
+>     sales_amount
+> FROM sales_q2
+> WHERE sales_date BETWEEN DATE '2026-04-01' AND DATE '2026-06-30'
+> 
+> UNION ALL
+> 
+> SELECT 
+>     'Q3',
+>     product_id,
+>     sales_amount
+> FROM sales_q3
+> WHERE sales_date BETWEEN DATE '2026-07-01' AND DATE '2026-09-30'
+> 
+> ORDER BY quarter, product_id;
+> ```
+>
+> ---
+>
+> ---
+>
+> ==**关键注意事项**==
+>
+> 1.==**列数和类型必须匹配**==
+>
+> ```sql
+> -- ✅ 正确：列数、类型、顺序都匹配
+> SELECT 
+>     employee_id,    -- NUMBER
+>     employee_name,  -- VARCHAR2
+>     hire_date       -- DATE
+> FROM employees
+> 
+> UNION
+> 
+> SELECT 
+>     contractor_id,  -- NUMBER（类型兼容）
+>     contractor_name,-- VARCHAR2
+>     start_date      -- DATE
+> FROM contractors;
+> 
+> -- ❌ 错误1：列数不匹配
+> SELECT id, name FROM table1
+> UNION
+> SELECT id FROM table2;  -- 错误：列数不同
+> 
+> -- ❌ 错误2：类型不兼容
+> SELECT id, name FROM table1
+> UNION
+> SELECT name, id FROM table2;  -- 错误：类型不匹配
+> ```
+>
+> 2. ==**列名以第一个SELECT为准**==
+>
+> ```sql
+> SELECT 
+>     emp_id as 员工编号,
+>     emp_name as 员工姓名
+> FROM employees
+> 
+> UNION
+> 
+> SELECT 
+>     contractor_id,    -- 不需要别名，用第一个SELECT的别名
+>     contractor_name
+> FROM contractors;
+> 
+> -- 最终列名：员工编号, 员工姓名
+> ```
+>
+> 3. ==**ORDER BY 只能放在最后**==
+>
+> ```sql
+> -- ✅ 正确：ORDER BY 放在最后
+> SELECT * FROM table1
+> UNION
+> SELECT * FROM table2
+> ORDER BY column1;  -- 对整个结果排序
+> 
+> -- ❌ 错误：不能放在中间
+> SELECT * FROM table1 ORDER BY column1
+> UNION  -- 错误！
+> SELECT * FROM table2;
+> ```
+>
+> 
+>
+> ==**性能优化建议**==
+>
+> ```sql
+> -- ❌ 不好：在UNION前过滤
+> SELECT * FROM large_table1
+> UNION
+> SELECT * FROM large_table2
+> WHERE condition = 'X';  -- 只过滤第二个表
+> 
+> -- ✅ 好：在每个SELECT中都过滤
+> SELECT * FROM large_table1 WHERE condition = 'X'
+> UNION
+> SELECT * FROM large_table2 WHERE condition = 'X';
+> 
+> -- ❌ 不好：SELECT 所有列
+> SELECT * FROM table1
+> UNION
+> SELECT * FROM table2;
+> 
+> -- ✅ 好：只选择需要的列
+> SELECT col1, col2 FROM table1
+> UNION
+> SELECT col1, col2 FROM table2;
+> ```
+>
+> **常见问题与解决方案**
+>
+> **==问题1：如何基于单列去重？==**
+>
+> ```sql
+> -- 场景：只需要基于员工号去重，但返回多列
+> -- ❌ 错误：这会基于所有列去重
+> SELECT emp_id, emp_name, dept FROM current_emps
+> UNION
+> SELECT emp_id, emp_name, dept FROM former_emps;
+> 
+> -- ✅ 正确：使用ROW_NUMBER()窗口函数
+> SELECT emp_id, emp_name, dept
+> FROM (
+>     SELECT 
+>         emp_id, 
+>         emp_name, 
+>         dept,
+>         ROW_NUMBER() OVER (PARTITION BY emp_id ORDER BY hire_date DESC) as rn
+>     FROM (
+>         SELECT emp_id, emp_name, dept, hire_date FROM current_emps
+>         UNION ALL
+>         SELECT emp_id, emp_name, dept, hire_date FROM former_emps
+>     )
+> )
+> WHERE rn = 1;
+> ```
+>
+> **问题2：如何处理NULL值？**
+>
+> ```sql
+> -- 示例：合并客户联系信息
+> SELECT 
+>     customer_id,
+>     phone_number as 联系电话,
+>     '主要电话' as 电话类型
+> FROM customer_phones
+> WHERE phone_number IS NOT NULL
+> 
+> UNION ALL
+> 
+> SELECT 
+>     customer_id,
+>     mobile_number as 联系电话,
+>     '手机号码' as 电话类型
+> FROM customer_mobiles
+> WHERE mobile_number IS NOT NULL
+> 
+> UNION ALL
+> 
+> SELECT 
+>     customer_id,
+>     NULL as 联系电话,  -- 用NULL补齐
+>     '无联系电话' as 电话类型
+> FROM customers
+> WHERE customer_id NOT IN (
+>     SELECT customer_id FROM customer_phones WHERE phone_number IS NOT NULL
+>     UNION
+>     SELECT customer_id FROM customer_mobiles WHERE mobile_number IS NOT NULL
+> )
+> ORDER BY customer_id;
+> ```
+
+
+
+## ==6.== Oracle CASE 表达式
+
+<kbd>2026.03.05</kbd> <kbd>腾讯元宝</kbd> 
+
+> **CASE 表达式**是 Oracle SQL 中的条件判断语句，类似于其他编程语言中的 if-else 或 switch-case 语句。它允许在 SQL 查询中根据条件返回不同的值。
+>
+> ---
+>
+> **基本语法格式**
+>
+> 1. **简单 CASE 表达式**（等值比较）
+>
+> ```sql
+> CASE 列名或表达式
+>     WHEN 值1 THEN 结果1
+>     WHEN 值2 THEN 结果2
+>     ...
+>     [ELSE 默认结果]
+> END
+> ```
+>
+> 2. **搜索式 CASE 表达式**（条件判断）
+>
+> ```sql
+> CASE
+>     WHEN 条件1 THEN 结果1
+>     WHEN 条件2 THEN 结果2
+>     ...
+>     [ELSE 默认结果]
+> END
+> ```
+>
+> ---
+>
+> **基本用法示例**
+>
+> 示例1：简单 CASE 表达式
+>
+> ```sql
+> -- 根据部门编号返回部门名称
+> SELECT 
+>     employee_id,
+>     employee_name,
+>     department_id,
+>     CASE department_id
+>         WHEN 10 THEN '技术部'
+>         WHEN 20 THEN '销售部'
+>         WHEN 30 THEN '财务部'
+>         WHEN 40 THEN '人事部'
+>         ELSE '其他部门'
+>     END AS department_name
+> FROM employees;
+> ```
+>
+> 示例2：搜索式 CASE 表达式
+>
+> ```sql
+> -- 根据成绩判断等级
+> SELECT 
+>     student_id,
+>     score,
+>     CASE
+>         WHEN score >= 90 THEN '优秀'
+>         WHEN score >= 80 THEN '良好'
+>         WHEN score >= 60 THEN '及格'
+>         ELSE '不及格'
+>     END AS grade
+> FROM scores;
+> ```
+>
+> 示例3：多层条件判断
+>
+> ```sql
+> -- 复杂的价格策略
+> SELECT 
+>     order_id,
+>     customer_type,
+>     order_amount,
+>     CASE customer_type
+>         WHEN 'VIP' THEN
+>             CASE
+>                 WHEN order_amount >= 10000 THEN ROUND(order_amount * 0.8, 2)
+>                 WHEN order_amount >= 5000 THEN ROUND(order_amount * 0.85, 2)
+>                 WHEN order_amount >= 1000 THEN ROUND(order_amount * 0.9, 2)
+>                 ELSE ROUND(order_amount * 0.95, 2)
+>             END
+>             
+>         WHEN '普通' THEN
+>             CASE
+>                 WHEN order_amount >= 10000 THEN ROUND(order_amount * 0.9, 2)
+>                 WHEN order_amount >= 5000 THEN ROUND(order_amount * 0.92, 2)
+>                 WHEN order_amount >= 1000 THEN ROUND(order_amount * 0.95, 2)
+>                 ELSE order_amount
+>             END
+>             
+>         ELSE order_amount
+>     END as 实际金额
+> FROM orders;
+> ```
+>
+> ---
+>
+> **在聚合函数中使用 CASE**
+>
+> 示例1：条件计数
+>
+> ```sql
+> -- 统计不同类型订单数量
+> SELECT 
+>     COUNT(CASE WHEN order_type = '普通' THEN 1 END) as 普通订单数,
+>     COUNT(CASE WHEN order_type = '加急' THEN 1 END) as 加急订单数,
+>     COUNT(CASE WHEN order_type = '特快' THEN 1 END) as 特快订单数,
+>     COUNT(*) as 总订单数
+> FROM orders
+> WHERE order_date >= DATE '2026-01-01';
+> ```
+>
+> 示例2：条件求和
+>
+> ```sql
+> -- 按支付方式汇总金额
+> SELECT 
+>     SUM(CASE WHEN payment_method = '现金' THEN order_amount ELSE 0 END) as 现金支付,
+>     SUM(CASE WHEN payment_method = '支付宝' THEN order_amount ELSE 0 END) as 支付宝支付,
+>     SUM(CASE WHEN payment_method = '微信' THEN order_amount ELSE 0 END) as 微信支付,
+>     SUM(CASE WHEN payment_method = '银行卡' THEN order_amount ELSE 0 END) as 银行卡支付
+> FROM orders
+> WHERE order_date >= DATE '2026-01-01';
+> ```
+>
+> 示例3：条件平均值
+>
+> ```sql
+> -- 计算不同路线平均运输时间
+> SELECT 
+>     AVG(CASE WHEN route_type = '市内' THEN delivery_hours END) as 市内平均时间,
+>     AVG(CASE WHEN route_type = '省内' THEN delivery_hours END) as 省内平均时间,
+>     AVG(CASE WHEN route_type = '跨省' THEN delivery_hours END) as 跨省平均时间
+> FROM shipments
+> WHERE status = '已完成';
+> ```
+>
+> ---
+>
+> **在 ORDER BY 中使用 CASE**
+>
+> 自定义排序规则
+>
+> ```sql
+> -- 按状态优先级排序
+> SELECT 
+>     shipment_id,
+>     status,
+>     create_time
+> FROM shipments
+> WHERE shipment_date = DATE '2026-01-15'
+> ORDER BY
+>     CASE status
+>         WHEN '待分配' THEN 1
+>         WHEN '已分配' THEN 2
+>         WHEN '运输中' THEN 3
+>         WHEN '已送达' THEN 4
+>         WHEN '已签收' THEN 5
+>         ELSE 6
+>     END,
+>     create_time;
+> ```
+>
+> ---
+>
+> **在 UPDATE 语句中使用 CASE**
+>
+> 批量更新数据
+>
+> ```sql
+> -- 根据条件更新运输状态
+> UPDATE shipments
+> SET priority = CASE
+>     WHEN delivery_hours <= 24 THEN 1
+>     WHEN delivery_hours <= 48 THEN 2
+>     ELSE 3
+> END,
+> discount = CASE
+>     WHEN customer_level = 'VIP' AND order_amount > 1000 THEN 0.1
+>     WHEN customer_level = '普通' AND order_amount > 5000 THEN 0.05
+>     ELSE 0
+> END
+> WHERE shipment_date >= DATE '2026-01-01';
+> ```
+>
+> ---
+>
+> **在 INSERT 语句中使用 CASE**
+>
+> 插入时计算值
+>
+> ```sql
+> -- 插入统计报表数据
+> INSERT INTO daily_report (
+>     report_date,
+>     report_type,
+>     order_count,
+>     order_amount
+> )
+> SELECT 
+>     TRUNC(SYSDATE) - 1,
+>     CASE
+>         WHEN order_time < 12 THEN '上午订单'
+>         WHEN order_time < 18 THEN '下午订单'
+>         ELSE '晚间订单'
+>     END,
+>     COUNT(*),
+>     SUM(order_amount)
+> FROM orders
+> WHERE order_date = TRUNC(SYSDATE) - 1
+> GROUP BY 
+>     CASE
+>         WHEN order_time < 12 THEN '上午订单'
+>         WHEN order_time < 18 THEN '下午订单'
+>         ELSE '晚间订单'
+>     END;
+> ```
+>
+> ----
+>
+> **CASE 表达式的注意事项**
+>
+> 1. **数据类型必须一致**
+>
+> ```sql
+> -- ❌ 错误：THEN 子句返回类型不一致
+> SELECT 
+>     CASE 
+>         WHEN score >= 60 THEN '及格'
+>         WHEN score < 60 THEN 0  -- 这里是数字，上面是字符串
+>     END
+> FROM scores;
+> 
+> -- ✅ 正确：统一类型
+> SELECT 
+>     CASE 
+>         WHEN score >= 60 THEN '及格'
+>         WHEN score < 60 THEN '不及格'
+>     END
+> FROM scores;
+> ```
+>
+> 2. **ELSE 子句是可选的**
+>
+> ```sql
+> -- 不写 ELSE，默认返回 NULL
+> SELECT 
+>     CASE 
+>         WHEN score >= 60 THEN '及格'
+>         WHEN score < 60 THEN '不及格'
+>         -- 没有 ELSE，如果 score 为 NULL，则返回 NULL
+>     END
+> FROM scores;
+> ```
+>
+> 3. ==**条件顺序很重要**==
+>
+> ```sql
+> -- ❌ 错误：顺序不当
+> SELECT 
+>     CASE
+>         WHEN score >= 60 THEN '及格'
+>         WHEN score >= 80 THEN '良好'  -- 永远不会执行
+>         WHEN score >= 90 THEN '优秀'  -- 永远不会执行
+>         ELSE '不及格'
+>     END
+> FROM scores;
+> 
+> -- ✅ 正确：从高到低
+> SELECT 
+>     CASE
+>         WHEN score >= 90 THEN '优秀'
+>         WHEN score >= 80 THEN '良好'
+>         WHEN score >= 60 THEN '及格'
+>         ELSE '不及格'
+>     END
+> FROM scores;
+> ```
+>
+> ---
+>
+> **CASE 与 DECODE 对比**
+>
+> Oracle 还提供了 DECODE 函数，功能类似于简单 CASE：
+>
+> ```sql
+> -- 使用 DECODE
+> SELECT 
+>     status,
+>     DECODE(status,
+>         'P', '待处理',
+>         'A', '已分配', 
+>         'D', '配送中',
+>         'C', '已完成',
+>         '未知状态'
+>     ) as 状态描述
+> FROM shipments;
+> 
+> -- 使用 CASE 的等价写法
+> SELECT 
+>     status,
+>     CASE status
+>         WHEN 'P' THEN '待处理'
+>         WHEN 'A' THEN '已分配'
+>         WHEN 'D' THEN '配送中'
+>         WHEN 'C' THEN '已完成'
+>         ELSE '未知状态'
+>     END as 状态描述
+> FROM shipments;
+> ```
+>
+> **DECODE 与 CASE 对比**：
+>
+> - DECODE 是 Oracle 特有，CASE 是 SQL 标准
+> - CASE 功能更强大，支持复杂条件
+> - DECODE 只能做等值比较
+> - 推荐使用 CASE，可移植性更好
+>
+> ---
+>
+> 最佳实践
+>
+> 1. **保持简洁**
+>
+> ```sql
+> -- ❌ 不好：过于复杂
+> SELECT 
+>     CASE
+>         WHEN a = 1 AND b = 2 AND c = 3 AND d = 4 AND e = 5 THEN '复杂条件1'
+>         -- ... 很多条件
+>     END
+> FROM table;
+> 
+> -- ✅ 好：拆分为多个 CASE
+> SELECT 
+>     CASE
+>         WHEN 简单条件 THEN '结果1'
+>         WHEN 中等条件 THEN '结果2'
+>         ELSE '默认'
+>     END as 结果1,
+>     CASE
+>         WHEN 其他条件 THEN '其他结果'
+>     END as 结果2
+> FROM table;
+> ```
+>
+> 2. **使用 ELSE 捕获异常**
+>
+> ```sql
+> -- 总是包含 ELSE
+> SELECT 
+>     CASE
+>         WHEN condition1 THEN 'A'
+>         WHEN condition2 THEN 'B'
+>         ELSE '未知'  -- 处理未预料的情况
+>     END
+> FROM table;
+> ```
+>
+> 3. **在视图中使用**
+>
+> ```sql
+> -- 创建视图，隐藏复杂逻辑
+> CREATE OR REPLACE VIEW v_shipment_status AS
+> SELECT 
+>     shipment_id,
+>     status,
+>     CASE status
+>         WHEN 'P' THEN '待处理'
+>         WHEN 'D' THEN '配送中'
+>         WHEN 'C' THEN '已完成'
+>         ELSE '其他'
+>     END as status_desc,
+>     create_time
+> FROM shipments;
+> ```
+>
+> 4. **CASE 可能使索引失效**
+>
+> ```sql
+> SELECT *
+> FROM shipments
+> WHERE 
+>     CASE 
+>         WHEN status = '已完成' THEN delivery_date 
+>         ELSE order_date 
+>     END > DATE '2026-01-01';
+>     
+> -- 考虑重写为
+> SELECT *
+> FROM shipments
+> WHERE (status = '已完成' AND delivery_date > DATE '2026-01-01')
+>    OR (status != '已完成' AND order_date > DATE '2026-01-01');
+> ```
+>
+> **总结**
+>
+> **CASE 表达式要点**：
+>
+> 1. 简单 CASE 用于等值比较，搜索式 CASE 用于复杂条件
+> 2. 必须包含 `END`
+> 3. `ELSE`是可选的，省略时默认返回 NULL
+> 4. 可以嵌套使用
+> 5. 可用于 SELECT、WHERE、ORDER BY、GROUP BY、UPDATE、INSERT
+> 6. 是 SQL 标准，推荐使用
+
+
 
 
 
