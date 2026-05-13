@@ -32,6 +32,24 @@ jobs:
         echo -e "下面是腾讯跨越可配置的edgeone.json配置" > a.txt
         cat > edgeone.json << EOF
           {
+            "rewrites": [
+              {
+                "source": "/%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98/*",
+                "destination": "/其他问题/:splat"
+              },
+              {
+                "source": "/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/*",
+                "destination": "/前端项目/:splat"
+              },
+              {
+                "source": "/%E5%8C%BB/*",
+                "destination": "/医/:splat"
+              },
+              {
+                "source": "/%E7%89%9B%E9%A9%AC%E7%94%9F%E6%B4%BB/*",
+                "destination": "/牛马生活/:splat"
+              }
+            ],
             "headers": [
               {
                 "source": "/*",
